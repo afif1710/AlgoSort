@@ -1,0 +1,284 @@
+[
+  {
+    "slug": "array-basics",
+    "title": "Arrays: Introduction",
+    "summary": "Understand arrays, indexing, and basic operations with detailed examples.",
+    "level": "Beginner",
+    "category": "Arrays",
+    "content": [
+      "An array is a collection of elements stored at contiguous memory locations. Each element can be accessed directly using its index (position).",
+      "Arrays support O(1) random access, meaning you can instantly jump to any position if you know the index.",
+      "Common operations: insertion at the end is O(1), insertion/deletion in the middle is O(n) because elements must shift.",
+      "Example: Store exam scores [85, 92, 78, 95, 88]. Access the third score with scores[2] = 78.",
+      "Key insight: Arrays are fixed-size in many languages (C/C++/Java), but Python lists and JavaScript arrays grow dynamically."
+    ],
+    "example": {
+      "language": "python",
+      "code": "# Array basics in Python\nscores = [85, 92, 78, 95, 88]\n\n# Access by index (0-based)\nprint(f\"First score: {scores[0]}\")  # 85\nprint(f\"Third score: {scores[2]}\")  # 78\n\n# Modify element\nscores[1] = 90\nprint(f\"Updated scores: {scores}\")  # [85, 90, 78, 95, 88]\n\n# Append to end (O(1) average)\nscores.append(100)\nprint(f\"After append: {scores}\")\n\n# Insert in middle (O(n))\nscores.insert(2, 88)\nprint(f\"After insert: {scores}\")\n\n# Find length\nprint(f\"Total scores: {len(scores)}\")\n",
+      "input": ""
+    }
+  },
+  {
+    "slug": "array-two-pointer",
+    "title": "Two Pointer Technique",
+    "summary": "Learn how to use two pointers to solve array problems efficiently.",
+    "level": "Intermediate",
+    "category": "Arrays",
+    "content": [
+      "The two-pointer technique uses two indices that traverse the array from different directions or speeds.",
+      "Pattern 1 (Opposite ends): One pointer starts at index 0, another at the last index. Move them toward each other.",
+      "Pattern 2 (Same direction): Both pointers start at the beginning but move at different speeds (fast and slow).",
+      "Example problem: Reverse an array in-place without extra space. Use left pointer at start, right pointer at end, swap and move inward.",
+      "Time complexity: O(n) with O(1) space, making it efficient for in-place solutions."
+    ],
+    "example": {
+      "language": "python",
+      "code": "# Example 1: Reverse array in-place\ndef reverse_array(arr):\n    left, right = 0, len(arr) - 1\n    while left < right:\n        # Swap elements\n        arr[left], arr[right] = arr[right], arr[left]\n        left += 1\n        right -= 1\n    return arr\n\ntest1 = [1, 2, 3, 4, 5]\nprint(f\"Original: {test1}\")\nprint(f\"Reversed: {reverse_array(test1)}\")\n\n# Example 2: Check if palindrome\ndef is_palindrome(arr):\n    left, right = 0, len(arr) - 1\n    while left < right:\n        if arr[left] != arr[right]:\n            return False\n        left += 1\n        right -= 1\n    return True\n\ntest2 = [1, 2, 3, 2, 1]\nprint(f\"\\nIs palindrome: {is_palindrome(test2)}\")\n",
+      "input": ""
+    }
+  },
+  {
+    "slug": "strings-basics",
+    "title": "String Manipulation",
+    "summary": "Learn string operations, reversal, palindrome checking, and common patterns.",
+    "level": "Beginner",
+    "category": "Strings",
+    "content": [
+      "Strings are sequences of characters. In Python and Java, strings are immutable (cannot be changed after creation).",
+      "Common operations: length, concatenation, substring extraction, character access, case conversion.",
+      "Pattern matching: Check palindromes (reads same forwards/backwards like 'racecar'), anagrams (same letters different order like 'listen' and 'silent').",
+      "Example: Check if 'madam' is a palindrome - compare first and last chars, then second and second-last, etc.",
+      "Tip: Two-pointer technique works great for string problems too!"
+    ],
+    "example": {
+      "language": "python",
+      "code": "# String basics\ntext = \"Hello World\"\n\n# Length and access\nprint(f\"Length: {len(text)}\")\nprint(f\"First char: {text[0]}\")\nprint(f\"Last char: {text[-1]}\")\n\n# Substring\nprint(f\"Substring [0:5]: {text[0:5]}\")  # Hello\n\n# Case conversion\nprint(f\"Upper: {text.upper()}\")\nprint(f\"Lower: {text.lower()}\")\n\n# Check palindrome\ndef is_palindrome(s):\n    # Remove spaces and convert to lowercase\n    s = s.replace(\" \", \"\").lower()\n    left, right = 0, len(s) - 1\n    while left < right:\n        if s[left] != s[right]:\n            return False\n        left += 1\n        right -= 1\n    return True\n\nprint(f\"\\n'racecar' is palindrome: {is_palindrome('racecar')}\")\nprint(f\"'hello' is palindrome: {is_palindrome('hello')}\")\n",
+      "input": ""
+    }
+  },
+  {
+    "slug": "bubble-sort",
+    "title": "Bubble Sort",
+    "summary": "Learn the simplest sorting algorithm that repeatedly swaps adjacent elements.",
+    "level": "Beginner",
+    "category": "Sorting",
+    "content": [
+      "Bubble Sort repeatedly steps through the list, compares adjacent elements, and swaps them if they're in the wrong order.",
+      "The algorithm gets its name because smaller elements 'bubble' to the top (beginning) of the list.",
+      "Pass 1: Compare each pair and swap if needed. Largest element reaches the end.",
+      "Pass 2: Repeat but ignore the last position (already sorted). Second largest reaches second-last position.",
+      "Time Complexity: O(n²) in worst and average cases, O(n) if already sorted with optimization.",
+      "Space: O(1) - sorts in place.",
+      "Example: [5, 1, 4, 2, 8] → Compare 5&1 (swap) → [1, 5, 4, 2, 8] → Compare 5&4 (swap) → continue..."
+    ],
+    "example": {
+      "language": "python",
+      "code": "# Bubble Sort Implementation\ndef bubble_sort(arr):\n    n = len(arr)\n    \n    # Traverse through all array elements\n    for i in range(n):\n        # Track if any swap happened\n        swapped = False\n        \n        # Last i elements are already sorted\n        for j in range(0, n - i - 1):\n            # Swap if current element > next element\n            if arr[j] > arr[j + 1]:\n                arr[j], arr[j + 1] = arr[j + 1], arr[j]\n                swapped = True\n                print(f\"Swapped {arr[j+1]} and {arr[j]}: {arr}\")\n        \n        # If no swaps, array is sorted\n        if not swapped:\n            break\n    \n    return arr\n\n# Example\ntest = [64, 34, 25, 12, 22, 11, 90]\nprint(f\"Original: {test}\")\nprint(\"\\nSorting process:\")\nresult = bubble_sort(test.copy())\nprint(f\"\\nSorted: {result}\")\n",
+      "input": ""
+    }
+  },
+  {
+    "slug": "selection-sort",
+    "title": "Selection Sort",
+    "summary": "Find the minimum element and place it at the beginning repeatedly.",
+    "level": "Beginner",
+    "category": "Sorting",
+    "content": [
+      "Selection Sort divides the array into sorted and unsorted parts. It repeatedly selects the smallest element from the unsorted part and moves it to the sorted part.",
+      "Step 1: Find the minimum element in the entire array and swap it with the first element.",
+      "Step 2: Find the minimum in the remaining unsorted array and swap with the second position.",
+      "Repeat until the entire array is sorted.",
+      "Time Complexity: O(n²) in all cases - always makes n² comparisons.",
+      "Space: O(1) - in-place sorting.",
+      "Example: [29, 10, 14, 37] → Find min=10, swap with 29 → [10, 29, 14, 37] → Find min=14, swap with 29 → [10, 14, 29, 37]"
+    ],
+    "example": {
+      "language": "python",
+      "code": "# Selection Sort Implementation\ndef selection_sort(arr):\n    n = len(arr)\n    \n    # Traverse through all array elements\n    for i in range(n):\n        # Find minimum element in remaining unsorted array\n        min_idx = i\n        for j in range(i + 1, n):\n            if arr[j] < arr[min_idx]:\n                min_idx = j\n        \n        # Swap the found minimum with first element\n        if min_idx != i:\n            arr[i], arr[min_idx] = arr[min_idx], arr[i]\n            print(f\"Swapped {arr[i]} with {arr[min_idx]} (position {i}): {arr}\")\n    \n    return arr\n\n# Example\ntest = [64, 25, 12, 22, 11]\nprint(f\"Original: {test}\")\nprint(\"\\nSorting process:\")\nresult = selection_sort(test.copy())\nprint(f\"\\nSorted: {result}\")\n\n# Selection sort makes fewer swaps than bubble sort\nprint(\"\\nNote: Selection sort minimizes the number of swaps!\")\n",
+      "input": ""
+    }
+  },
+  {
+    "slug": "insertion-sort",
+    "title": "Insertion Sort",
+    "summary": "Build the sorted array one element at a time by inserting elements in correct position.",
+    "level": "Beginner",
+    "category": "Sorting",
+    "content": [
+      "Insertion Sort builds the final sorted array one item at a time. It's similar to how you sort playing cards in your hands.",
+      "Start with the second element. Compare it with elements in the sorted part (left side) and insert it at the correct position.",
+      "Shift all larger elements one position to the right to make space for the inserted element.",
+      "Example: Like arranging cards - pick a card, compare with cards in hand, insert at right spot.",
+      "Time Complexity: O(n²) worst case, O(n) best case (already sorted), good for small datasets.",
+      "Space: O(1) - in-place sorting.",
+      "Practical use: Efficient for small arrays or nearly sorted arrays."
+    ],
+    "example": {
+      "language": "python",
+      "code": "# Insertion Sort Implementation\ndef insertion_sort(arr):\n    n = len(arr)\n    \n    # Start from second element\n    for i in range(1, n):\n        key = arr[i]  # Element to be inserted\n        j = i - 1\n        \n        print(f\"\\nInserting {key}:\")\n        \n        # Move elements greater than key one position ahead\n        while j >= 0 and arr[j] > key:\n            arr[j + 1] = arr[j]\n            j -= 1\n            print(f\"  Shifted: {arr}\")\n        \n        # Insert key at correct position\n        arr[j + 1] = key\n        print(f\"  Final: {arr}\")\n    \n    return arr\n\n# Example\ntest = [12, 11, 13, 5, 6]\nprint(f\"Original: {test}\")\nresult = insertion_sort(test.copy())\nprint(f\"\\nSorted: {result}\")\n",
+      "input": ""
+    }
+  },
+  {
+    "slug": "merge-sort",
+    "title": "Merge Sort",
+    "summary": "Efficient divide-and-conquer algorithm that splits, sorts, and merges arrays.",
+    "level": "Intermediate",
+    "category": "Sorting",
+    "content": [
+      "Merge Sort uses divide-and-conquer strategy: divide array into halves, sort each half, then merge them.",
+      "Step 1 (Divide): Split array into two halves recursively until each subarray has one element.",
+      "Step 2 (Conquer): Merge the subarrays back together in sorted order.",
+      "Merging: Compare first elements of both subarrays, pick smaller one, repeat until all elements are merged.",
+      "Time Complexity: O(n log n) in all cases - much better than O(n²) algorithms!",
+      "Space: O(n) - needs extra space for merging.",
+      "Example: [38,27,43,3] → [38,27] & [43,3] → [38],[27] & [43],[3] → merge → [27,38] & [3,43] → [3,27,38,43]"
+    ],
+    "example": {
+      "language": "python",
+      "code": "# Merge Sort Implementation\ndef merge_sort(arr):\n    if len(arr) <= 1:\n        return arr\n    \n    # Divide array into two halves\n    mid = len(arr) // 2\n    left = arr[:mid]\n    right = arr[mid:]\n    \n    print(f\"Splitting: {arr} → {left} | {right}\")\n    \n    # Recursively sort both halves\n    left = merge_sort(left)\n    right = merge_sort(right)\n    \n    # Merge sorted halves\n    return merge(left, right)\n\ndef merge(left, right):\n    result = []\n    i = j = 0\n    \n    # Compare and merge\n    while i < len(left) and j < len(right):\n        if left[i] <= right[j]:\n            result.append(left[i])\n            i += 1\n        else:\n            result.append(right[j])\n            j += 1\n    \n    # Add remaining elements\n    result.extend(left[i:])\n    result.extend(right[j:])\n    \n    print(f\"Merging {left} + {right} = {result}\")\n    return result\n\n# Example\ntest = [38, 27, 43, 3, 9, 82, 10]\nprint(f\"Original: {test}\\n\")\nresult = merge_sort(test.copy())\nprint(f\"\\nFinal Sorted: {result}\")\n",
+      "input": ""
+    }
+  },
+  {
+    "slug": "quick-sort",
+    "title": "Quick Sort",
+    "summary": "Fast divide-and-conquer algorithm using pivot partitioning.",
+    "level": "Intermediate",
+    "category": "Sorting",
+    "content": [
+      "Quick Sort picks a 'pivot' element and partitions the array around it: smaller elements go left, larger go right.",
+      "Step 1: Choose a pivot (commonly last element, first element, or random).",
+      "Step 2: Partition array so elements < pivot are on left, elements > pivot are on right.",
+      "Step 3: Recursively apply quick sort to left and right partitions.",
+      "Time Complexity: O(n log n) average case, O(n²) worst case (rare with good pivot selection).",
+      "Space: O(log n) for recursion stack.",
+      "Example: [10,7,8,9,1,5] pivot=5 → [1] 5 [10,7,8,9] → recursively sort both sides."
+    ],
+    "example": {
+      "language": "python",
+      "code": "# Quick Sort Implementation\ndef quick_sort(arr, low=0, high=None):\n    if high is None:\n        high = len(arr) - 1\n    \n    if low < high:\n        # Partition and get pivot index\n        pi = partition(arr, low, high)\n        \n        # Recursively sort elements before and after partition\n        quick_sort(arr, low, pi - 1)\n        quick_sort(arr, pi + 1, high)\n    \n    return arr\n\ndef partition(arr, low, high):\n    # Choose rightmost element as pivot\n    pivot = arr[high]\n    i = low - 1  # Index of smaller element\n    \n    print(f\"\\nPartitioning {arr[low:high+1]} with pivot={pivot}\")\n    \n    for j in range(low, high):\n        # If current element <= pivot\n        if arr[j] <= pivot:\n            i += 1\n            arr[i], arr[j] = arr[j], arr[i]\n    \n    # Place pivot in correct position\n    arr[i + 1], arr[high] = arr[high], arr[i + 1]\n    print(f\"After partition: {arr}\")\n    \n    return i + 1\n\n# Example\ntest = [10, 7, 8, 9, 1, 5]\nprint(f\"Original: {test}\")\nresult = quick_sort(test.copy())\nprint(f\"\\nFinal Sorted: {result}\")\n",
+      "input": ""
+    }
+  },
+  {
+    "slug": "linked-list-basics",
+    "title": "Linked Lists: Introduction",
+    "summary": "Understand nodes, pointers, and basic linked list operations.",
+    "level": "Beginner",
+    "category": "Linked Lists",
+    "content": [
+      "A linked list is a linear data structure where each element (node) contains data and a reference (pointer) to the next node.",
+      "Unlike arrays, linked lists don't need contiguous memory. Nodes can be scattered in memory.",
+      "Advantages: Dynamic size, efficient insertions/deletions at O(1) if you have the pointer.",
+      "Disadvantages: No random access (must traverse from head), extra memory for pointers.",
+      "Types: Singly linked list (next pointer only), doubly linked list (next + previous pointers), circular linked list (last node points to first).",
+      "Example: Think of a treasure hunt - each clue (node) points to the next location."
+    ],
+    "example": {
+      "language": "python",
+      "code": "# Linked List Implementation\nclass Node:\n    def __init__(self, data):\n        self.data = data\n        self.next = None\n\nclass LinkedList:\n    def __init__(self):\n        self.head = None\n    \n    def append(self, data):\n        new_node = Node(data)\n        if not self.head:\n            self.head = new_node\n            return\n        \n        current = self.head\n        while current.next:\n            current = current.next\n        current.next = new_node\n    \n    def display(self):\n        elements = []\n        current = self.head\n        while current:\n            elements.append(str(current.data))\n            current = current.next\n        return \" -> \".join(elements) + \" -> None\"\n\n# Example usage\nll = LinkedList()\nll.append(1)\nll.append(2)\nll.append(3)\nll.append(4)\n\nprint(\"Linked List:\")\nprint(ll.display())\n\nprint(\"\\nEach node points to the next, forming a chain!\")\n",
+      "input": ""
+    }
+  },
+  {
+    "slug": "stack-basics",
+    "title": "Stacks: LIFO Structure",
+    "summary": "Master stack operations and solve parentheses matching problems.",
+    "level": "Beginner",
+    "category": "Stacks",
+    "content": [
+      "A stack follows Last In First Out (LIFO): the last element added is the first to be removed.",
+      "Think of a stack of plates - you can only add or remove from the top.",
+      "Core operations: push (add to top), pop (remove from top), peek (view top without removing), isEmpty.",
+      "Use cases: Function call stack, undo/redo mechanisms, browser back button, expression evaluation, backtracking algorithms.",
+      "Common problem: Check if parentheses are balanced - '(())' is valid, '(()' is not.",
+      "Implementation: Can use arrays (Python list) or linked lists."
+    ],
+    "example": {
+      "language": "python",
+      "code": "# Stack Implementation\nclass Stack:\n    def __init__(self):\n        self.items = []\n    \n    def push(self, item):\n        self.items.append(item)\n        print(f\"Pushed {item}: {self.items}\")\n    \n    def pop(self):\n        if not self.is_empty():\n            item = self.items.pop()\n            print(f\"Popped {item}: {self.items}\")\n            return item\n        return None\n    \n    def peek(self):\n        return self.items[-1] if not self.is_empty() else None\n    \n    def is_empty(self):\n        return len(self.items) == 0\n\n# Example: Valid Parentheses\ndef is_valid_parentheses(s):\n    stack = []\n    mapping = {')': '(', '}': '{', ']': '['}\n    \n    for char in s:\n        if char in mapping:\n            top = stack.pop() if stack else '#'\n            if mapping[char] != top:\n                return False\n        else:\n            stack.append(char)\n    \n    return not stack\n\nprint(\"Stack Demo:\")\ns = Stack()\ns.push(10)\ns.push(20)\ns.push(30)\ns.pop()\n\nprint(\"\\nValid Parentheses Check:\")\nprint(f\"'()[]{{}}' is valid: {is_valid_parentheses('()[]{}')}\")\nprint(f\"'(]' is valid: {is_valid_parentheses('(]')}\")\n",
+      "input": ""
+    }
+  },
+  {
+    "slug": "queue-basics",
+    "title": "Queues: FIFO Structure",
+    "summary": "Learn queue operations and understand First In First Out behavior.",
+    "level": "Beginner",
+    "category": "Queues",
+    "content": [
+      "A queue follows First In First Out (FIFO): the first element added is the first to be removed.",
+      "Think of a line at a ticket counter - first person in line gets served first.",
+      "Core operations: enqueue (add to rear), dequeue (remove from front), peek (view front), isEmpty.",
+      "Use cases: Task scheduling, breadth-first search (BFS), printer queue, handling requests in web servers.",
+      "Types: Simple queue, circular queue (wraps around), priority queue (elements have priorities), deque (double-ended queue).",
+      "Implementation: Can use arrays with two pointers (front and rear) or linked lists."
+    ],
+    "example": {
+      "language": "python",
+      "code": "# Queue Implementation\nfrom collections import deque\n\nclass Queue:\n    def __init__(self):\n        self.items = deque()\n    \n    def enqueue(self, item):\n        self.items.append(item)\n        print(f\"Enqueued {item}: {list(self.items)}\")\n    \n    def dequeue(self):\n        if not self.is_empty():\n            item = self.items.popleft()\n            print(f\"Dequeued {item}: {list(self.items)}\")\n            return item\n        return None\n    \n    def peek(self):\n        return self.items[0] if not self.is_empty() else None\n    \n    def is_empty(self):\n        return len(self.items) == 0\n    \n    def size(self):\n        return len(self.items)\n\n# Example usage\nprint(\"Queue Demo:\")\nq = Queue()\nq.enqueue(\"Customer 1\")\nq.enqueue(\"Customer 2\")\nq.enqueue(\"Customer 3\")\n\nprint(\"\\nServing customers:\")\nq.dequeue()  # Customer 1 served first\nq.dequeue()  # Customer 2 served next\n\nprint(\"\\nNext in line:\")\nprint(f\"Front: {q.peek()}\")\n",
+      "input": ""
+    }
+  },
+  {
+    "slug": "hashmap-basics",
+    "title": "Hash Maps: Key-Value Storage",
+    "summary": "Master hash tables for O(1) lookups, counting, and frequency problems.",
+    "level": "Beginner",
+    "category": "Hash Maps",
+    "content": [
+      "A hash map (or dictionary) stores key-value pairs and allows O(1) average-time insertion, deletion, and lookup.",
+      "How it works: A hash function converts keys into array indices. Values are stored at those indices.",
+      "Example: Store student grades - {'Alice': 95, 'Bob': 87} - access Alice's grade instantly.",
+      "Use cases: Counting frequencies, finding duplicates, caching results, implementing sets.",
+      "Common problems: Two Sum (find pairs that sum to target), anagram detection, frequency counter.",
+      "Collision handling: When two keys hash to same index, use chaining (linked lists) or open addressing."
+    ],
+    "example": {
+      "language": "python",
+      "code": "# Hash Map Basics\n\n# Example 1: Count character frequency\ndef count_chars(s):\n    freq = {}\n    for char in s:\n        freq[char] = freq.get(char, 0) + 1\n    return freq\n\ntext = \"hello world\"\nprint(f\"Character frequencies in '{text}':\")\nprint(count_chars(text))\n\n# Example 2: Find first non-repeating character\ndef first_unique_char(s):\n    freq = count_chars(s)\n    for i, char in enumerate(s):\n        if freq[char] == 1:\n            return i\n    return -1\n\ntest = \"leetcode\"\nprint(f\"\\nFirst unique char in '{test}':\")\nindex = first_unique_char(test)\nprint(f\"Index: {index}, Character: '{test[index]}'\")\n\n# Example 3: Two Sum using hash map\ndef two_sum(nums, target):\n    seen = {}\n    for i, num in enumerate(nums):\n        complement = target - num\n        if complement in seen:\n            return [seen[complement], i]\n        seen[num] = i\n    return []\n\nnums = [2, 7, 11, 15]\ntarget = 9\nprint(f\"\\nTwo Sum: {nums}, target={target}\")\nprint(f\"Indices: {two_sum(nums, target)}\")\n",
+      "input": ""
+    }
+  },
+  {
+    "slug": "heap-basics",
+    "title": "Heaps: Priority Queue",
+    "summary": "Understand min-heap and max-heap for efficient priority-based operations.",
+    "level": "Intermediate",
+    "category": "Heaps",
+    "content": [
+      "A heap is a complete binary tree where each parent node has a specific relationship with its children.",
+      "Max-Heap: Parent node is always greater than or equal to children. Root is the maximum element.",
+      "Min-Heap: Parent node is always less than or equal to children. Root is the minimum element.",
+      "Core operations: insert O(log n), extract-min/max O(log n), peek O(1).",
+      "Use cases: Priority queues, heap sort, finding kth largest/smallest element, median maintenance.",
+      "Array representation: For node at index i, left child at 2i+1, right child at 2i+2, parent at (i-1)/2.",
+      "Example: Hospital emergency room - critical patients (high priority) treated before minor cases."
+    ],
+    "example": {
+      "language": "python",
+      "code": "# Min-Heap Implementation using Python's heapq\nimport heapq\n\nclass MinHeap:\n    def __init__(self):\n        self.heap = []\n    \n    def push(self, val):\n        heapq.heappush(self.heap, val)\n        print(f\"Inserted {val}: {self.heap}\")\n    \n    def pop(self):\n        if self.heap:\n            val = heapq.heappop(self.heap)\n            print(f\"Extracted min {val}: {self.heap}\")\n            return val\n        return None\n    \n    def peek(self):\n        return self.heap[0] if self.heap else None\n\n# Example: Priority Queue\nprint(\"Min-Heap Demo:\")\nheap = MinHeap()\n\n# Insert elements\nheap.push(10)\nheap.push(5)\nheap.push(20)\nheap.push(1)\n\nprint(\"\\nExtracting minimum elements:\")\nheap.pop()  # Removes 1\nheap.pop()  # Removes 5\n\nprint(f\"\\nCurrent minimum: {heap.peek()}\")\n\n# Example: Find Kth largest\ndef find_kth_largest(nums, k):\n    heap = []\n    for num in nums:\n        heapq.heappush(heap, num)\n        if len(heap) > k:\n            heapq.heappop(heap)\n    return heap[0]\n\nnums = [3, 2, 1, 5, 6, 4]\nk = 2\nprint(f\"\\nFind {k}th largest in {nums}: {find_kth_largest(nums, k)}\")\n",
+      "input": ""
+    }
+  },
+  {
+    "slug": "array-sliding-window",
+    "title": "Sliding Window",
+    "summary": "Master the sliding window pattern for subarray problems.",
+    "level": "Intermediate",
+    "category": "Arrays",
+    "content": [
+      "Sliding window maintains a window (subarray) and slides it across the array to solve problems efficiently.",
+      "Fixed-size window: size k is constant (e.g., max sum of k consecutive elements).",
+      "Variable-size window: size changes based on a condition (e.g., longest substring with at most k distinct characters).",
+      "Reduces brute-force O(n²) or O(n³) solutions to O(n) by reusing calculations from the previous window."
+    ],
+    "example": {
+      "language": "python",
+      "code": "# Fixed sliding window: max sum of k consecutive elements\ndef max_sum_k(arr, k):\n    n = len(arr)\n    if n < k:\n        return -1\n    \n    # Compute sum of first window\n    window_sum = sum(arr[:k])\n    max_sum = window_sum\n    \n    # Slide the window\n    for i in range(n - k):\n        window_sum = window_sum - arr[i] + arr[i + k]\n        max_sum = max(max_sum, window_sum)\n    \n    return max_sum\n\narr = [1, 4, 2, 10, 23, 3, 1, 0, 20]\nk = 4\nprint(max_sum_k(arr, k))  # 39 (10+23+3+1)\n",
+      "input": ""
+    }
+  }
+
+]

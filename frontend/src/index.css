@@ -1,0 +1,275 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Theme tokens */
+:root {
+  --bg: #ffffff;
+  --fg: #0f172a;
+  --muted: #64748b;
+  --panel: #f8fafc;
+  --card-hover-bg: #e2e8f0;
+  --accent: #6366F1;
+  --brand: #6366f1;
+  --brand-dark: #4f46e5;
+}
+
+[data-theme="gray"] {
+  --bg: #f3f4f6;
+  --fg: #111827;
+  --muted: #6b7280;
+  --panel: #e5e7eb;
+  --card-hover-bg: #d1d5db;
+  --accent: #6b7280;
+  --brand: #6b7280;
+  --brand-dark: #52525b;
+}
+
+[data-theme="dark"] {
+  --bg: #0b1020;
+  --fg: #e5e7eb;
+  --muted: #a1a1aa;
+  --panel: #0f172a;
+  --card-hover-bg: #1e293b;
+  --accent: #8b5cf6;
+  --brand: #818cf8;
+  --brand-dark: #6366f1;
+}
+
+html, body, #root { 
+  height: 100%; 
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Enhanced Card Styles with Hover Effects */
+.card {
+  background: var(--panel);
+  border: 1px solid rgba(148,163,184,.25);
+  border-radius: .75rem;
+  box-shadow: 0 10px 20px rgba(2,6,23,.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15), 
+              0 10px 20px rgba(0, 0, 0, 0.1);
+  background: var(--card-hover-bg);
+  border-color: var(--brand);
+}
+
+/* Button Styles */
+.btn {
+  @apply px-3 py-2 rounded-md text-sm font-medium;
+  background: var(--brand);
+  color: white;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--brand-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-outline {
+  @apply px-3 py-2 rounded-md text-sm border font-medium;
+  background: var(--panel);
+  color: var(--fg);
+  border-color: rgba(148,163,184,.35);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-outline:hover:not(:disabled) {
+  background: var(--card-hover-bg);
+  border-color: var(--brand);
+  color: var(--brand);
+  transform: translateY(-1px);
+}
+
+.btn-outline:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Link Styles */
+.link {
+  color: var(--brand);
+  text-underline-offset: 3px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.link:hover {
+  color: var(--brand-dark);
+  text-decoration: underline;
+}
+
+/* Form Controls */
+input, textarea, select {
+  background: var(--panel);
+  color: var(--fg);
+  border: 1px solid rgba(148,163,184,.35);
+  border-radius: .5rem;
+  padding: .5rem .75rem;
+  outline: none;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--muted);
+}
+
+input:disabled, textarea:disabled, select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Range Input Styling */
+input[type="range"] {
+  padding: 0;
+  height: 6px;
+  border: none;
+  background: transparent;
+}
+
+input[type="range"]::-webkit-slider-track {
+  background: rgba(148,163,184,.35);
+  height: 6px;
+  border-radius: 3px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--brand);
+  cursor: pointer;
+  margin-top: -6px;
+  transition: all 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: var(--brand-dark);
+  transform: scale(1.1);
+}
+
+input[type="range"]::-moz-range-track {
+  background: rgba(148,163,184,.35);
+  height: 6px;
+  border-radius: 3px;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--brand);
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+  background: var(--brand-dark);
+  transform: scale(1.1);
+}
+
+/* Code Block Styling */
+pre {
+  background: var(--panel);
+  border: 1px solid rgba(148,163,184,.25);
+  border-radius: .5rem;
+  padding: 1rem;
+  overflow-x: auto;
+  font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+code {
+  font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+  font-size: 0.875rem;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--panel);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148,163,184,.4);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148,163,184,.6);
+}
+
+/* Animation Utilities */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Smooth page transitions */
+main {
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* Selection color */
+::selection {
+  background-color: var(--brand);
+  color: white;
+}
+
+::-moz-selection {
+  background-color: var(--brand);
+  color: white;
+}

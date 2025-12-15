@@ -1,0 +1,85 @@
+{
+  "Arrays": [
+    { "title": "Two Sum", "url": "https://leetcode.com/problems/two-sum/", "difficulty": "Easy" },
+    { "title": "Best Time to Buy and Sell Stock", "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/", "difficulty": "Easy" },
+    { "title": "Contains Duplicate", "url": "https://leetcode.com/problems/contains-duplicate/", "difficulty": "Easy" },
+    { "title": "Product of Array Except Self", "url": "https://leetcode.com/problems/product-of-array-except-self/", "difficulty": "Medium" },
+    { "title": "Maximum Subarray", "url": "https://leetcode.com/problems/maximum-subarray/", "difficulty": "Medium" },
+    { "title": "3Sum", "url": "https://leetcode.com/problems/3sum/", "difficulty": "Medium" },
+    { "title": "Container With Most Water", "url": "https://leetcode.com/problems/container-with-most-water/", "difficulty": "Medium" },
+    { "title": "Trapping Rain Water", "url": "https://leetcode.com/problems/trapping-rain-water/", "difficulty": "Hard" }
+  ],
+  "Strings": [
+    { "title": "Valid Anagram", "url": "https://leetcode.com/problems/valid-anagram/", "difficulty": "Easy" },
+    { "title": "Valid Palindrome", "url": "https://leetcode.com/problems/valid-palindrome/", "difficulty": "Easy" },
+    { "title": "Longest Substring Without Repeating Characters", "url": "https://leetcode.com/problems/longest-substring-without-repeating-characters/", "difficulty": "Medium" },
+    { "title": "Longest Palindromic Substring", "url": "https://leetcode.com/problems/longest-palindromic-substring/", "difficulty": "Medium" },
+    { "title": "Group Anagrams", "url": "https://leetcode.com/problems/group-anagrams/", "difficulty": "Medium" }
+  ],
+  "Sorting": [
+    { "title": "Sort Colors", "url": "https://leetcode.com/problems/sort-colors/", "difficulty": "Medium", "note": "Can solve with bubble/selection/insertion sort" },
+    { "title": "Merge Intervals", "url": "https://leetcode.com/problems/merge-intervals/", "difficulty": "Medium", "note": "Requires sorting first" },
+    { "title": "Sort an Array", "url": "https://leetcode.com/problems/sort-an-array/", "difficulty": "Medium", "note": "Practice implementing merge/quick sort" },
+    { "title": "Kth Largest Element in an Array", "url": "https://leetcode.com/problems/kth-largest-element-in-an-array/", "difficulty": "Medium", "note": "Use quick select or heap" },
+    { "title": "Largest Number", "url": "https://leetcode.com/problems/largest-number/", "difficulty": "Medium", "note": "Custom comparator" },
+    { "title": "Meeting Rooms II", "url": "https://leetcode.com/problems/meeting-rooms-ii/", "difficulty": "Medium", "note": "Sort by start time" }
+  ],
+  "Stacks": [
+    { "title": "Valid Parentheses", "url": "https://leetcode.com/problems/valid-parentheses/", "difficulty": "Easy" },
+    { "title": "Min Stack", "url": "https://leetcode.com/problems/min-stack/", "difficulty": "Medium" },
+    { "title": "Daily Temperatures", "url": "https://leetcode.com/problems/daily-temperatures/", "difficulty": "Medium" },
+    { "title": "Evaluate Reverse Polish Notation", "url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/", "difficulty": "Medium" },
+    { "title": "Largest Rectangle in Histogram", "url": "https://leetcode.com/problems/largest-rectangle-in-histogram/", "difficulty": "Hard" }
+  ],
+  "Queues": [
+    { "title": "Implement Queue using Stacks", "url": "https://leetcode.com/problems/implement-queue-using-stacks/", "difficulty": "Easy" },
+    { "title": "Number of Recent Calls", "url": "https://leetcode.com/problems/number-of-recent-calls/", "difficulty": "Easy" },
+    { "title": "Design Circular Queue", "url": "https://leetcode.com/problems/design-circular-queue/", "difficulty": "Medium" },
+    { "title": "Moving Average from Data Stream", "url": "https://leetcode.com/problems/moving-average-from-data-stream/", "difficulty": "Easy" }
+  ],
+  "Linked Lists": [
+    { "title": "Reverse Linked List", "url": "https://leetcode.com/problems/reverse-linked-list/", "difficulty": "Easy" },
+    { "title": "Merge Two Sorted Lists", "url": "https://leetcode.com/problems/merge-two-sorted-lists/", "difficulty": "Easy" },
+    { "title": "Linked List Cycle", "url": "https://leetcode.com/problems/linked-list-cycle/", "difficulty": "Easy" },
+    { "title": "Remove Nth Node From End of List", "url": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/", "difficulty": "Medium" },
+    { "title": "Reorder List", "url": "https://leetcode.com/problems/reorder-list/", "difficulty": "Medium" }
+  ],
+  "Hash Maps": [
+    { "title": "Two Sum", "url": "https://leetcode.com/problems/two-sum/", "difficulty": "Easy" },
+    { "title": "Group Anagrams", "url": "https://leetcode.com/problems/group-anagrams/", "difficulty": "Medium" },
+    { "title": "Top K Frequent Elements", "url": "https://leetcode.com/problems/top-k-frequent-elements/", "difficulty": "Medium" },
+    { "title": "Subarray Sum Equals K", "url": "https://leetcode.com/problems/subarray-sum-equals-k/", "difficulty": "Medium" },
+    { "title": "Longest Consecutive Sequence", "url": "https://leetcode.com/problems/longest-consecutive-sequence/", "difficulty": "Medium" }
+  ],
+  "Heaps": [
+    { "title": "Kth Largest Element in an Array", "url": "https://leetcode.com/problems/kth-largest-element-in-an-array/", "difficulty": "Medium" },
+    { "title": "Top K Frequent Elements", "url": "https://leetcode.com/problems/top-k-frequent-elements/", "difficulty": "Medium" },
+    { "title": "Find Median from Data Stream", "url": "https://leetcode.com/problems/find-median-from-data-stream/", "difficulty": "Hard" },
+    { "title": "Merge K Sorted Lists", "url": "https://leetcode.com/problems/merge-k-sorted-lists/", "difficulty": "Hard" },
+    { "title": "Task Scheduler", "url": "https://leetcode.com/problems/task-scheduler/", "difficulty": "Medium" }
+  ],
+  "Trees": [
+    { "title": "Maximum Depth of Binary Tree", "url": "https://leetcode.com/problems/maximum-depth-of-binary-tree/", "difficulty": "Easy" },
+    { "title": "Invert Binary Tree", "url": "https://leetcode.com/problems/invert-binary-tree/", "difficulty": "Easy" },
+    { "title": "Binary Tree Level Order Traversal", "url": "https://leetcode.com/problems/binary-tree-level-order-traversal/", "difficulty": "Medium" }
+  ],
+  "Graphs": [
+    { "title": "Number of Islands", "url": "https://leetcode.com/problems/number-of-islands/", "difficulty": "Medium" },
+    { "title": "Clone Graph", "url": "https://leetcode.com/problems/clone-graph/", "difficulty": "Medium" },
+    { "title": "Course Schedule", "url": "https://leetcode.com/problems/course-schedule/", "difficulty": "Medium" }
+  ],
+  "Dynamic Programming": [
+    { "title": "Climbing Stairs", "url": "https://leetcode.com/problems/climbing-stairs/", "difficulty": "Easy" },
+    { "title": "House Robber", "url": "https://leetcode.com/problems/house-robber/", "difficulty": "Medium" },
+    { "title": "Coin Change", "url": "https://leetcode.com/problems/coin-change/", "difficulty": "Medium" }
+  ],
+  "Sliding Window": [
+    { "title": "Maximum Average Subarray I", "url": "https://leetcode.com/problems/maximum-average-subarray-i/", "difficulty": "Easy" },
+    { "title": "Longest Substring Without Repeating Characters", "url": "https://leetcode.com/problems/longest-substring-without-repeating-characters/", "difficulty": "Medium" },
+    { "title": "Minimum Size Subarray Sum", "url": "https://leetcode.com/problems/minimum-size-subarray-sum/", "difficulty": "Medium" },
+    { "title": "Longest Repeating Character Replacement", "url": "https://leetcode.com/problems/longest-repeating-character-replacement/", "difficulty": "Medium" },
+    { "title": "Permutation in String", "url": "https://leetcode.com/problems/permutation-in-string/", "difficulty": "Medium" },
+    { "title": "Sliding Window Maximum", "url": "https://leetcode.com/problems/sliding-window-maximum/", "difficulty": "Hard" }
+  ]
+
+}

@@ -1,0 +1,29 @@
+{
+  "array-basics": [
+    {
+      "id": "q1",
+      "prompt": "What is the time complexity of accessing arr[i] in a static array?",
+      "choices": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+      "answer": 0,
+      "explanation": "Static arrays offer constant-time random access by index."
+    }
+  ],
+  "sorting-basics": [
+    {
+      "id": "q2",
+      "prompt": "Bubble sort performs swaps until the array is:",
+      "choices": ["Partially sorted", "Stable", "Sorted", "Partitioned"],
+      "answer": 2,
+      "explanation": "In the best case after passes, the array is sorted."
+    }
+  ],
+  "graph-bfs": [
+    {
+      "id": "q3",
+      "prompt": "BFS uses which data structure?",
+      "choices": ["Stack", "Queue", "Priority Queue", "Set only"],
+      "answer": 1,
+      "explanation": "A first-in-first-out queue processes layers of neighbors."
+    }
+  ]
+}
