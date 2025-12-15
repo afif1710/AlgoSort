@@ -58,11 +58,6 @@
     { "title": "Merge K Sorted Lists", "url": "https://leetcode.com/problems/merge-k-sorted-lists/", "difficulty": "Hard" },
     { "title": "Task Scheduler", "url": "https://leetcode.com/problems/task-scheduler/", "difficulty": "Medium" }
   ],
-  "Trees": [
-    { "title": "Maximum Depth of Binary Tree", "url": "https://leetcode.com/problems/maximum-depth-of-binary-tree/", "difficulty": "Easy" },
-    { "title": "Invert Binary Tree", "url": "https://leetcode.com/problems/invert-binary-tree/", "difficulty": "Easy" },
-    { "title": "Binary Tree Level Order Traversal", "url": "https://leetcode.com/problems/binary-tree-level-order-traversal/", "difficulty": "Medium" }
-  ],
   "Graphs": [
     { "title": "Number of Islands", "url": "https://leetcode.com/problems/number-of-islands/", "difficulty": "Medium" },
     { "title": "Clone Graph", "url": "https://leetcode.com/problems/clone-graph/", "difficulty": "Medium" },
@@ -80,6 +75,197 @@
     { "title": "Longest Repeating Character Replacement", "url": "https://leetcode.com/problems/longest-repeating-character-replacement/", "difficulty": "Medium" },
     { "title": "Permutation in String", "url": "https://leetcode.com/problems/permutation-in-string/", "difficulty": "Medium" },
     { "title": "Sliding Window Maximum", "url": "https://leetcode.com/problems/sliding-window-maximum/", "difficulty": "Hard" }
+  ],
+  "Binary Trees Introduction": [
+    {
+      "title": "Maximum Depth of Binary Tree",
+      "url": "https://leetcode.com/problems/maximum-depth-of-binary-tree/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Same Tree",
+      "url": "https://leetcode.com/problems/same-tree/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Invert Binary Tree",
+      "url": "https://leetcode.com/problems/invert-binary-tree/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Symmetric Tree",
+      "url": "https://leetcode.com/problems/symmetric-tree/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Balanced Binary Tree",
+      "url": "https://leetcode.com/problems/balanced-binary-tree/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Merge Two Binary Trees",
+      "url": "https://leetcode.com/problems/merge-two-binary-trees/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Count Complete Tree Nodes",
+      "url": "https://leetcode.com/problems/count-complete-tree-nodes/",
+      "difficulty": "Easy"
+    }
+  ],
+
+  "Tree Traversals (DFS)": [
+    {
+      "title": "Binary Tree Inorder Traversal",
+      "url": "https://leetcode.com/problems/binary-tree-inorder-traversal/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Binary Tree Preorder Traversal",
+      "url": "https://leetcode.com/problems/binary-tree-preorder-traversal/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Binary Tree Postorder Traversal",
+      "url": "https://leetcode.com/problems/binary-tree-postorder-traversal/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "N-ary Tree Preorder Traversal",
+      "url": "https://leetcode.com/problems/n-ary-tree-preorder-traversal/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "N-ary Tree Postorder Traversal",
+      "url": "https://leetcode.com/problems/n-ary-tree-postorder-traversal/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Binary Tree Paths",
+      "url": "https://leetcode.com/problems/binary-tree-paths/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Sum Root to Leaf Numbers",
+      "url": "https://leetcode.com/problems/sum-root-to-leaf-numbers/",
+      "difficulty": "Medium"
+    }
+  ],
+
+  "Binary Search Trees": [
+    {
+      "title": "Search in a Binary Search Tree",
+      "url": "https://leetcode.com/problems/search-in-a-binary-search-tree/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Insert into a Binary Search Tree",
+      "url": "https://leetcode.com/problems/insert-into-a-binary-search-tree/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Validate Binary Search Tree",
+      "url": "https://leetcode.com/problems/validate-binary-search-tree/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Minimum Absolute Difference in BST",
+      "url": "https://leetcode.com/problems/minimum-absolute-difference-in-bst/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Kth Smallest Element in a BST",
+      "url": "https://leetcode.com/problems/kth-smallest-element-in-a-bst/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Delete Node in a BST",
+      "url": "https://leetcode.com/problems/delete-node-in-a-bst/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Convert Sorted Array to Binary Search Tree",
+      "url": "https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/",
+      "difficulty": "Easy"
+    }
+  ],
+
+  "Level Order Traversal (BFS)": [
+    {
+      "title": "Binary Tree Level Order Traversal",
+      "url": "https://leetcode.com/problems/binary-tree-level-order-traversal/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Binary Tree Level Order Traversal II",
+      "url": "https://leetcode.com/problems/binary-tree-level-order-traversal-ii/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Binary Tree Zigzag Level Order Traversal",
+      "url": "https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Binary Tree Right Side View",
+      "url": "https://leetcode.com/problems/binary-tree-right-side-view/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Average of Levels in Binary Tree",
+      "url": "https://leetcode.com/problems/average-of-levels-in-binary-tree/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Minimum Depth of Binary Tree",
+      "url": "https://leetcode.com/problems/minimum-depth-of-binary-tree/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Maximum Width of Binary Tree",
+      "url": "https://leetcode.com/problems/maximum-width-of-binary-tree/",
+      "difficulty": "Medium"
+    }
+  ],
+
+  "Tree Properties & Paths": [
+    {
+      "title": "Path Sum",
+      "url": "https://leetcode.com/problems/path-sum/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Path Sum II",
+      "url": "https://leetcode.com/problems/path-sum-ii/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Diameter of Binary Tree",
+      "url": "https://leetcode.com/problems/diameter-of-binary-tree/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Lowest Common Ancestor of a Binary Tree",
+      "url": "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Sum of Left Leaves",
+      "url": "https://leetcode.com/problems/sum-of-left-leaves/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Binary Tree Maximum Path Sum",
+      "url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/",
+      "difficulty": "Hard"
+    },
+    {
+      "title": "Construct Binary Tree from Preorder and Inorder Traversal",
+      "url": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/",
+      "difficulty": "Medium"
+    }
   ]
+
+
 
 }

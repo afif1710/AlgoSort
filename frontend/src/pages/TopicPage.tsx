@@ -15,10 +15,10 @@ import StackVisualizer from "../components/StackVisualizer";
 import LinkedListVisualizer from "../components/LinkedListVisualizer";
 import HashMapVisualizer from "../components/HashMapVisualizer";
 import MaxHeapVisualizer from "../components/MaxHeapVisualizer";
-import TwoPointerVisualizer from '../components/TwoPointerVisualizer'
-import SlidingWindowVisualizer from '../components/SlidingWindowVisualizer'
-
-
+import TwoPointerVisualizer from "../components/TwoPointerVisualizer";
+import SlidingWindowVisualizer from "../components/SlidingWindowVisualizer";
+import BinaryTreeVisualizer from "../components/BinaryTreeVisualizer";
+import TreeTraversalVisualizer from "../components/TreeTraversalVisualizer";
 
 type LeetProblem = { title: string; url: string; difficulty: string };
 
@@ -27,9 +27,19 @@ export default function TopicPage() {
   const topic = topics.find((t) => t.slug === slug);
   if (!topic) return <div>Topic not found.</div>;
 
+  // Map slug to problem category key
+  const problemKeyMap: Record<string, string> = {
+    "binary-trees-intro": "Binary Trees Introduction",
+    "tree-traversals-dfs": "Tree Traversals (DFS)",
+    "binary-search-trees": "Binary Search Trees",
+    "level-order-traversal": "Level Order Traversal (BFS)",
+    "tree-properties-paths": "Tree Properties & Paths",
+  };
+  // Get problems using the mapped key
+  const problemKey = problemKeyMap[topic.slug] || topic.category;
   // Pull problems by the topic's category from leetcodeProblems.json
   const topicProblems: LeetProblem[] =
-    (leetcode as Record<string, LeetProblem[]>)[topic.category] || [];
+    (leetcode as Record<string, LeetProblem[]>)[problemKey] || [];
 
   const qset = (quizzes as any)[topic.slug] || [];
 
@@ -63,10 +73,10 @@ export default function TopicPage() {
         {topic.slug === "linked-list-basics" && <LinkedListVisualizer />}
         {topic.slug === "hashmap-basics" && <HashMapVisualizer />}
         {topic.slug === "heap-basics" && <MaxHeapVisualizer />}
-        {topic.slug === 'array-two-pointer' && <TwoPointerVisualizer />}
-        {topic.slug === 'array-sliding-window' && <SlidingWindowVisualizer />}
-
-
+        {topic.slug === "array-two-pointer" && <TwoPointerVisualizer />}
+        {topic.slug === "array-sliding-window" && <SlidingWindowVisualizer />}
+        {topic.slug === "binary-trees-intro" && <BinaryTreeVisualizer />}
+        {topic.slug === "tree-traversals-dfs" && <TreeTraversalVisualizer />}
       </section>
 
       <section className="card p-4 space-y-3">

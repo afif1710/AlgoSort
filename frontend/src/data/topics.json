@@ -279,6 +279,46 @@
       "code": "# Fixed sliding window: max sum of k consecutive elements\ndef max_sum_k(arr, k):\n    n = len(arr)\n    if n < k:\n        return -1\n    \n    # Compute sum of first window\n    window_sum = sum(arr[:k])\n    max_sum = window_sum\n    \n    # Slide the window\n    for i in range(n - k):\n        window_sum = window_sum - arr[i] + arr[i + k]\n        max_sum = max(max_sum, window_sum)\n    \n    return max_sum\n\narr = [1, 4, 2, 10, 23, 3, 1, 0, 20]\nk = 4\nprint(max_sum_k(arr, k))  # 39 (10+23+3+1)\n",
       "input": ""
     }
+  },
+  {
+    "slug": "binary-trees-intro",
+    "title": "Binary Trees Introduction",
+    "summary": "Understanding hierarchical data structures with nodes and children",
+    "level": "Intermediate",
+    "category": "Trees",
+    "content": [
+      "A binary tree is a hierarchical data structure where each node contains a value and can have at most two children: a left child and a right child. Unlike linear structures like arrays or linked lists, trees represent parent-child relationships, making them ideal for hierarchical data like file systems, organizational charts, or expression parsing.",
+      "Each binary tree starts with a root node (the topmost node). Nodes with no children are called leaf nodes, while nodes with at least one child are internal nodes. The height of a tree is the longest path from root to any leaf, and the depth of a node is its distance from the root. A tree with only one node has height 0.",
+      "Binary trees have several important properties: maximum nodes at level i is 2^i, and a tree of height h can have at most 2^(h+1) - 1 nodes. A perfect binary tree has all levels completely filled. A complete binary tree fills levels left-to-right, with all levels full except possibly the last. A balanced binary tree maintains height of O(log n), ensuring efficient operations.",
+      "Common operations include insertion (adding nodes), deletion (removing nodes while maintaining structure), and searching (finding specific values). Traversal methods let us visit all nodes systematically - we'll explore depth-first (preorder, inorder, postorder) and breadth-first (level-order) approaches in upcoming topics.",
+      "Time complexity for basic operations depends on tree structure. In a balanced tree, search, insertion, and deletion take O(log n). However, in a skewed tree (resembling a linked list), these degrade to O(n). Space complexity for storing n nodes is always O(n), while recursion depth can reach O(h) where h is tree height."
+    ],
+    "example": {
+      "language": "python",
+      "code": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\ndef count_nodes(root):\n    \"\"\"Count total nodes in binary tree\"\"\"\n    if root is None:\n        return 0\n    return 1 + count_nodes(root.left) + count_nodes(root.right)\n\ndef max_depth(root):\n    \"\"\"Find height of binary tree\"\"\"\n    if root is None:\n        return 0\n    return 1 + max(max_depth(root.left), max_depth(root.right))\n\n# Example usage:\nroot = TreeNode(1)\nroot.left = TreeNode(2)\nroot.right = TreeNode(3)\nroot.left.left = TreeNode(4)\nroot.left.right = TreeNode(5)\n\nprint(f\"Total nodes: {count_nodes(root)}\")  # Output: 5\nprint(f\"Tree height: {max_depth(root)}\")    # Output: 3",
+      "input": "Binary Tree:\n       1\n      / \\\n     2   3\n    / \\\n   4   5"
+    }
+  },
+  {
+  "slug": "tree-traversals-dfs",
+  "title": "Tree Traversals (DFS)",
+  "summary": "Master depth-first traversals: inorder, preorder, and postorder",
+  "level": "Intermediate",
+  "category": "Trees",
+  "content": [
+    "Depth-First Search (DFS) traversals explore a tree by diving as deep as possible into each branch before backtracking. Unlike breadth-first search which explores level-by-level, DFS uses recursion or a stack to visit nodes in three distinct orders: inorder, preorder, and postorder. Each traversal has specific use cases and produces different node visitation sequences.",
+    "Preorder traversal (Root → Left → Right) visits the current node first, then recursively traverses left and right subtrees. This is useful for creating a copy of the tree, serializing tree structure, or prefix notation expressions. For tree [1,2,3,4,5], preorder gives: 1, 2, 4, 5, 3.",
+    "Inorder traversal (Left → Root → Right) visits the left subtree first, then the current node, then the right subtree. For Binary Search Trees, inorder traversal produces values in sorted ascending order, making it essential for BST validation and sorted output. For tree [1,2,3,4,5], inorder gives: 4, 2, 5, 1, 3.",
+    "Postorder traversal (Left → Right → Root) visits both subtrees before the current node. This is ideal for deleting trees (leaves first), calculating directory sizes, or postfix notation expressions. For tree [1,2,3,4,5], postorder gives: 4, 5, 2, 3, 1. The parent is always processed after its children.",
+    "All three DFS traversals have O(n) time complexity visiting each node once, and O(h) space complexity for recursion stack where h is tree height. In balanced trees, space is O(log n), but in skewed trees it becomes O(n). Iterative implementations using explicit stacks can help manage stack overflow for very deep trees."
+  ],
+  "example": {
+    "language": "python",
+    "code": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\ndef inorder_traversal(root, result=[]):\n    \"\"\"Left -> Root -> Right (sorted for BST)\"\"\"\n    if root:\n        inorder_traversal(root.left, result)\n        result.append(root.val)  # Process node\n        inorder_traversal(root.right, result)\n    return result\n\ndef preorder_traversal(root, result=[]):\n    \"\"\"Root -> Left -> Right (copy tree structure)\"\"\"\n    if root:\n        result.append(root.val)  # Process node first\n        preorder_traversal(root.left, result)\n        preorder_traversal(root.right, result)\n    return result\n\ndef postorder_traversal(root, result=[]):\n    \"\"\"Left -> Right -> Root (delete tree, bottom-up)\"\"\"\n    if root:\n        postorder_traversal(root.left, result)\n        postorder_traversal(root.right, result)\n        result.append(root.val)  # Process node last\n    return result\n\n# Example usage:\nroot = TreeNode(1)\nroot.left = TreeNode(2)\nroot.right = TreeNode(3)\nroot.left.left = TreeNode(4)\nroot.left.right = TreeNode(5)\n\nprint(f\"Inorder: {inorder_traversal(root, [])}\")    # [4,2,5,1,3]\nprint(f\"Preorder: {preorder_traversal(root, [])}\")  # [1,2,4,5,3]\nprint(f\"Postorder: {postorder_traversal(root, [])}]\") # [4,5,2,3,1]",
+    "input": "Binary Tree:\n       1\n      / \\\n     2   3\n    / \\\n   4   5"
   }
+}
+
+
 
 ]
