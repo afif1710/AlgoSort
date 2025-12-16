@@ -1,10 +1,10 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import topics from "../data/topics.json";
 import leetcode from "../data/leetcodeProblems.json";
 import quizzes from "../data/quizzes.json";
 import Quiz from "../components/Quiz";
 import SortingVisualizer from "../components/SortingVisualizer";
-import GraphBFSVisualizer from "../components/GraphBFSVisualizer";
 import QueueVisualizer from "../components/QueueVisualizer";
 import HeapVisualizer from "../components/HeapVisualizer";
 import SelectionSortVisualizer from "../components/SelectionSortVisualizer";
@@ -19,105 +19,165 @@ import TwoPointerVisualizer from "../components/TwoPointerVisualizer";
 import SlidingWindowVisualizer from "../components/SlidingWindowVisualizer";
 import BinaryTreeVisualizer from "../components/BinaryTreeVisualizer";
 import TreeTraversalVisualizer from "../components/TreeTraversalVisualizer";
+import BSTVisualizer from "../components/BSTVisualizer";
+import LevelOrderVisualizer from "../components/LevelOrderVisualizer";
+import TreePropertiesVisualizer from "../components/TreePropertiesVisualizer";
+import GraphRepresentationVisualizer from "../components/GraphRepresentationVisualizer";
+import GraphDFSVisualizer from "../components/GraphDFSVisualizer";
+import GraphBFSVisualizer from "../components/GraphBFSVisualizer";
+import DijkstraVisualizer from "../components/DijkstraVisualizer";
+import TopologicalSortVisualizer from "../components/TopologicalSortVisualizer";
 
 type LeetProblem = { title: string; url: string; difficulty: string };
 
 export default function TopicPage() {
   const { slug } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+
+    const timer = setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 0);
+
+    return () => clearTimeout(timer);
+  }, [slug]);
+
   const topic = topics.find((t) => t.slug === slug);
   if (!topic) return <div>Topic not found.</div>;
 
-  // Map slug to problem category key
   const problemKeyMap: Record<string, string> = {
     "binary-trees-intro": "Binary Trees Introduction",
     "tree-traversals-dfs": "Tree Traversals (DFS)",
     "binary-search-trees": "Binary Search Trees",
     "level-order-traversal": "Level Order Traversal (BFS)",
     "tree-properties-paths": "Tree Properties & Paths",
+    "graph-representation": "Graph Representation",
+    "graph-dfs": "Graph DFS",
+    "graph-bfs": "Graph BFS",
+    "shortest-path-dijkstra": "Shortest Path Dijkstra",
+    "topological-sort": "Topological Sort",
   };
-  // Get problems using the mapped key
+
   const problemKey = problemKeyMap[topic.slug] || topic.category;
-  // Pull problems by the topic's category from leetcodeProblems.json
   const topicProblems: LeetProblem[] =
     (leetcode as Record<string, LeetProblem[]>)[problemKey] || [];
 
   const qset = (quizzes as any)[topic.slug] || [];
 
   return (
-    <div className="space-y-6">
-      <header className="space-y-1">
-        <div className="text-sm text-[var(--muted)]">
-          {topic.level} • {topic.category}
+    // ✅ ADDED: py-6 wrapper for padding
+    <div className="py-6">
+      <div className="space-y-6">
+        <div className="flex items-center">
+          <button
+            onClick={() => navigate("/tutorials")}
+            className="flex items-center gap-1 px-3 py-1.5 rounded text-xs font-medium transition-all"
+            style={{
+              backgroundColor: "var(--card-hover-bg)",
+              color: "var(--fg)",
+              border: "1px solid var(--brand)",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = "var(--brand)";
+              e.currentTarget.style.color = "white";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = "var(--card-hover-bg)";
+              e.currentTarget.style.color = "var(--fg)";
+            }}
+          >
+            <span>←</span>
+            <span>Back</span>
+          </button>
         </div>
-        <h1 className="text-3xl font-bold">{topic.title}</h1>
-        <p className="text-[var(--muted)]">{topic.summary}</p>
-      </header>
 
-      <section className="card p-4 space-y-3">
-        <h3 className="font-semibold">Concept</h3>
-        {topic.content.map((p: string, i: number) => (
-          <p key={i}>{p}</p>
-        ))}
+        <header className="space-y-1">
+          <div className="text-sm text-[var(--muted)]">
+            {topic.level} • {topic.category}
+          </div>
+          <h1 className="text-3xl font-bold">{topic.title}</h1>
+          <p className="text-[var(--muted)]">{topic.summary}</p>
+        </header>
 
-        {/* Visualizations */}
-        {topic.slug === "sorting-basics" && <SortingVisualizer />}
-        {topic.slug === "bubble-sort" && <SortingVisualizer />}
-        {topic.slug === "selection-sort" && <SelectionSortVisualizer />}
-        {topic.slug === "insertion-sort" && <InsertionSortVisualizer />}
-        {topic.slug === "merge-sort" && <MergeSortVisualizer />}
-        {topic.slug === "quick-sort" && <QuickSortVisualizer />}
-        {topic.slug === "graph-bfs" && <GraphBFSVisualizer />}
-        {topic.slug === "queue-basics" && <QueueVisualizer />}
-        {topic.slug === "stack-basics" && <StackVisualizer />}
-        {topic.slug === "heap-basics" && <HeapVisualizer />}
-        {topic.slug === "linked-list-basics" && <LinkedListVisualizer />}
-        {topic.slug === "hashmap-basics" && <HashMapVisualizer />}
-        {topic.slug === "heap-basics" && <MaxHeapVisualizer />}
-        {topic.slug === "array-two-pointer" && <TwoPointerVisualizer />}
-        {topic.slug === "array-sliding-window" && <SlidingWindowVisualizer />}
-        {topic.slug === "binary-trees-intro" && <BinaryTreeVisualizer />}
-        {topic.slug === "tree-traversals-dfs" && <TreeTraversalVisualizer />}
-      </section>
+        <section className="card p-4 space-y-3">
+          <h3 className="font-semibold">Concept</h3>
+          {topic.content.map((p: string, i: number) => (
+            <p key={i}>{p}</p>
+          ))}
 
-      <section className="card p-4 space-y-3">
-        <h3 className="font-semibold">Example Code</h3>
-        <pre className="bg-[var(--panel)] p-4 rounded-lg overflow-x-auto">
-          <code className="text-sm">{topic.example.code}</code>
-        </pre>
-      </section>
-
-      <section className="space-y-3">
-        <h3 className="font-semibold">Practice Problems</h3>
-        {topicProblems.length === 0 ? (
-          <p className="text-sm text-[var(--muted)]">
-            No curated problems yet for this topic.
-          </p>
-        ) : (
-          <ul className="grid sm:grid-cols-2 gap-3">
-            {topicProblems.map((p, idx) => (
-              <li key={idx} className="card p-3">
-                <a
-                  href={p.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="font-medium link"
-                >
-                  {p.title}
-                </a>
-                <div className="text-sm text-[var(--muted)]">
-                  {p.difficulty}
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
-
-      {qset.length > 0 && (
-        <section>
-          <Quiz questions={qset as any} storageKey={`quiz:${topic.slug}`} />
+          {/* Visualizations */}
+          {topic.slug === "sorting-basics" && <SortingVisualizer />}
+          {topic.slug === "bubble-sort" && <SortingVisualizer />}
+          {topic.slug === "selection-sort" && <SelectionSortVisualizer />}
+          {topic.slug === "insertion-sort" && <InsertionSortVisualizer />}
+          {topic.slug === "merge-sort" && <MergeSortVisualizer />}
+          {topic.slug === "quick-sort" && <QuickSortVisualizer />}
+          {topic.slug === "queue-basics" && <QueueVisualizer />}
+          {topic.slug === "stack-basics" && <StackVisualizer />}
+          {topic.slug === "heap-basics" && <HeapVisualizer />}
+          {topic.slug === "linked-list-basics" && <LinkedListVisualizer />}
+          {topic.slug === "hashmap-basics" && <HashMapVisualizer />}
+          {topic.slug === "heap-basics" && <MaxHeapVisualizer />}
+          {topic.slug === "array-two-pointer" && <TwoPointerVisualizer />}
+          {topic.slug === "array-sliding-window" && <SlidingWindowVisualizer />}
+          {topic.slug === "binary-trees-intro" && <BinaryTreeVisualizer />}
+          {topic.slug === "tree-traversals-dfs" && <TreeTraversalVisualizer />}
+          {topic.slug === "binary-search-trees" && <BSTVisualizer />}
+          {topic.slug === "level-order-traversal" && <LevelOrderVisualizer />}
+          {topic.slug === "tree-properties-paths" && (
+            <TreePropertiesVisualizer />
+          )}
+          {topic.slug === "graph-representation" && (
+            <GraphRepresentationVisualizer />
+          )}
+          {topic.slug === "graph-dfs" && <GraphDFSVisualizer />}
+          {topic.slug === "graph-bfs" && <GraphBFSVisualizer />}
+          {topic.slug === "shortest-path-dijkstra" && <DijkstraVisualizer />}
+          {topic.slug === "topological-sort" && <TopologicalSortVisualizer />}
         </section>
-      )}
+
+        <section className="card p-4 space-y-3">
+          <h3 className="font-semibold">Example Code</h3>
+          <pre className="bg-[var(--panel)] p-4 rounded-lg overflow-x-auto">
+            <code className="text-sm">{topic.example.code}</code>
+          </pre>
+        </section>
+
+        <section className="space-y-3">
+          <h3 className="font-semibold">Practice Problems</h3>
+          {topicProblems.length === 0 ? (
+            <p className="text-sm text-[var(--muted)]">
+              No curated problems yet for this topic.
+            </p>
+          ) : (
+            <ul className="grid sm:grid-cols-2 gap-3">
+              {topicProblems.map((p, idx) => (
+                <li key={idx} className="card p-3">
+                  <a
+                    href={p.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-medium link"
+                  >
+                    {p.title}
+                  </a>
+                  <div className="text-sm text-[var(--muted)]">
+                    {p.difficulty}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
+        {qset.length > 0 && (
+          <section>
+            <Quiz questions={qset as any} storageKey={`quiz:${topic.slug}`} />
+          </section>
+        )}
+      </div>
     </div>
   );
 }

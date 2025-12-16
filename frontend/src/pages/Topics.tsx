@@ -9,7 +9,6 @@ export default function Topics() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Hide main navbar and move level nav to top after scrolling 150px
       setIsScrolled(window.scrollY > 150);
     };
 
@@ -37,13 +36,14 @@ export default function Topics() {
   };
 
   return (
-    <div className="min-h-screen">
+    // ✅ ADDED: py-6 wrapper for padding
+    <div className="py-6 min-h-screen">
       {/* Level Navigation - Dynamic Position */}
       <div
         className={`level-nav-container ${isScrolled ? "scrolled" : ""}`}
         style={{
           backgroundColor: isScrolled
-            ? "rgba(129, 140, 248, 0.15)" // Lighter brand overlay
+            ? "rgba(129, 140, 248, 0.15)"
             : "rgba(var(--bg-rgb), 0.8)",
           borderBottom: isScrolled ? "2px solid var(--brand)" : "none",
           boxShadow: isScrolled
@@ -146,7 +146,7 @@ export default function Topics() {
                       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
                         {list.map((t) => (
                           <Link
-                            to={`/topics/${t.slug}`}
+                            to={`/tutorials/${t.slug}`}
                             key={t.slug}
                             className="topic-card p-6 rounded-xl cursor-pointer group transition-all duration-300"
                             style={{

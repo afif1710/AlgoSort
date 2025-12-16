@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SpeedControl from "./SpeedControl";
+import SpeedControl from "./SpeedControl"; // ✅ STEP 1: Import added
 
 interface TreeNode {
   val: number;
@@ -7,19 +7,20 @@ interface TreeNode {
   right: TreeNode | null;
   x?: number;
   y?: number;
+  level?: number;
 }
 
-type TraversalType = "inorder" | "preorder" | "postorder";
-
-const TreeTraversalVisualizer: React.FC = () => {
-  const [animationSpeed, setAnimationSpeed] = useState<number>(1);
-  const [inputValue, setInputValue] = useState<string>("1,2,3,4,5,null,6");
+const LevelOrderVisualizer: React.FC = () => {
+  const [inputValue, setInputValue] = useState<string>("3,9,20,null,null,15,7");
   const [tree, setTree] = useState<TreeNode | null>(null);
-  const [traversalType, setTraversalType] = useState<TraversalType>("inorder");
-  const [traversalResult, setTraversalResult] = useState<number[]>([]);
-  const [animating, setAnimating] = useState(false);
-  const [currentNode, setCurrentNode] = useState<number | null>(null);
+  const [traversalResult, setTraversalResult] = useState<number[][]>([]);
+  const [currentLevel, setCurrentLevel] = useState<number>(-1);
+  const [currentNodes, setCurrentNodes] = useState<Set<number>>(new Set());
   const [visitedNodes, setVisitedNodes] = useState<Set<number>>(new Set());
+  const [animating, setAnimating] = useState(false);
+  const [queueState, setQueueState] = useState<number[]>([]);
+  const [mode, setMode] = useState<"normal" | "zigzag" | "rightview">("normal");
+  const [animationSpeed, setAnimationSpeed] = useState<number>(1); // ✅ STEP 2: State added
 
   const buildTree = (values: string[]): TreeNode | null => {
     if (values.length === 0 || values[0] === "null") return null;
@@ -28,6 +29,7 @@ const TreeTraversalVisualizer: React.FC = () => {
       val: parseInt(values[0]),
       left: null,
       right: null,
+      level: 0,
     };
     const queue: TreeNode[] = [root];
     let i = 1;
@@ -36,13 +38,23 @@ const TreeTraversalVisualizer: React.FC = () => {
       const node = queue.shift()!;
 
       if (i < values.length && values[i] !== "null") {
-        node.left = { val: parseInt(values[i]), left: null, right: null };
+        node.left = {
+          val: parseInt(values[i]),
+          left: null,
+          right: null,
+          level: (node.level || 0) + 1,
+        };
         queue.push(node.left);
       }
       i++;
 
       if (i < values.length && values[i] !== "null") {
-        node.right = { val: parseInt(values[i]), left: null, right: null };
+        node.right = {
+          val: parseInt(values[i]),
+          left: null,
+          right: null,
+          level: (node.level || 0) + 1,
+        };
         queue.push(node.right);
       }
       i++;
@@ -66,52 +78,123 @@ const TreeTraversalVisualizer: React.FC = () => {
       calculatePositions(node.right, x + offset, y + 80, offset / 2);
   };
 
+  // ✅ STEP 3: Updated sleep function
   const sleep = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms / animationSpeed));
 
-  const inorderTraversal = async (
-    node: TreeNode | null,
-    result: number[]
-  ): Promise<void> => {
-    if (!node) return;
-    await inorderTraversal(node.left, result);
-    setCurrentNode(node.val);
-    await sleep(800);
-    result.push(node.val);
-    setTraversalResult([...result]);
-    setVisitedNodes((prev) => new Set([...prev, node.val]));
-    await sleep(400);
-    await inorderTraversal(node.right, result);
+  const levelOrderTraversal = async (root: TreeNode): Promise<number[][]> => {
+    const result: number[][] = [];
+    const queue: TreeNode[] = [root];
+    setQueueState([root.val]);
+
+    while (queue.length > 0) {
+      await sleep(800);
+      const levelSize = queue.length;
+      const currentLevel: number[] = [];
+      const levelNodes = new Set<number>();
+
+      for (let i = 0; i < levelSize; i++) {
+        const node = queue.shift()!;
+        currentLevel.push(node.val);
+        levelNodes.add(node.val);
+
+        setCurrentNodes(new Set([node.val]));
+        await sleep(600);
+
+        if (node.left) queue.push(node.left);
+        if (node.right) queue.push(node.right);
+      }
+
+      setQueueState(queue.map((n) => n.val));
+      result.push(currentLevel);
+      setTraversalResult([...result]);
+      setVisitedNodes((prev) => new Set([...prev, ...levelNodes]));
+      setCurrentLevel(result.length - 1);
+      await sleep(400);
+    }
+
+    setCurrentNodes(new Set());
+    return result;
   };
 
-  const preorderTraversal = async (
-    node: TreeNode | null,
-    result: number[]
-  ): Promise<void> => {
-    if (!node) return;
-    setCurrentNode(node.val);
-    await sleep(800);
-    result.push(node.val);
-    setTraversalResult([...result]);
-    setVisitedNodes((prev) => new Set([...prev, node.val]));
-    await sleep(400);
-    await preorderTraversal(node.left, result);
-    await preorderTraversal(node.right, result);
+  const zigzagTraversal = async (root: TreeNode): Promise<number[][]> => {
+    const result: number[][] = [];
+    const queue: TreeNode[] = [root];
+    let leftToRight = true;
+
+    while (queue.length > 0) {
+      await sleep(800);
+      const levelSize = queue.length;
+      const currentLevel: number[] = [];
+      const levelNodes = new Set<number>();
+
+      for (let i = 0; i < levelSize; i++) {
+        const node = queue.shift()!;
+        currentLevel.push(node.val);
+        levelNodes.add(node.val);
+
+        setCurrentNodes(new Set([node.val]));
+        await sleep(600);
+
+        if (node.left) queue.push(node.left);
+        if (node.right) queue.push(node.right);
+      }
+
+      if (!leftToRight) {
+        currentLevel.reverse();
+      }
+
+      result.push(currentLevel);
+      setTraversalResult([...result]);
+      setVisitedNodes((prev) => new Set([...prev, ...levelNodes]));
+      setCurrentLevel(result.length - 1);
+      leftToRight = !leftToRight;
+      await sleep(400);
+    }
+
+    setCurrentNodes(new Set());
+    return result;
   };
 
-  const postorderTraversal = async (
-    node: TreeNode | null,
-    result: number[]
-  ): Promise<void> => {
-    if (!node) return;
-    await postorderTraversal(node.left, result);
-    await postorderTraversal(node.right, result);
-    setCurrentNode(node.val);
-    await sleep(800);
-    result.push(node.val);
-    setTraversalResult([...result]);
-    setVisitedNodes((prev) => new Set([...prev, node.val]));
-    await sleep(400);
+  const rightSideView = async (root: TreeNode): Promise<number[][]> => {
+    const result: number[][] = [];
+    const rightView: number[] = [];
+    const queue: TreeNode[] = [root];
+
+    while (queue.length > 0) {
+      await sleep(800);
+      const levelSize = queue.length;
+      const currentLevel: number[] = [];
+      const levelNodes = new Set<number>();
+
+      for (let i = 0; i < levelSize; i++) {
+        const node = queue.shift()!;
+        currentLevel.push(node.val);
+        levelNodes.add(node.val);
+
+        setCurrentNodes(new Set([node.val]));
+        await sleep(600);
+
+        // Last node in level
+        if (i === levelSize - 1) {
+          rightView.push(node.val);
+        }
+
+        if (node.left) queue.push(node.left);
+        if (node.right) queue.push(node.right);
+      }
+
+      result.push(currentLevel);
+      setTraversalResult([...result]);
+      setVisitedNodes((prev) => new Set([...prev, ...levelNodes]));
+      setCurrentLevel(result.length - 1);
+      await sleep(400);
+    }
+
+    setCurrentNodes(new Set());
+    // Show right view as final result
+    setTraversalResult([rightView]);
+    return result;
   };
 
   const handleBuildTree = () => {
@@ -122,7 +205,9 @@ const TreeTraversalVisualizer: React.FC = () => {
       setTree(newTree);
       setTraversalResult([]);
       setVisitedNodes(new Set());
-      setCurrentNode(null);
+      setCurrentNodes(new Set());
+      setCurrentLevel(-1);
+      setQueueState([]);
     }
   };
 
@@ -131,19 +216,19 @@ const TreeTraversalVisualizer: React.FC = () => {
     setAnimating(true);
     setTraversalResult([]);
     setVisitedNodes(new Set());
-    setCurrentNode(null);
+    setCurrentNodes(new Set());
+    setCurrentLevel(-1);
 
-    const result: number[] = [];
-    if (traversalType === "inorder") {
-      await inorderTraversal(tree, result);
-    } else if (traversalType === "preorder") {
-      await preorderTraversal(tree, result);
+    if (mode === "normal") {
+      await levelOrderTraversal(tree);
+    } else if (mode === "zigzag") {
+      await zigzagTraversal(tree);
     } else {
-      await postorderTraversal(tree, result);
+      await rightSideView(tree);
     }
 
-    setCurrentNode(null);
     setAnimating(false);
+    setQueueState([]);
   };
 
   const renderEdges = (node: TreeNode | null): JSX.Element[] => {
@@ -189,15 +274,15 @@ const TreeTraversalVisualizer: React.FC = () => {
     if (!node || node.x === undefined || node.y === undefined) return [];
     const nodes: JSX.Element[] = [];
 
-    const isCurrentNode = currentNode === node.val;
+    const isCurrent = currentNodes.has(node.val);
     const isVisited = visitedNodes.has(node.val);
 
     let fillColor = "var(--panel)";
     let strokeColor = "var(--brand)";
     let textColor = "var(--fg)";
 
-    if (isCurrentNode) {
-      fillColor = "#fbbf24"; // Amber for current
+    if (isCurrent) {
+      fillColor = "#fbbf24";
       textColor = "white";
       strokeColor = "#f59e0b";
     } else if (isVisited) {
@@ -246,14 +331,16 @@ const TreeTraversalVisualizer: React.FC = () => {
           className="text-lg font-semibold mb-4"
           style={{ color: "var(--fg)" }}
         >
-          Interactive DFS Traversal Visualizer
+          Interactive Level Order Traversal
         </h3>
 
         <div className="space-y-3">
+          {/* ✅ STEP 4: Speed Control Component Added */}
           <SpeedControl
             speed={animationSpeed}
             onSpeedChange={setAnimationSpeed}
           />
+
           <div>
             <label
               className="block text-sm mb-2"
@@ -265,7 +352,7 @@ const TreeTraversalVisualizer: React.FC = () => {
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              placeholder="1,2,3,4,5,null,6"
+              placeholder="3,9,20,null,null,15,7"
               className="w-full px-4 py-2 rounded border"
               style={{
                 backgroundColor: "var(--bg)",
@@ -295,59 +382,50 @@ const TreeTraversalVisualizer: React.FC = () => {
                   className="block text-sm mb-2"
                   style={{ color: "var(--fg)" }}
                 >
-                  Select Traversal Type:
+                  Select Traversal Mode:
                 </label>
-                <div className="flex gap-2">
+                <div className="flex gap-2 flex-wrap">
                   <button
-                    onClick={() => setTraversalType("inorder")}
-                    className={`tree-example-btn px-4 py-2 rounded text-sm transition-all duration-300 ${
-                      traversalType === "inorder" ? "font-bold" : ""
-                    }`}
+                    onClick={() => setMode("normal")}
+                    className={`tree-example-btn px-4 py-2 rounded text-sm transition-all duration-300`}
                     style={{
                       backgroundColor:
-                        traversalType === "inorder"
+                        mode === "normal"
                           ? "var(--brand)"
                           : "var(--card-hover-bg)",
-                      color:
-                        traversalType === "inorder" ? "white" : "var(--fg)",
+                      color: mode === "normal" ? "white" : "var(--fg)",
                       border: "2px solid var(--brand)",
                     }}
                   >
-                    Inorder (L-Root-R)
+                    Normal BFS
                   </button>
                   <button
-                    onClick={() => setTraversalType("preorder")}
-                    className={`tree-example-btn px-4 py-2 rounded text-sm transition-all duration-300 ${
-                      traversalType === "preorder" ? "font-bold" : ""
-                    }`}
+                    onClick={() => setMode("zigzag")}
+                    className={`tree-example-btn px-4 py-2 rounded text-sm transition-all duration-300`}
                     style={{
                       backgroundColor:
-                        traversalType === "preorder"
+                        mode === "zigzag"
                           ? "var(--brand)"
                           : "var(--card-hover-bg)",
-                      color:
-                        traversalType === "preorder" ? "white" : "var(--fg)",
+                      color: mode === "zigzag" ? "white" : "var(--fg)",
                       border: "2px solid var(--brand)",
                     }}
                   >
-                    Preorder (Root-L-R)
+                    Zigzag
                   </button>
                   <button
-                    onClick={() => setTraversalType("postorder")}
-                    className={`tree-example-btn px-4 py-2 rounded text-sm transition-all duration-300 ${
-                      traversalType === "postorder" ? "font-bold" : ""
-                    }`}
+                    onClick={() => setMode("rightview")}
+                    className={`tree-example-btn px-4 py-2 rounded text-sm transition-all duration-300`}
                     style={{
                       backgroundColor:
-                        traversalType === "postorder"
+                        mode === "rightview"
                           ? "var(--brand)"
                           : "var(--card-hover-bg)",
-                      color:
-                        traversalType === "postorder" ? "white" : "var(--fg)",
+                      color: mode === "rightview" ? "white" : "var(--fg)",
                       border: "2px solid var(--brand)",
                     }}
                   >
-                    Postorder (L-R-Root)
+                    Right Side View
                   </button>
                 </div>
               </div>
@@ -367,29 +445,68 @@ const TreeTraversalVisualizer: React.FC = () => {
             </>
           )}
 
-          {traversalResult.length > 0 && (
+          {queueState.length > 0 && (
             <div
-              className="mt-4 p-4 rounded"
+              className="p-4 rounded"
               style={{ backgroundColor: "var(--bg)" }}
             >
               <p
                 className="text-sm font-semibold mb-2"
                 style={{ color: "var(--fg)" }}
               >
-                Traversal Order:
+                Queue State:
               </p>
               <div className="flex gap-2 flex-wrap">
-                {traversalResult.map((val, idx) => (
+                {queueState.map((val, idx) => (
                   <span
                     key={idx}
-                    className="px-3 py-1 rounded font-mono"
+                    className="px-3 py-1 rounded font-mono text-sm"
                     style={{
-                      backgroundColor: "var(--brand)",
+                      backgroundColor: "#10b981",
                       color: "white",
                     }}
                   >
                     {val}
                   </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {traversalResult.length > 0 && (
+            <div
+              className="p-4 rounded"
+              style={{ backgroundColor: "var(--bg)" }}
+            >
+              <p
+                className="text-sm font-semibold mb-2"
+                style={{ color: "var(--fg)" }}
+              >
+                {mode === "rightview"
+                  ? "Right Side View:"
+                  : "Level Order Result:"}
+              </p>
+              <div className="space-y-2">
+                {traversalResult.map((level, idx) => (
+                  <div key={idx} className="flex gap-2 items-center">
+                    <span className="text-xs" style={{ color: "var(--muted)" }}>
+                      {mode === "rightview" ? "View:" : `Level ${idx}:`}
+                    </span>
+                    <div className="flex gap-2">
+                      {level.map((val, vidx) => (
+                        <span
+                          key={vidx}
+                          className="px-3 py-1 rounded font-mono text-sm"
+                          style={{
+                            backgroundColor: "var(--brand)",
+                            color: "white",
+                          }}
+                        >
+                          {val}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
@@ -429,7 +546,7 @@ const TreeTraversalVisualizer: React.FC = () => {
                 className="w-4 h-4 rounded-full"
                 style={{ backgroundColor: "#fbbf24" }}
               ></div>
-              <span>Current</span>
+              <span>Processing</span>
             </div>
             <div className="flex items-center gap-2">
               <div
@@ -441,8 +558,18 @@ const TreeTraversalVisualizer: React.FC = () => {
           </div>
         </div>
       )}
+
+      <div
+        className="p-4 rounded-lg text-sm"
+        style={{ backgroundColor: "var(--panel)", color: "var(--fg)" }}
+      >
+        <p>
+          <strong>💡 How BFS Works:</strong> Uses a queue (FIFO) to process
+          nodes level-by-level. Watch the queue state to see upcoming nodes!
+        </p>
+      </div>
     </div>
   );
 };
 
-export default TreeTraversalVisualizer;
+export default LevelOrderVisualizer;

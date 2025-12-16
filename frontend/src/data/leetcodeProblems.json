@@ -264,7 +264,212 @@
       "url": "https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/",
       "difficulty": "Medium"
     }
+  ],
+    "Graph Representation": [
+    {
+      "title": "Find the Town Judge",
+      "url": "https://leetcode.com/problems/find-the-town-judge/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Find Center of Star Graph",
+      "url": "https://leetcode.com/problems/find-center-of-star-graph/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Clone Graph",
+      "url": "https://leetcode.com/problems/clone-graph/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Keys and Rooms",
+      "url": "https://leetcode.com/problems/keys-and-rooms/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Find if Path Exists in Graph",
+      "url": "https://leetcode.com/problems/find-if-path-exists-in-graph/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "All Paths From Source to Target",
+      "url": "https://leetcode.com/problems/all-paths-from-source-to-target/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Redundant Connection",
+      "url": "https://leetcode.com/problems/redundant-connection/",
+      "difficulty": "Medium"
+    }
+    ],
+    "Graph DFS": [
+    {
+      "title": "Number of Islands",
+      "url": "https://leetcode.com/problems/number-of-islands/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Clone Graph",
+      "url": "https://leetcode.com/problems/clone-graph/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Course Schedule",
+      "url": "https://leetcode.com/problems/course-schedule/",
+      "difficulty": "Medium",
+      "note": "Cycle detection in directed graph"
+    },
+    {
+      "title": "Number of Provinces",
+      "url": "https://leetcode.com/problems/number-of-provinces/",
+      "difficulty": "Medium",
+      "note": "Connected components"
+    },
+    {
+      "title": "Graph Valid Tree",
+      "url": "https://leetcode.com/problems/graph-valid-tree/",
+      "difficulty": "Medium",
+      "note": "Cycle detection + connectivity"
+    },
+    {
+      "title": "Pacific Atlantic Water Flow",
+      "url": "https://leetcode.com/problems/pacific-atlantic-water-flow/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Surrounded Regions",
+      "url": "https://leetcode.com/problems/surrounded-regions/",
+      "difficulty": "Medium"
+    }
+  ],
+    "Graph BFS": [
+    {
+      "title": "Binary Tree Level Order Traversal",
+      "url": "https://leetcode.com/problems/binary-tree-level-order-traversal/",
+      "difficulty": "Medium",
+      "note": "Classic BFS pattern"
+    },
+    {
+      "title": "Rotting Oranges",
+      "url": "https://leetcode.com/problems/rotting-oranges/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Is Graph Bipartite?",
+      "url": "https://leetcode.com/problems/is-graph-bipartite/",
+      "difficulty": "Medium",
+      "note": "2-coloring with BFS"
+    },
+    {
+      "title": "Word Ladder",
+      "url": "https://leetcode.com/problems/word-ladder/",
+      "difficulty": "Hard",
+      "note": "Shortest path in word graph"
+    },
+    {
+      "title": "01 Matrix",
+      "url": "https://leetcode.com/problems/01-matrix/",
+      "difficulty": "Medium",
+      "note": "Multi-source BFS"
+    },
+    {
+      "title": "Open the Lock",
+      "url": "https://leetcode.com/problems/open-the-lock/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Minimum Knight Moves",
+      "url": "https://leetcode.com/problems/minimum-knight-moves/",
+      "difficulty": "Medium",
+      "note": "Shortest path on chessboard"
+    }
+  ],
+    "Shortest Path Dijkstra": [
+    {
+      "title": "Network Delay Time",
+      "url": "https://leetcode.com/problems/network-delay-time/",
+      "difficulty": "Medium",
+      "note": "Classic Dijkstra application"
+    },
+    {
+      "title": "Path with Maximum Probability",
+      "url": "https://leetcode.com/problems/path-with-maximum-probability/",
+      "difficulty": "Medium",
+      "note": "Modified Dijkstra (maximize instead of minimize)"
+    },
+    {
+      "title": "Cheapest Flights Within K Stops",
+      "url": "https://leetcode.com/problems/cheapest-flights-within-k-stops/",
+      "difficulty": "Medium",
+      "note": "Dijkstra with constraints"
+    },
+    {
+      "title": "Minimum Cost to Make at Least One Valid Path in a Grid",
+      "url": "https://leetcode.com/problems/minimum-cost-to-make-at-least-one-valid-path-in-a-grid/",
+      "difficulty": "Hard"
+    },
+    {
+      "title": "Path With Minimum Effort",
+      "url": "https://leetcode.com/problems/path-with-minimum-effort/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Swim in Rising Water",
+      "url": "https://leetcode.com/problems/swim-in-rising-water/",
+      "difficulty": "Hard"
+    },
+    {
+      "title": "Shortest Path in a Grid with Obstacles Elimination",
+      "url": "https://leetcode.com/problems/shortest-path-in-a-grid-with-obstacles-elimination/",
+      "difficulty": "Hard"
+    }
+  ],
+    "Topological Sort": [
+    {
+      "title": "Course Schedule",
+      "url": "https://leetcode.com/problems/course-schedule/",
+      "difficulty": "Medium",
+      "note": "Classic: detect if cycle exists"
+    },
+    {
+      "title": "Course Schedule II",
+      "url": "https://leetcode.com/problems/course-schedule-ii/",
+      "difficulty": "Medium",
+      "note": "Return actual topological order"
+    },
+    {
+      "title": "Alien Dictionary",
+      "url": "https://leetcode.com/problems/alien-dictionary/",
+      "difficulty": "Hard",
+      "note": "Build graph from word order, then topo sort"
+    },
+    {
+      "title": "Minimum Height Trees",
+      "url": "https://leetcode.com/problems/minimum-height-trees/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Sequence Reconstruction",
+      "url": "https://leetcode.com/problems/sequence-reconstruction/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Parallel Courses",
+      "url": "https://leetcode.com/problems/parallel-courses/",
+      "difficulty": "Medium",
+      "note": "Topological sort with levels"
+    },
+    {
+      "title": "Sort Items by Groups Respecting Dependencies",
+      "url": "https://leetcode.com/problems/sort-items-by-groups-respecting-dependencies/",
+      "difficulty": "Hard"
+    }
   ]
+
+
+
+
+
 
 
 

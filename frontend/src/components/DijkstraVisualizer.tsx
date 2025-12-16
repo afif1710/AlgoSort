@@ -4,34 +4,33 @@ import SpeedControl from "./SpeedControl"; // ✅ STEP 1: Import added
 interface Edge {
   from: number;
   to: number;
+  weight: number;
 }
 
-type Mode = "traverse" | "shortest" | "bipartite";
-
-const GraphBFSVisualizer: React.FC = () => {
+const DijkstraVisualizer: React.FC = () => {
   const [numNodes, setNumNodes] = useState<number>(5);
   const [edges, setEdges] = useState<Edge[]>([
-    { from: 0, to: 1 },
-    { from: 0, to: 2 },
-    { from: 1, to: 3 },
-    { from: 2, to: 3 },
-    { from: 3, to: 4 },
+    { from: 0, to: 1, weight: 4 },
+    { from: 0, to: 2, weight: 2 },
+    { from: 2, to: 1, weight: 1 },
+    { from: 1, to: 3, weight: 5 },
+    { from: 2, to: 3, weight: 8 },
+    { from: 3, to: 4, weight: 3 },
   ]);
   const [fromNode, setFromNode] = useState<string>("");
   const [toNode, setToNode] = useState<string>("");
+  const [edgeWeight, setEdgeWeight] = useState<string>("");
   const [isDirected, setIsDirected] = useState<boolean>(false);
-  const [mode, setMode] = useState<Mode>("traverse");
   const [startNode, setStartNode] = useState<string>("0");
   const [endNode, setEndNode] = useState<string>("4");
 
+  const [distances, setDistances] = useState<Map<number, number>>(new Map());
   const [visitedNodes, setVisitedNodes] = useState<Set<number>>(new Set());
-  const [currentLevel, setCurrentLevel] = useState<Set<number>>(new Set());
-  const [traversalOrder, setTraversalOrder] = useState<number[]>([]);
-  const [queueState, setQueueState] = useState<number[]>([]);
+  const [currentNode, setCurrentNode] = useState<number | null>(null);
+  const [pathEdges, setPathEdges] = useState<Set<string>>(new Set());
+  const [pqState, setPqState] = useState<Array<[number, number]>>([]);
   const [animating, setAnimating] = useState(false);
   const [result, setResult] = useState<string>("");
-  const [pathEdges, setPathEdges] = useState<Set<string>>(new Set());
-  const [nodeColors, setNodeColors] = useState<Map<number, number>>(new Map());
   const [animationSpeed, setAnimationSpeed] = useState<number>(1); // ✅ STEP 2: State added
 
   const getNodePositions = (n: number) => {
@@ -53,15 +52,15 @@ const GraphBFSVisualizer: React.FC = () => {
   const nodePositions = getNodePositions(numNodes);
 
   const buildAdjList = () => {
-    const adj = new Map<number, number[]>();
+    const adj = new Map<number, Array<[number, number]>>();
     for (let i = 0; i < numNodes; i++) {
       adj.set(i, []);
     }
-    edges.forEach(({ from, to }) => {
+    edges.forEach(({ from, to, weight }) => {
       if (from < numNodes && to < numNodes) {
-        adj.get(from)?.push(to);
+        adj.get(from)?.push([to, weight]);
         if (!isDirected) {
-          adj.get(to)?.push(from);
+          adj.get(to)?.push([from, weight]);
         }
       }
     });
@@ -72,188 +71,125 @@ const GraphBFSVisualizer: React.FC = () => {
   const sleep = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms / animationSpeed));
 
-  const bfsTraversal = async (start: number, adj: Map<number, number[]>) => {
-    const visited = new Set<number>();
-    const queue: number[] = [start];
-    const order: number[] = [];
-
-    visited.add(start);
-
-    while (queue.length > 0) {
-      setQueueState([...queue]);
-      await sleep(800);
-
-      const levelSize = queue.length;
-      const currentLevelNodes = new Set<number>();
-
-      for (let i = 0; i < levelSize; i++) {
-        const node = queue.shift()!;
-        order.push(node);
-        currentLevelNodes.add(node);
-
-        setCurrentLevel(new Set(currentLevelNodes));
-        setTraversalOrder([...order]);
-        setVisitedNodes(new Set(visited));
-        await sleep(600);
-
-        const neighbors = adj.get(node) || [];
-        for (const neighbor of neighbors) {
-          if (!visited.has(neighbor)) {
-            visited.add(neighbor);
-            queue.push(neighbor);
-          }
-        }
-      }
-
-      await sleep(400);
-    }
-
-    setQueueState([]);
-    setCurrentLevel(new Set());
-    return order;
-  };
-
-  const findShortestPath = (
+  const dijkstra = async (
     start: number,
     end: number,
-    adj: Map<number, number[]>
-  ): number[] | null => {
-    if (start === end) return [start];
-
-    const visited = new Set<number>([start]);
-    const queue: number[] = [start];
+    adj: Map<number, Array<[number, number]>>
+  ) => {
+    const dist = new Map<number, number>();
     const parent = new Map<number, number>();
+    const visited = new Set<number>();
+
+    // Initialize distances
+    for (let i = 0; i < numNodes; i++) {
+      dist.set(i, Infinity);
+    }
+    dist.set(start, 0);
     parent.set(start, -1);
 
-    while (queue.length > 0) {
-      const node = queue.shift()!;
+    // Priority queue: [distance, node]
+    const pq: Array<[number, number]> = [[0, start]];
 
-      if (node === end) {
-        // Reconstruct path
-        const path: number[] = [];
-        let current = end;
-        while (current !== -1) {
-          path.unshift(current);
-          current = parent.get(current)!;
-        }
-        return path;
-      }
+    while (pq.length > 0) {
+      // Sort to simulate min-heap
+      pq.sort((a, b) => a[0] - b[0]);
+      setPqState([...pq]);
+      await sleep(800);
 
+      const [currentDist, node] = pq.shift()!;
+
+      if (visited.has(node)) continue;
+
+      visited.add(node);
+      setVisitedNodes(new Set(visited));
+      setCurrentNode(node);
+      setDistances(new Map(dist));
+      await sleep(600);
+
+      // Early exit if we reached destination
+      if (node === end) break;
+
+      // Relax edges
       const neighbors = adj.get(node) || [];
-      for (const neighbor of neighbors) {
+      for (const [neighbor, weight] of neighbors) {
         if (!visited.has(neighbor)) {
-          visited.add(neighbor);
-          parent.set(neighbor, node);
-          queue.push(neighbor);
-        }
-      }
-    }
-
-    return null; // No path
-  };
-
-  const checkBipartite = (
-    adj: Map<number, number[]>
-  ): { isBipartite: boolean; coloring: Map<number, number> } => {
-    const color = new Map<number, number>();
-
-    for (let start = 0; start < numNodes; start++) {
-      if (!color.has(start)) {
-        const queue: number[] = [start];
-        color.set(start, 0);
-
-        while (queue.length > 0) {
-          const node = queue.shift()!;
-          const currentColor = color.get(node)!;
-
-          const neighbors = adj.get(node) || [];
-          for (const neighbor of neighbors) {
-            if (!color.has(neighbor)) {
-              color.set(neighbor, 1 - currentColor);
-              queue.push(neighbor);
-            } else if (color.get(neighbor) === currentColor) {
-              return { isBipartite: false, coloring: color };
-            }
+          const newDist = dist.get(node)! + weight;
+          if (newDist < dist.get(neighbor)!) {
+            dist.set(neighbor, newDist);
+            parent.set(neighbor, node);
+            pq.push([newDist, neighbor]);
+            setDistances(new Map(dist));
+            await sleep(300);
           }
         }
       }
+
+      setCurrentNode(null);
+      await sleep(200);
     }
 
-    return { isBipartite: true, coloring: color };
+    setPqState([]);
+
+    // Reconstruct path
+    if (dist.get(end) === Infinity) {
+      return { path: null, cost: Infinity };
+    }
+
+    const path: number[] = [];
+    let current = end;
+    while (current !== -1) {
+      path.unshift(current);
+      const prev = parent.get(current);
+      current = prev === undefined ? -1 : prev;
+    }
+
+    return { path, cost: dist.get(end)! };
   };
 
   const handleVisualize = async () => {
     if (animating) return;
+
+    const start = parseInt(startNode);
+    const end = parseInt(endNode);
+
+    if (
+      isNaN(start) ||
+      start < 0 ||
+      start >= numNodes ||
+      isNaN(end) ||
+      end < 0 ||
+      end >= numNodes
+    ) {
+      setResult("❌ Invalid nodes!");
+      return;
+    }
+
     setAnimating(true);
+    setDistances(new Map());
     setVisitedNodes(new Set());
-    setCurrentLevel(new Set());
-    setTraversalOrder([]);
-    setQueueState([]);
-    setResult("");
+    setCurrentNode(null);
     setPathEdges(new Set());
-    setNodeColors(new Map());
+    setPqState([]);
+    setResult("");
 
     const adj = buildAdjList();
+    const { path, cost } = await dijkstra(start, end, adj);
 
-    if (mode === "traverse") {
-      const start = parseInt(startNode);
-      if (isNaN(start) || start < 0 || start >= numNodes) {
-        setResult("❌ Invalid start node!");
-        setAnimating(false);
-        return;
-      }
-
-      const order = await bfsTraversal(start, adj);
-      setResult(`✅ BFS Order: ${order.join(" → ")}`);
-    } else if (mode === "shortest") {
-      const start = parseInt(startNode);
-      const end = parseInt(endNode);
-
-      if (
-        isNaN(start) ||
-        start < 0 ||
-        start >= numNodes ||
-        isNaN(end) ||
-        end < 0 ||
-        end >= numNodes
-      ) {
-        setResult("❌ Invalid nodes!");
-        setAnimating(false);
-        return;
-      }
-
-      const path = findShortestPath(start, end, adj);
-
-      if (path) {
-        setVisitedNodes(new Set(path));
-        setTraversalOrder(path);
-
-        // Highlight path edges
-        const pathEdgesSet = new Set<string>();
-        for (let i = 0; i < path.length - 1; i++) {
-          pathEdgesSet.add(`${path[i]}-${path[i + 1]}`);
-          if (!isDirected) {
-            pathEdgesSet.add(`${path[i + 1]}-${path[i]}`);
-          }
+    if (path) {
+      // Highlight shortest path
+      const pathEdgesSet = new Set<string>();
+      for (let i = 0; i < path.length - 1; i++) {
+        pathEdgesSet.add(`${path[i]}-${path[i + 1]}`);
+        if (!isDirected) {
+          pathEdgesSet.add(`${path[i + 1]}-${path[i]}`);
         }
-        setPathEdges(pathEdgesSet);
-
-        setResult(
-          `✅ Shortest path (${path.length - 1} edges): ${path.join(" → ")}`
-        );
-      } else {
-        setResult(`❌ No path exists from ${start} to ${end}`);
       }
-    } else if (mode === "bipartite") {
-      const { isBipartite, coloring } = checkBipartite(adj);
-      setNodeColors(coloring);
-      setVisitedNodes(new Set(Array.from({ length: numNodes }, (_, i) => i)));
-
-      if (isBipartite) {
-        setResult("✅ Graph is BIPARTITE! Can be colored with 2 colors.");
-      } else {
-        setResult("❌ Graph is NOT bipartite (contains odd-length cycle)");
-      }
+      setPathEdges(pathEdgesSet);
+      setResult(
+        `✅ Shortest path found! Cost: ${cost}\nPath: ${path.join(" → ")}`
+      );
+    } else {
+      setResult(`❌ No path exists from ${start} to ${end}`);
     }
 
     setAnimating(false);
@@ -262,14 +198,20 @@ const GraphBFSVisualizer: React.FC = () => {
   const handleAddEdge = () => {
     const from = parseInt(fromNode);
     const to = parseInt(toNode);
+    const weight = parseInt(edgeWeight);
 
-    if (isNaN(from) || isNaN(to)) {
+    if (isNaN(from) || isNaN(to) || isNaN(weight)) {
       alert("Please enter valid numbers");
       return;
     }
 
     if (from < 0 || from >= numNodes || to < 0 || to >= numNodes) {
       alert(`Nodes must be between 0 and ${numNodes - 1}`);
+      return;
+    }
+
+    if (weight <= 0) {
+      alert("Weight must be positive (Dijkstra requires non-negative weights)");
       return;
     }
 
@@ -289,83 +231,78 @@ const GraphBFSVisualizer: React.FC = () => {
       return;
     }
 
-    setEdges([...edges, { from, to }]);
+    setEdges([...edges, { from, to, weight }]);
     setFromNode("");
     setToNode("");
+    setEdgeWeight("");
+  };
+
+  const handleRemoveEdge = (index: number) => {
+    setEdges(edges.filter((_, i) => i !== index));
   };
 
   const loadExample = (type: string) => {
+    setDistances(new Map());
     setVisitedNodes(new Set());
-    setCurrentLevel(new Set());
-    setTraversalOrder([]);
-    setQueueState([]);
-    setResult("");
+    setCurrentNode(null);
     setPathEdges(new Set());
-    setNodeColors(new Map());
+    setPqState([]);
+    setResult("");
 
     if (type === "simple") {
       setNumNodes(5);
       setIsDirected(false);
       setEdges([
-        { from: 0, to: 1 },
-        { from: 0, to: 2 },
-        { from: 1, to: 3 },
-        { from: 2, to: 3 },
-        { from: 3, to: 4 },
+        { from: 0, to: 1, weight: 4 },
+        { from: 0, to: 2, weight: 2 },
+        { from: 2, to: 1, weight: 1 },
+        { from: 1, to: 3, weight: 5 },
+        { from: 2, to: 3, weight: 8 },
+        { from: 3, to: 4, weight: 3 },
       ]);
-    } else if (type === "bipartite-yes") {
-      setNumNodes(4);
-      setIsDirected(false);
-      setEdges([
-        { from: 0, to: 1 },
-        { from: 0, to: 3 },
-        { from: 1, to: 2 },
-        { from: 2, to: 3 },
-      ]);
-    } else if (type === "bipartite-no") {
-      setNumNodes(3);
-      setIsDirected(false);
-      setEdges([
-        { from: 0, to: 1 },
-        { from: 1, to: 2 },
-        { from: 2, to: 0 },
-      ]);
-    } else if (type === "grid") {
+      setStartNode("0");
+      setEndNode("4");
+    } else if (type === "complex") {
       setNumNodes(6);
       setIsDirected(false);
       setEdges([
-        { from: 0, to: 1 },
-        { from: 1, to: 2 },
-        { from: 0, to: 3 },
-        { from: 1, to: 4 },
-        { from: 2, to: 5 },
-        { from: 3, to: 4 },
-        { from: 4, to: 5 },
+        { from: 0, to: 1, weight: 7 },
+        { from: 0, to: 2, weight: 9 },
+        { from: 0, to: 5, weight: 14 },
+        { from: 1, to: 2, weight: 10 },
+        { from: 1, to: 3, weight: 15 },
+        { from: 2, to: 3, weight: 11 },
+        { from: 2, to: 5, weight: 2 },
+        { from: 3, to: 4, weight: 6 },
+        { from: 4, to: 5, weight: 9 },
       ]);
+      setStartNode("0");
+      setEndNode("4");
+    } else if (type === "directed") {
+      setNumNodes(5);
+      setIsDirected(true);
+      setEdges([
+        { from: 0, to: 1, weight: 10 },
+        { from: 0, to: 3, weight: 5 },
+        { from: 1, to: 2, weight: 1 },
+        { from: 2, to: 4, weight: 4 },
+        { from: 3, to: 1, weight: 3 },
+        { from: 3, to: 2, weight: 9 },
+        { from: 3, to: 4, weight: 2 },
+        { from: 4, to: 2, weight: 6 },
+      ]);
+      setStartNode("0");
+      setEndNode("2");
     }
   };
 
-  const getNodeColor = (
-    node: number
-  ): { fill: string; stroke: string; text: string } => {
-    if (mode === "bipartite" && nodeColors.has(node)) {
-      const color = nodeColors.get(node);
-      if (color === 0) {
-        return { fill: "#3b82f6", stroke: "#2563eb", text: "white" };
-      } else {
-        return { fill: "#10b981", stroke: "#059669", text: "white" };
-      }
-    }
-
-    if (currentLevel.has(node)) {
-      return { fill: "#fbbf24", stroke: "#f59e0b", text: "white" };
-    }
-
-    if (visitedNodes.has(node)) {
-      return { fill: "var(--brand)", stroke: "var(--brand)", text: "white" };
-    }
-
-    return { fill: "var(--panel)", stroke: "var(--brand)", text: "var(--fg)" };
+  const getEdgeLabel = (from: number, to: number): number | null => {
+    const edge = edges.find(
+      (e) =>
+        (e.from === from && e.to === to) ||
+        (!isDirected && e.from === to && e.to === from)
+    );
+    return edge ? edge.weight : null;
   };
 
   return (
@@ -379,7 +316,7 @@ const GraphBFSVisualizer: React.FC = () => {
           className="text-lg font-semibold mb-4"
           style={{ color: "var(--fg)" }}
         >
-          BFS Visualization Controls
+          Dijkstra's Algorithm Controls
         </h3>
 
         <div className="space-y-4">
@@ -388,60 +325,6 @@ const GraphBFSVisualizer: React.FC = () => {
             speed={animationSpeed}
             onSpeedChange={setAnimationSpeed}
           />
-
-          {/* Mode Selection */}
-          <div>
-            <label
-              className="block text-sm mb-2"
-              style={{ color: "var(--fg)" }}
-            >
-              Select Mode:
-            </label>
-            <div className="flex gap-2 flex-wrap">
-              <button
-                onClick={() => setMode("traverse")}
-                className="tree-example-btn px-4 py-2 rounded text-sm"
-                style={{
-                  backgroundColor:
-                    mode === "traverse"
-                      ? "var(--brand)"
-                      : "var(--card-hover-bg)",
-                  color: mode === "traverse" ? "white" : "var(--fg)",
-                  border: "2px solid var(--brand)",
-                }}
-              >
-                BFS Traversal
-              </button>
-              <button
-                onClick={() => setMode("shortest")}
-                className="tree-example-btn px-4 py-2 rounded text-sm"
-                style={{
-                  backgroundColor:
-                    mode === "shortest"
-                      ? "var(--brand)"
-                      : "var(--card-hover-bg)",
-                  color: mode === "shortest" ? "white" : "var(--fg)",
-                  border: "2px solid var(--brand)",
-                }}
-              >
-                Shortest Path
-              </button>
-              <button
-                onClick={() => setMode("bipartite")}
-                className="tree-example-btn px-4 py-2 rounded text-sm"
-                style={{
-                  backgroundColor:
-                    mode === "bipartite"
-                      ? "var(--brand)"
-                      : "var(--card-hover-bg)",
-                  color: mode === "bipartite" ? "white" : "var(--fg)",
-                  border: "2px solid var(--brand)",
-                }}
-              >
-                Bipartite Check
-              </button>
-            </div>
-          </div>
 
           {/* Graph Settings */}
           <div className="grid md:grid-cols-2 gap-4">
@@ -489,7 +372,7 @@ const GraphBFSVisualizer: React.FC = () => {
               className="block text-sm mb-2"
               style={{ color: "var(--fg)" }}
             >
-              Add Edge:
+              Add Weighted Edge:
             </label>
             <div className="flex gap-2 items-center">
               <input
@@ -521,6 +404,19 @@ const GraphBFSVisualizer: React.FC = () => {
                   borderColor: "var(--brand)",
                 }}
               />
+              <input
+                type="number"
+                value={edgeWeight}
+                onChange={(e) => setEdgeWeight(e.target.value)}
+                placeholder="Weight"
+                min="1"
+                className="w-24 px-3 py-2 rounded border text-sm"
+                style={{
+                  backgroundColor: "var(--bg)",
+                  color: "var(--fg)",
+                  borderColor: "var(--brand)",
+                }}
+              />
               <button
                 onClick={handleAddEdge}
                 className="build-tree-btn px-4 py-2 rounded text-sm"
@@ -531,8 +427,8 @@ const GraphBFSVisualizer: React.FC = () => {
             </div>
           </div>
 
-          {/* Node Inputs */}
-          {mode === "traverse" && (
+          {/* Path Selection */}
+          <div className="flex gap-4">
             <div>
               <label
                 className="block text-sm mb-2"
@@ -554,54 +450,28 @@ const GraphBFSVisualizer: React.FC = () => {
                 }}
               />
             </div>
-          )}
-
-          {mode === "shortest" && (
-            <div className="flex gap-4">
-              <div>
-                <label
-                  className="block text-sm mb-2"
-                  style={{ color: "var(--fg)" }}
-                >
-                  Start Node:
-                </label>
-                <input
-                  type="number"
-                  value={startNode}
-                  onChange={(e) => setStartNode(e.target.value)}
-                  min="0"
-                  max={numNodes - 1}
-                  className="w-24 px-3 py-2 rounded border text-sm"
-                  style={{
-                    backgroundColor: "var(--bg)",
-                    color: "var(--fg)",
-                    borderColor: "var(--brand)",
-                  }}
-                />
-              </div>
-              <div>
-                <label
-                  className="block text-sm mb-2"
-                  style={{ color: "var(--fg)" }}
-                >
-                  End Node:
-                </label>
-                <input
-                  type="number"
-                  value={endNode}
-                  onChange={(e) => setEndNode(e.target.value)}
-                  min="0"
-                  max={numNodes - 1}
-                  className="w-24 px-3 py-2 rounded border text-sm"
-                  style={{
-                    backgroundColor: "var(--bg)",
-                    color: "var(--fg)",
-                    borderColor: "var(--brand)",
-                  }}
-                />
-              </div>
+            <div>
+              <label
+                className="block text-sm mb-2"
+                style={{ color: "var(--fg)" }}
+              >
+                End Node:
+              </label>
+              <input
+                type="number"
+                value={endNode}
+                onChange={(e) => setEndNode(e.target.value)}
+                min="0"
+                max={numNodes - 1}
+                className="w-24 px-3 py-2 rounded border text-sm"
+                style={{
+                  backgroundColor: "var(--bg)",
+                  color: "var(--fg)",
+                  borderColor: "var(--brand)",
+                }}
+              />
             </div>
-          )}
+          </div>
 
           {/* Examples */}
           <div>
@@ -623,34 +493,24 @@ const GraphBFSVisualizer: React.FC = () => {
                 Simple Graph
               </button>
               <button
-                onClick={() => loadExample("bipartite-yes")}
+                onClick={() => loadExample("complex")}
                 className="tree-example-btn px-3 py-2 rounded text-sm"
                 style={{
                   backgroundColor: "var(--card-hover-bg)",
                   color: "var(--fg)",
                 }}
               >
-                Bipartite (Yes)
+                Complex Graph
               </button>
               <button
-                onClick={() => loadExample("bipartite-no")}
+                onClick={() => loadExample("directed")}
                 className="tree-example-btn px-3 py-2 rounded text-sm"
                 style={{
                   backgroundColor: "var(--card-hover-bg)",
                   color: "var(--fg)",
                 }}
               >
-                Bipartite (No)
-              </button>
-              <button
-                onClick={() => loadExample("grid")}
-                className="tree-example-btn px-3 py-2 rounded text-sm"
-                style={{
-                  backgroundColor: "var(--card-hover-bg)",
-                  color: "var(--fg)",
-                }}
-              >
-                Grid Graph
+                Directed Graph
               </button>
             </div>
           </div>
@@ -666,29 +526,21 @@ const GraphBFSVisualizer: React.FC = () => {
               cursor: animating ? "not-allowed" : "pointer",
             }}
           >
-            {animating
-              ? "Running..."
-              : `Run ${
-                  mode === "traverse"
-                    ? "BFS"
-                    : mode === "shortest"
-                    ? "Shortest Path"
-                    : "Bipartite Check"
-                }`}
+            {animating ? "Running Dijkstra..." : "Find Shortest Path"}
           </button>
 
           {/* Result */}
           {result && (
             <div
-              className="p-4 rounded text-sm font-medium"
+              className="p-4 rounded text-sm font-medium whitespace-pre-line"
               style={{ backgroundColor: "var(--bg)", color: "var(--fg)" }}
             >
               {result}
             </div>
           )}
 
-          {/* Queue State */}
-          {queueState.length > 0 && (
+          {/* Priority Queue State */}
+          {pqState.length > 0 && (
             <div
               className="p-4 rounded"
               style={{ backgroundColor: "var(--bg)" }}
@@ -697,24 +549,24 @@ const GraphBFSVisualizer: React.FC = () => {
                 className="text-sm font-semibold mb-2"
                 style={{ color: "var(--fg)" }}
               >
-                Queue State:
+                Priority Queue (min-heap):
               </p>
               <div className="flex gap-2 flex-wrap">
-                {queueState.map((node, idx) => (
+                {pqState.map(([dist, node], idx) => (
                   <span
                     key={idx}
                     className="px-3 py-1 rounded font-mono text-sm"
                     style={{ backgroundColor: "#10b981", color: "white" }}
                   >
-                    {node}
+                    ({node}, {dist})
                   </span>
                 ))}
               </div>
             </div>
           )}
 
-          {/* Traversal Order */}
-          {traversalOrder.length > 0 && mode !== "bipartite" && (
+          {/* Distances */}
+          {distances.size > 0 && (
             <div
               className="p-4 rounded"
               style={{ backgroundColor: "var(--bg)" }}
@@ -723,21 +575,54 @@ const GraphBFSVisualizer: React.FC = () => {
                 className="text-sm font-semibold mb-2"
                 style={{ color: "var(--fg)" }}
               >
-                {mode === "shortest" ? "Path:" : "Traversal Order:"}
+                Current Distances:
               </p>
               <div className="flex gap-2 flex-wrap">
-                {traversalOrder.map((node, idx) => (
+                {Array.from({ length: numNodes }, (_, i) => i).map((node) => (
                   <span
-                    key={idx}
+                    key={node}
                     className="px-3 py-1 rounded font-mono text-sm"
                     style={{ backgroundColor: "var(--brand)", color: "white" }}
                   >
-                    {node}
+                    {node}:{" "}
+                    {distances.get(node) === Infinity
+                      ? "∞"
+                      : distances.get(node)}
                   </span>
                 ))}
               </div>
             </div>
           )}
+
+          {/* Edge List */}
+          <div>
+            <label
+              className="block text-sm mb-2"
+              style={{ color: "var(--fg)" }}
+            >
+              Current Edges:
+            </label>
+            <div className="space-y-1 max-h-32 overflow-y-auto">
+              {edges.map((edge, idx) => (
+                <div
+                  key={idx}
+                  className="flex justify-between items-center text-sm p-2 rounded"
+                  style={{ backgroundColor: "var(--bg)" }}
+                >
+                  <span className="font-mono" style={{ color: "var(--fg)" }}>
+                    {edge.from} → {edge.to} (weight: {edge.weight})
+                  </span>
+                  <button
+                    onClick={() => handleRemoveEdge(idx)}
+                    className="text-xs px-2 py-1 rounded"
+                    style={{ backgroundColor: "#ef4444", color: "white" }}
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -767,6 +652,10 @@ const GraphBFSVisualizer: React.FC = () => {
             const edgeKey = `${edge.from}-${edge.to}`;
             const isPathEdge = pathEdges.has(edgeKey);
 
+            // Calculate midpoint for weight label
+            const midX = (fromPos.x + toPos.x) / 2;
+            const midY = (fromPos.y + toPos.y) / 2;
+
             if (isDirected) {
               const angle = Math.atan2(
                 toPos.y - fromPos.y,
@@ -795,20 +684,45 @@ const GraphBFSVisualizer: React.FC = () => {
                     fill={isPathEdge ? "#fbbf24" : "var(--brand)"}
                     opacity={isPathEdge ? "1" : "0.5"}
                   />
+                  <circle cx={midX} cy={midY} r="12" fill="var(--bg)" />
+                  <text
+                    x={midX}
+                    y={midY}
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    fill={isPathEdge ? "#fbbf24" : "var(--fg)"}
+                    fontSize="10"
+                    fontWeight="600"
+                  >
+                    {edge.weight}
+                  </text>
                 </g>
               );
             } else {
               return (
-                <line
-                  key={`edge-${idx}`}
-                  x1={fromPos.x}
-                  y1={fromPos.y}
-                  x2={toPos.x}
-                  y2={toPos.y}
-                  stroke={isPathEdge ? "#fbbf24" : "var(--brand)"}
-                  strokeWidth={isPathEdge ? "3" : "2"}
-                  opacity={isPathEdge ? "1" : "0.5"}
-                />
+                <g key={`edge-${idx}`}>
+                  <line
+                    x1={fromPos.x}
+                    y1={fromPos.y}
+                    x2={toPos.x}
+                    y2={toPos.y}
+                    stroke={isPathEdge ? "#fbbf24" : "var(--brand)"}
+                    strokeWidth={isPathEdge ? "3" : "2"}
+                    opacity={isPathEdge ? "1" : "0.5"}
+                  />
+                  <circle cx={midX} cy={midY} r="12" fill="var(--bg)" />
+                  <text
+                    x={midX}
+                    y={midY}
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    fill={isPathEdge ? "#fbbf24" : "var(--fg)"}
+                    fontSize="10"
+                    fontWeight="600"
+                  >
+                    {edge.weight}
+                  </text>
+                </g>
               );
             }
           })}
@@ -818,7 +732,21 @@ const GraphBFSVisualizer: React.FC = () => {
             const pos = nodePositions[node];
             if (!pos) return null;
 
-            const { fill, stroke, text } = getNodeColor(node);
+            const isVisited = visitedNodes.has(node);
+            const isCurrent = currentNode === node;
+
+            let fillColor = "var(--panel)";
+            let strokeColor = "var(--brand)";
+            let textColor = "var(--fg)";
+
+            if (isCurrent) {
+              fillColor = "#fbbf24";
+              strokeColor = "#f59e0b";
+              textColor = "white";
+            } else if (isVisited) {
+              fillColor = "var(--brand)";
+              textColor = "white";
+            }
 
             return (
               <g key={`node-${node}`}>
@@ -826,8 +754,8 @@ const GraphBFSVisualizer: React.FC = () => {
                   cx={pos.x}
                   cy={pos.y}
                   r="25"
-                  fill={fill}
-                  stroke={stroke}
+                  fill={fillColor}
+                  stroke={strokeColor}
                   strokeWidth="2"
                   style={{ transition: "all 0.3s ease" }}
                 />
@@ -836,12 +764,25 @@ const GraphBFSVisualizer: React.FC = () => {
                   y={pos.y}
                   textAnchor="middle"
                   dominantBaseline="middle"
-                  fill={text}
+                  fill={textColor}
                   fontSize="16"
                   fontWeight="600"
                 >
                   {node}
                 </text>
+                {/* Distance label */}
+                {distances.has(node) && distances.get(node) !== Infinity && (
+                  <text
+                    x={pos.x}
+                    y={pos.y + 40}
+                    textAnchor="middle"
+                    fill="var(--fg)"
+                    fontSize="11"
+                    fontWeight="500"
+                  >
+                    d={distances.get(node)}
+                  </text>
+                )}
               </g>
             );
           })}
@@ -866,7 +807,7 @@ const GraphBFSVisualizer: React.FC = () => {
               className="w-4 h-4 rounded-full"
               style={{ backgroundColor: "#fbbf24" }}
             ></div>
-            <span>Current Level</span>
+            <span>Processing</span>
           </div>
           <div className="flex items-center gap-2">
             <div
@@ -875,24 +816,6 @@ const GraphBFSVisualizer: React.FC = () => {
             ></div>
             <span>Visited</span>
           </div>
-          {mode === "bipartite" && (
-            <>
-              <div className="flex items-center gap-2">
-                <div
-                  className="w-4 h-4 rounded-full"
-                  style={{ backgroundColor: "#3b82f6" }}
-                ></div>
-                <span>Color 0</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div
-                  className="w-4 h-4 rounded-full"
-                  style={{ backgroundColor: "#10b981" }}
-                ></div>
-                <span>Color 1</span>
-              </div>
-            </>
-          )}
         </div>
       </div>
 
@@ -902,20 +825,24 @@ const GraphBFSVisualizer: React.FC = () => {
         style={{ backgroundColor: "var(--panel)", color: "var(--fg)" }}
       >
         <p>
-          <strong>💡 BFS Key Concepts:</strong>
+          <strong>💡 Dijkstra's Algorithm:</strong>
         </p>
         <ul className="mt-2 space-y-1 ml-4 text-xs">
           <li>
-            • <strong>Traversal:</strong> Visit level-by-level using queue
-            (FIFO). O(V+E) time
+            • <strong>Greedy approach:</strong> Always pick unvisited node with
+            minimum distance
           </li>
           <li>
-            • <strong>Shortest Path:</strong> First visit = shortest path in
-            unweighted graphs
+            • <strong>Priority Queue:</strong> Efficiently selects next node.
+            O((V+E) log V)
           </li>
           <li>
-            • <strong>Bipartite:</strong> 2-colorable graph. Use BFS to assign
-            alternating colors
+            • <strong>Non-negative weights required:</strong> Negative weights
+            break the algorithm
+          </li>
+          <li>
+            • <strong>Use BFS for unweighted,</strong> Dijkstra for weighted,
+            Bellman-Ford for negative weights
           </li>
         </ul>
       </div>
@@ -923,4 +850,4 @@ const GraphBFSVisualizer: React.FC = () => {
   );
 };
 
-export default GraphBFSVisualizer;
+export default DijkstraVisualizer;
