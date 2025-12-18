@@ -27,6 +27,15 @@ import GraphDFSVisualizer from "../components/GraphDFSVisualizer";
 import GraphBFSVisualizer from "../components/GraphBFSVisualizer";
 import DijkstraVisualizer from "../components/DijkstraVisualizer";
 import TopologicalSortVisualizer from "../components/TopologicalSortVisualizer";
+import DPIntroVisualizer from "../components/DPIntroVisualizer";
+import DP1DSequenceVisualizer from "../components/DP1DSequenceVisualizer";
+import DPKnapsackVisualizer from "../components/DPKnapsackVisualizer";
+import DPStringsVisualizer from "../components/DPStringsVisualizer";
+import BinarySearchBasicsVisualizer from "../components/BinarySearchBasicsVisualizer";
+import BinarySearchAdvancedVisualizer from "../components/BinarySearchAdvancedVisualizer";
+import GreedyAlgorithmsVisualizer from "../components/GreedyAlgorithmsVisualizer";
+import BacktrackingBasicsVisualizer from "../components/BacktrackingBasicsVisualizer";
+import BitManipulationBasicsVisualizer from "../components/BitManipulationBasicsVisualizer";
 
 type LeetProblem = { title: string; url: string; difficulty: string };
 
@@ -58,6 +67,10 @@ export default function TopicPage() {
     "graph-bfs": "Graph BFS",
     "shortest-path-dijkstra": "Shortest Path Dijkstra",
     "topological-sort": "Topological Sort",
+    "dp-introduction": "Dynamic Programming Introduction",
+    "dp-1d-sequence": "1D Sequence DP",
+    "dp-knapsack": "Knapsack DP",
+    "dp-strings": "String DP",
   };
 
   const problemKey = problemKeyMap[topic.slug] || topic.category;
@@ -136,6 +149,24 @@ export default function TopicPage() {
           {topic.slug === "graph-bfs" && <GraphBFSVisualizer />}
           {topic.slug === "shortest-path-dijkstra" && <DijkstraVisualizer />}
           {topic.slug === "topological-sort" && <TopologicalSortVisualizer />}
+          {topic.slug === "dp-introduction" && <DPIntroVisualizer />}
+          {topic.slug === "dp-1d-sequence" && <DP1DSequenceVisualizer />}
+          {topic.slug === "dp-knapsack" && <DPKnapsackVisualizer />}
+          {topic.slug === "dp-strings" && <DPStringsVisualizer />}
+          {topic.slug === "binary-search-basics" && (
+            <BinarySearchBasicsVisualizer />
+          )}
+
+          {topic.slug === "binary-search-advanced" && (
+            <BinarySearchAdvancedVisualizer />
+          )}
+          {topic.slug === "greedy-algorithms" && <GreedyAlgorithmsVisualizer />}
+          {topic.slug === "backtracking-basics" && (
+            <BacktrackingBasicsVisualizer />
+          )}
+          {topic.slug === "bit-manipulation-basics" && (
+            <BitManipulationBasicsVisualizer />
+          )}
         </section>
 
         <section className="card p-4 space-y-3">

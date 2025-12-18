@@ -31,6 +31,33 @@
     { "title": "Evaluate Reverse Polish Notation", "url": "https://leetcode.com/problems/evaluate-reverse-polish-notation/", "difficulty": "Medium" },
     { "title": "Largest Rectangle in Histogram", "url": "https://leetcode.com/problems/largest-rectangle-in-histogram/", "difficulty": "Hard" }
   ],
+  "Binary Search": [
+    {
+      "title": "Binary Search",
+      "url": "https://leetcode.com/problems/binary-search/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Search Insert Position",
+      "url": "https://leetcode.com/problems/search-insert-position/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "First Bad Version",
+      "url": "https://leetcode.com/problems/first-bad-version/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Valid Perfect Square",
+      "url": "https://leetcode.com/problems/valid-perfect-square/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Sqrt(x)",
+      "url": "https://leetcode.com/problems/sqrtx/",
+      "difficulty": "Easy"
+    }
+  ],
   "Queues": [
     { "title": "Implement Queue using Stacks", "url": "https://leetcode.com/problems/implement-queue-using-stacks/", "difficulty": "Easy" },
     { "title": "Number of Recent Calls", "url": "https://leetcode.com/problems/number-of-recent-calls/", "difficulty": "Easy" },
@@ -63,11 +90,7 @@
     { "title": "Clone Graph", "url": "https://leetcode.com/problems/clone-graph/", "difficulty": "Medium" },
     { "title": "Course Schedule", "url": "https://leetcode.com/problems/course-schedule/", "difficulty": "Medium" }
   ],
-  "Dynamic Programming": [
-    { "title": "Climbing Stairs", "url": "https://leetcode.com/problems/climbing-stairs/", "difficulty": "Easy" },
-    { "title": "House Robber", "url": "https://leetcode.com/problems/house-robber/", "difficulty": "Medium" },
-    { "title": "Coin Change", "url": "https://leetcode.com/problems/coin-change/", "difficulty": "Medium" }
-  ],
+  
   "Sliding Window": [
     { "title": "Maximum Average Subarray I", "url": "https://leetcode.com/problems/maximum-average-subarray-i/", "difficulty": "Easy" },
     { "title": "Longest Substring Without Repeating Characters", "url": "https://leetcode.com/problems/longest-substring-without-repeating-characters/", "difficulty": "Medium" },
@@ -463,6 +486,302 @@
       "title": "Sort Items by Groups Respecting Dependencies",
       "url": "https://leetcode.com/problems/sort-items-by-groups-respecting-dependencies/",
       "difficulty": "Hard"
+    }
+  ],
+  "Dynamic Programming": [
+    {
+      "title": "Climbing Stairs",
+      "url": "https://leetcode.com/problems/climbing-stairs/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Min Cost Climbing Stairs",
+      "url": "https://leetcode.com/problems/min-cost-climbing-stairs/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Fibonacci Number",
+      "url": "https://leetcode.com/problems/fibonacci-number/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "House Robber",
+      "url": "https://leetcode.com/problems/house-robber/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Unique Paths",
+      "url": "https://leetcode.com/problems/unique-paths/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Coin Change II",
+      "url": "https://leetcode.com/problems/coin-change-ii/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Longest Increasing Subsequence",
+      "url": "https://leetcode.com/problems/longest-increasing-subsequence/",
+      "difficulty": "Medium"
+    }
+  ],
+  "1D Sequence DP": [
+    {
+      "title": "Climbing Stairs",
+      "url": "https://leetcode.com/problems/climbing-stairs/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Min Cost Climbing Stairs",
+      "url": "https://leetcode.com/problems/min-cost-climbing-stairs/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "House Robber",
+      "url": "https://leetcode.com/problems/house-robber/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "House Robber II",
+      "url": "https://leetcode.com/problems/house-robber-ii/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Delete and Earn",
+      "url": "https://leetcode.com/problems/delete-and-earn/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Jump Game",
+      "url": "https://leetcode.com/problems/jump-game/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Decode Ways",
+      "url": "https://leetcode.com/problems/decode-ways/",
+      "difficulty": "Medium"
+    }
+  ],
+    "Knapsack DP": [
+    {
+      "title": "Partition Equal Subset Sum",
+      "url": "https://leetcode.com/problems/partition-equal-subset-sum/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Target Sum",
+      "url": "https://leetcode.com/problems/target-sum/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Ones and Zeroes",
+      "url": "https://leetcode.com/problems/ones-and-zeroes/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Last Stone Weight II",
+      "url": "https://leetcode.com/problems/last-stone-weight-ii/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Coin Change",
+      "url": "https://leetcode.com/problems/coin-change/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Coin Change II",
+      "url": "https://leetcode.com/problems/coin-change-ii/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Perfect Squares",
+      "url": "https://leetcode.com/problems/perfect-squares/",
+      "difficulty": "Medium"
+    }
+  ],
+   "String DP": [
+    {
+      "title": "Longest Common Subsequence",
+      "url": "https://leetcode.com/problems/longest-common-subsequence/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Edit Distance",
+      "url": "https://leetcode.com/problems/edit-distance/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Longest Palindromic Subsequence",
+      "url": "https://leetcode.com/problems/longest-palindromic-subsequence/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Distinct Subsequences",
+      "url": "https://leetcode.com/problems/distinct-subsequences/",
+      "difficulty": "Hard"
+    },
+    {
+      "title": "Delete Operation for Two Strings",
+      "url": "https://leetcode.com/problems/delete-operation-for-two-strings/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Minimum ASCII Delete Sum for Two Strings",
+      "url": "https://leetcode.com/problems/minimum-ascii-delete-sum-for-two-strings/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Longest Palindromic Substring",
+      "url": "https://leetcode.com/problems/longest-palindromic-substring/",
+      "difficulty": "Medium"
+    }
+  ],
+  "Binary Search Advanced": [
+    {
+      "title": "Search in Rotated Sorted Array",
+      "url": "https://leetcode.com/problems/search-in-rotated-sorted-array/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Find First and Last Position of Element in Sorted Array",
+      "url": "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Find Peak Element",
+      "url": "https://leetcode.com/problems/find-peak-element/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Koko Eating Bananas",
+      "url": "https://leetcode.com/problems/koko-eating-bananas/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Capacity To Ship Packages Within D Days",
+      "url": "https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Split Array Largest Sum",
+      "url": "https://leetcode.com/problems/split-array-largest-sum/",
+      "difficulty": "Hard"
+    },
+    {
+      "title": "Find Minimum in Rotated Sorted Array",
+      "url": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/",
+      "difficulty": "Medium"
+    }
+  ],
+  "Greedy": [
+    {
+      "title": "Jump Game",
+      "url": "https://leetcode.com/problems/jump-game/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Jump Game II",
+      "url": "https://leetcode.com/problems/jump-game-ii/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Gas Station",
+      "url": "https://leetcode.com/problems/gas-station/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Non-overlapping Intervals",
+      "url": "https://leetcode.com/problems/non-overlapping-intervals/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Merge Intervals",
+      "url": "https://leetcode.com/problems/merge-intervals/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Meeting Rooms II",
+      "url": "https://leetcode.com/problems/meeting-rooms-ii/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Task Scheduler",
+      "url": "https://leetcode.com/problems/task-scheduler/",
+      "difficulty": "Medium"
+    }
+  ],
+  "Backtracking": [
+    {
+      "title": "Subsets",
+      "url": "https://leetcode.com/problems/subsets/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Subsets II",
+      "url": "https://leetcode.com/problems/subsets-ii/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Permutations",
+      "url": "https://leetcode.com/problems/permutations/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Permutations II",
+      "url": "https://leetcode.com/problems/permutations-ii/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Combinations",
+      "url": "https://leetcode.com/problems/combinations/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Combination Sum",
+      "url": "https://leetcode.com/problems/combination-sum/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Letter Combinations of a Phone Number",
+      "url": "https://leetcode.com/problems/letter-combinations-of-a-phone-number/",
+      "difficulty": "Medium"
+    }
+  ],
+  "Bit Manipulation": [
+    {
+      "title": "Single Number",
+      "url": "https://leetcode.com/problems/single-number/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Number of 1 Bits",
+      "url": "https://leetcode.com/problems/number-of-1-bits/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Counting Bits",
+      "url": "https://leetcode.com/problems/counting-bits/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Power of Two",
+      "url": "https://leetcode.com/problems/power-of-two/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Single Number II",
+      "url": "https://leetcode.com/problems/single-number-ii/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Single Number III",
+      "url": "https://leetcode.com/problems/single-number-iii/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Sum of Two Integers",
+      "url": "https://leetcode.com/problems/sum-of-two-integers/",
+      "difficulty": "Medium"
     }
   ]
 
