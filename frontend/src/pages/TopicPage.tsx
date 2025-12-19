@@ -36,6 +36,16 @@ import BinarySearchAdvancedVisualizer from "../components/BinarySearchAdvancedVi
 import GreedyAlgorithmsVisualizer from "../components/GreedyAlgorithmsVisualizer";
 import BacktrackingBasicsVisualizer from "../components/BacktrackingBasicsVisualizer";
 import BitManipulationBasicsVisualizer from "../components/BitManipulationBasicsVisualizer";
+import TrieVisualizer from "../components/TrieVisualizer";
+import UnionFindVisualizer from "../components/UnionFindVisualizer";
+import SegmentTreeVisualizer from "../components/SegmentTreeVisualizer";
+import BitmaskDPVisualizer from "../components/BitmaskDPVisualizer";
+import DPOnTreesVisualizer from "../components/DPOnTreesVisualizer";
+import StateMachineDPVisualizer from "../components/StateMachineDPVisualizer";
+import MSTVisualizer from "../components/MSTVisualizer";
+import BellmanFordVisualizer from "../components/BellmanFordVisualizer";
+import FloydWarshallVisualizer from "../components/FloydWarshallVisualizer";
+import SCCVisualizer from "../components/SCCVisualizer";
 
 type LeetProblem = { title: string; url: string; difficulty: string };
 
@@ -71,6 +81,22 @@ export default function TopicPage() {
     "dp-1d-sequence": "1D Sequence DP",
     "dp-knapsack": "Knapsack DP",
     "dp-strings": "String DP",
+    "trie-prefix-tree": "Trie (Prefix Tree)",
+    "union-find-dsu": "Union Find (Disjoint Set Union)",
+    "segment-tree": "Segment Tree",
+    "fenwick-tree-bit": "Binary Indexed Tree (Fenwick Tree)",
+    "monotonic-stack-queue": "Monotonic Stack & Queue",
+    "sparse-table": "Sparse Table",
+    "bitmask-dp": "Bitmask DP",
+    "dp-on-trees": "DP on Trees",
+    "state-machine-dp": "State Machine DP",
+    "digit-dp": "Digit DP",
+    "dp-optimizations": "DP Optimizations",
+    "minimum-spanning-tree": "Minimum Spanning Tree",
+    "advanced-shortest-path": "Advanced Shortest Path",
+    "strongly-connected-components": "Strongly Connected Components",
+    "network-flow": "Network Flow",
+    "articulation-points-bridges": "Articulation Points & Bridges",
   };
 
   const problemKey = problemKeyMap[topic.slug] || topic.category;
@@ -167,6 +193,21 @@ export default function TopicPage() {
           {topic.slug === "bit-manipulation-basics" && (
             <BitManipulationBasicsVisualizer />
           )}
+          {topic.slug === "trie-prefix-tree" && <TrieVisualizer />}
+          {topic.slug === "union-find-dsu" && <UnionFindVisualizer />}
+          {topic.slug === "segment-tree" && <SegmentTreeVisualizer />}
+          {topic.slug === "bitmask-dp" && <BitmaskDPVisualizer />}
+          {topic.slug === "dp-on-trees" && <DPOnTreesVisualizer />}
+          {topic.slug === "state-machine-dp" && <StateMachineDPVisualizer />}
+          {topic.slug === "minimum-spanning-tree" && <MSTVisualizer />}
+          {topic.slug === "advanced-shortest-path" && (
+            <div className="space-y-4">
+              <BellmanFordVisualizer />
+              <FloydWarshallVisualizer />
+            </div>
+          )}
+
+          {topic.slug === "strongly-connected-components" && <SCCVisualizer />}
         </section>
 
         <section className="card p-4 space-y-3">

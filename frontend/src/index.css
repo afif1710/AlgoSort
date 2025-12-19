@@ -175,7 +175,7 @@ body {
   transform: translateY(-1px);
 }
 /* Smart Level Navigation - Scrolls to top and hides main navbar */
-.level-nav-container {
+/* .level-nav-container {
   position: sticky;
   top: 73px;
   z-index: 40;
@@ -190,13 +190,35 @@ body {
   z-index: 100;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   background-color: var(--bg) !important;
+} */
+
+.level-nav-container {
+  position: sticky;
+  top: 73px; /* Gap below navbar initially */
+  z-index: 40;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
+.level-nav-container.scrolled {
+  top: 54px; /* Even smaller gap */
+  z-index: 100;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  background-color: var(--bg) !important;
+}
+
+
+
+
+
+
 /* Hide main navbar when level nav is scrolled */
-body:has(.level-nav-container.scrolled) header {
+/* body:has(.level-nav-container.scrolled) header {
   transform: translateY(-100%);
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
+} */
 
 /* Show main navbar by default */
 header {

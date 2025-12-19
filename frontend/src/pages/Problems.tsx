@@ -1,4 +1,4 @@
-import data from '../data/leetcodeProblems.json'
+import data from "../data/leetcodeProblems.json";
 
 export default function Problems() {
   return (
@@ -11,15 +11,22 @@ export default function Problems() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {(list as any[]).map((p, idx) => (
               <div key={idx} className="card p-4">
-                <a className="font-semibold link" href={p.url} target="_blank" rel="noreferrer">
+                <a
+                  className="font-semibold link"
+                  href={p.url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   {p.title}
                 </a>
-                <div className="text-sm text-[var(--muted)]">{p.difficulty}</div>
+                <div className="text-sm text-[var(--muted)]">
+                  {p.difficulty}
+                </div>
               </div>
             ))}
           </div>
         </section>
       ))}
     </div>
-  )
+  );
 }

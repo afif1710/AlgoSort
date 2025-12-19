@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SpeedControl from "./SpeedControl";
 
 type WindowType = "fixed" | "variable";
 
@@ -10,9 +11,10 @@ export default function SlidingWindowVisualizer() {
   const [result, setResult] = useState<string>("");
   const [windowType, setWindowType] = useState<WindowType>("fixed");
   const [windowSize, setWindowSize] = useState<number>(3);
+  const [animationSpeed, setAnimationSpeed] = useState<number>(1); // ✅ ADDED
 
   const sleep = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
+    new Promise((resolve) => setTimeout(resolve, ms / animationSpeed)); // ✅ UPDATED
 
   const shuffle = () => {
     const newArray = Array.from(
@@ -35,7 +37,6 @@ export default function SlidingWindowVisualizer() {
     let maxSum = 0;
     let windowSum = 0;
 
-    // Calculate sum of first window
     for (let i = 0; i < k; i++) {
       windowSum += arr[i];
     }
@@ -46,7 +47,6 @@ export default function SlidingWindowVisualizer() {
     setResult(`Initial window [0-${k - 1}]: sum = ${windowSum}`);
     await sleep(1500);
 
-    // Slide the window
     for (let i = k; i < arr.length; i++) {
       windowSum = windowSum - arr[i - k] + arr[i];
 
@@ -93,7 +93,6 @@ export default function SlidingWindowVisualizer() {
       setResult(`Expand: added arr[${end}]=${arr[end]}, sum=${currentSum}`);
       await sleep(1200);
 
-      // Shrink window while sum exceeds target
       while (currentSum > target && start <= end) {
         setResult(`Sum ${currentSum} > ${target}, shrinking...`);
         await sleep(800);
@@ -108,7 +107,6 @@ export default function SlidingWindowVisualizer() {
         await sleep(1000);
       }
 
-      // Update maximum length
       if (end - start + 1 > maxLength) {
         maxLength = end - start + 1;
         bestStart = start;
@@ -152,6 +150,9 @@ export default function SlidingWindowVisualizer() {
   return (
     <div className="card p-4 space-y-4 mt-4">
       <h4 className="font-semibold">Sliding Window Visualization</h4>
+
+      {/* ✅ ADDED SPEED CONTROL */}
+      <SpeedControl speed={animationSpeed} onSpeedChange={setAnimationSpeed} />
 
       <div className="space-y-2">
         <label className="text-sm font-medium">Select Window Type:</label>
