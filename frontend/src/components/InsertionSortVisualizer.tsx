@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SpeedControl from "./SpeedControl";
 
 export default function InsertionSortVisualizer() {
   const [array, setArray] = useState<number[]>([12, 11, 13, 5, 6]);
@@ -6,6 +7,7 @@ export default function InsertionSortVisualizer() {
   const [key, setKey] = useState<number>(-1);
   const [sorted, setSorted] = useState<number[]>([0]);
   const [comparing, setComparing] = useState<number>(-1);
+  const [animationSpeed, setAnimationSpeed] = useState<number>(1);
 
   const shuffle = () => {
     const newArray = Array.from(
@@ -19,7 +21,7 @@ export default function InsertionSortVisualizer() {
   };
 
   const sleep = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
+    new Promise((resolve) => setTimeout(resolve, ms / animationSpeed));
 
   const insertionSort = async () => {
     setSorting(true);
@@ -35,7 +37,6 @@ export default function InsertionSortVisualizer() {
 
       let j = i - 1;
 
-      // Shift elements greater than key
       while (j >= 0 && arr[j] > keyValue) {
         setComparing(j);
         await sleep(300);
@@ -69,6 +70,8 @@ export default function InsertionSortVisualizer() {
   return (
     <div className="card p-4 space-y-4 mt-4">
       <h4 className="font-semibold">Insertion Sort Visualization</h4>
+
+      <SpeedControl speed={animationSpeed} onSpeedChange={setAnimationSpeed} />
 
       <div className="flex gap-2 flex-wrap">
         <button className="btn" onClick={insertionSort} disabled={sorting}>

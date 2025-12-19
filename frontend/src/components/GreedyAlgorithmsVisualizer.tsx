@@ -56,7 +56,11 @@ const GreedyAlgorithmsVisualizer: React.FC = () => {
   }, []);
 
   const runActivitySelection = async () => {
-    const activities = starts.map((s, i) => ({ start: s, end: ends[i], index: i }));
+    const activities = starts.map((s, i) => ({
+      start: s,
+      end: ends[i],
+      index: i,
+    }));
     activities.sort((a, b) => a.end - b.end);
 
     const activitySteps: ActivityStep[] = [];
@@ -145,7 +149,9 @@ const GreedyAlgorithmsVisualizer: React.FC = () => {
     const totalCost = cost.reduce((a, b) => a + b, 0);
 
     if (totalGas < totalCost) {
-      setResult(`❌ Impossible: Total gas (${totalGas}) < Total cost (${totalCost})`);
+      setResult(
+        `❌ Impossible: Total gas (${totalGas}) < Total cost (${totalCost})`
+      );
       setAnimating(false);
       return;
     }
@@ -198,8 +204,14 @@ const GreedyAlgorithmsVisualizer: React.FC = () => {
   };
 
   const handleSetActivities = () => {
-    const s = startsInput.split(",").map((v) => parseInt(v.trim())).filter((v) => !isNaN(v));
-    const e = endsInput.split(",").map((v) => parseInt(v.trim())).filter((v) => !isNaN(v));
+    const s = startsInput
+      .split(",")
+      .map((v) => parseInt(v.trim()))
+      .filter((v) => !isNaN(v));
+    const e = endsInput
+      .split(",")
+      .map((v) => parseInt(v.trim()))
+      .filter((v) => !isNaN(v));
     if (s.length > 0 && e.length > 0 && s.length === e.length) {
       setStarts(s);
       setEnds(e);
@@ -208,7 +220,10 @@ const GreedyAlgorithmsVisualizer: React.FC = () => {
   };
 
   const handleSetJump = () => {
-    const arr = jumpInput.split(",").map((v) => parseInt(v.trim())).filter((v) => !isNaN(v));
+    const arr = jumpInput
+      .split(",")
+      .map((v) => parseInt(v.trim()))
+      .filter((v) => !isNaN(v));
     if (arr.length > 0) {
       setJumpArray(arr);
       reset();
@@ -216,8 +231,14 @@ const GreedyAlgorithmsVisualizer: React.FC = () => {
   };
 
   const handleSetGas = () => {
-    const g = gasInput.split(",").map((v) => parseInt(v.trim())).filter((v) => !isNaN(v));
-    const c = costInput.split(",").map((v) => parseInt(v.trim())).filter((v) => !isNaN(v));
+    const g = gasInput
+      .split(",")
+      .map((v) => parseInt(v.trim()))
+      .filter((v) => !isNaN(v));
+    const c = costInput
+      .split(",")
+      .map((v) => parseInt(v.trim()))
+      .filter((v) => !isNaN(v));
     if (g.length > 0 && c.length > 0 && g.length === c.length) {
       setGas(g);
       setCost(c);
@@ -225,23 +246,36 @@ const GreedyAlgorithmsVisualizer: React.FC = () => {
     }
   };
 
-  const currentStepData = currentStep >= 0 && currentStep < steps.length ? steps[currentStep] : null;
+  const currentStepData =
+    currentStep >= 0 && currentStep < steps.length ? steps[currentStep] : null;
 
   // Calculate timeline max for activity selection
   const timelineMax = mode === "activity" ? Math.max(...ends) + 1 : 0;
 
   return (
     <div className="space-y-4">
-      <div className="p-6 rounded-lg" style={{ backgroundColor: "var(--panel)" }}>
-        <h3 className="text-lg font-semibold mb-4" style={{ color: "var(--fg)" }}>
+      <div
+        className="p-6 rounded-lg"
+        style={{ backgroundColor: "var(--panel)" }}
+      >
+        <h3
+          className="text-lg font-semibold mb-4"
+          style={{ color: "var(--fg)" }}
+        >
           Greedy Algorithms Visualizer
         </h3>
 
         <div className="space-y-4">
-          <SpeedControl speed={animationSpeed} onSpeedChange={setAnimationSpeed} />
+          <SpeedControl
+            speed={animationSpeed}
+            onSpeedChange={setAnimationSpeed}
+          />
 
           <div>
-            <label className="block text-sm mb-2" style={{ color: "var(--fg)" }}>
+            <label
+              className="block text-sm mb-2"
+              style={{ color: "var(--fg)" }}
+            >
               Select Problem:
             </label>
             <div className="flex gap-2 flex-wrap">
@@ -260,7 +294,8 @@ const GreedyAlgorithmsVisualizer: React.FC = () => {
                   }}
                   className="px-4 py-2 rounded text-sm font-medium"
                   style={{
-                    backgroundColor: mode === m.key ? "var(--brand)" : "var(--card-hover-bg)",
+                    backgroundColor:
+                      mode === m.key ? "var(--brand)" : "var(--card-hover-bg)",
                     color: mode === m.key ? "white" : "var(--fg)",
                     border: "2px solid var(--brand)",
                   }}
@@ -274,23 +309,41 @@ const GreedyAlgorithmsVisualizer: React.FC = () => {
           {mode === "activity" && (
             <div className="space-y-3">
               <div>
-                <label className="block text-sm mb-2" style={{ color: "var(--fg)" }}>Start times:</label>
+                <label
+                  className="block text-sm mb-2"
+                  style={{ color: "var(--fg)" }}
+                >
+                  Start times:
+                </label>
                 <input
                   type="text"
                   value={startsInput}
                   onChange={(e) => setStartsInput(e.target.value)}
                   className="w-full px-3 py-2 rounded border text-sm"
-                  style={{ backgroundColor: "var(--bg)", color: "var(--fg)", borderColor: "var(--brand)" }}
+                  style={{
+                    backgroundColor: "var(--bg)",
+                    color: "var(--fg)",
+                    borderColor: "var(--brand)",
+                  }}
                 />
               </div>
               <div>
-                <label className="block text-sm mb-2" style={{ color: "var(--fg)" }}>End times:</label>
+                <label
+                  className="block text-sm mb-2"
+                  style={{ color: "var(--fg)" }}
+                >
+                  End times:
+                </label>
                 <input
                   type="text"
                   value={endsInput}
                   onChange={(e) => setEndsInput(e.target.value)}
                   className="w-full px-3 py-2 rounded border text-sm"
-                  style={{ backgroundColor: "var(--bg)", color: "var(--fg)", borderColor: "var(--brand)" }}
+                  style={{
+                    backgroundColor: "var(--bg)",
+                    color: "var(--fg)",
+                    borderColor: "var(--brand)",
+                  }}
                 />
               </div>
               <button
@@ -307,13 +360,22 @@ const GreedyAlgorithmsVisualizer: React.FC = () => {
           {mode === "jump" && (
             <div className="space-y-3">
               <div>
-                <label className="block text-sm mb-2" style={{ color: "var(--fg)" }}>Jump array:</label>
+                <label
+                  className="block text-sm mb-2"
+                  style={{ color: "var(--fg)" }}
+                >
+                  Jump array:
+                </label>
                 <input
                   type="text"
                   value={jumpInput}
                   onChange={(e) => setJumpInput(e.target.value)}
                   className="w-full px-3 py-2 rounded border text-sm"
-                  style={{ backgroundColor: "var(--bg)", color: "var(--fg)", borderColor: "var(--brand)" }}
+                  style={{
+                    backgroundColor: "var(--bg)",
+                    color: "var(--fg)",
+                    borderColor: "var(--brand)",
+                  }}
                 />
               </div>
               <button
@@ -330,23 +392,41 @@ const GreedyAlgorithmsVisualizer: React.FC = () => {
           {mode === "gas" && (
             <div className="space-y-3">
               <div>
-                <label className="block text-sm mb-2" style={{ color: "var(--fg)" }}>Gas amounts:</label>
+                <label
+                  className="block text-sm mb-2"
+                  style={{ color: "var(--fg)" }}
+                >
+                  Gas amounts:
+                </label>
                 <input
                   type="text"
                   value={gasInput}
                   onChange={(e) => setGasInput(e.target.value)}
                   className="w-full px-3 py-2 rounded border text-sm"
-                  style={{ backgroundColor: "var(--bg)", color: "var(--fg)", borderColor: "var(--brand)" }}
+                  style={{
+                    backgroundColor: "var(--bg)",
+                    color: "var(--fg)",
+                    borderColor: "var(--brand)",
+                  }}
                 />
               </div>
               <div>
-                <label className="block text-sm mb-2" style={{ color: "var(--fg)" }}>Cost amounts:</label>
+                <label
+                  className="block text-sm mb-2"
+                  style={{ color: "var(--fg)" }}
+                >
+                  Cost amounts:
+                </label>
                 <input
                   type="text"
                   value={costInput}
                   onChange={(e) => setCostInput(e.target.value)}
                   className="w-full px-3 py-2 rounded border text-sm"
-                  style={{ backgroundColor: "var(--bg)", color: "var(--fg)", borderColor: "var(--brand)" }}
+                  style={{
+                    backgroundColor: "var(--bg)",
+                    color: "var(--fg)",
+                    borderColor: "var(--brand)",
+                  }}
                 />
               </div>
               <button
@@ -374,7 +454,10 @@ const GreedyAlgorithmsVisualizer: React.FC = () => {
           </button>
 
           {result && (
-            <div className="p-4 rounded text-sm font-medium" style={{ backgroundColor: "var(--bg)", color: "var(--fg)" }}>
+            <div
+              className="p-4 rounded text-sm font-medium"
+              style={{ backgroundColor: "var(--bg)", color: "var(--fg)" }}
+            >
               {result}
             </div>
           )}
@@ -383,28 +466,42 @@ const GreedyAlgorithmsVisualizer: React.FC = () => {
 
       {/* VISUAL TIMELINE for Activity Selection */}
       {mode === "activity" && steps.length > 0 && (
-        <div className="p-6 rounded-lg" style={{ backgroundColor: "var(--panel)" }}>
-          <h3 className="text-lg font-semibold mb-4" style={{ color: "var(--fg)" }}>
+        <div
+          className="p-6 rounded-lg"
+          style={{ backgroundColor: "var(--panel)" }}
+        >
+          <h3
+            className="text-lg font-semibold mb-4"
+            style={{ color: "var(--fg)" }}
+          >
             Timeline Visualization
           </h3>
           <div className="space-y-3">
             {steps.map((step: ActivityStep, idx) => {
               const isActive = idx === currentStep;
               const isPast = idx < currentStep;
-              
+
               return (
                 <div key={idx} className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs w-16" style={{ color: "var(--muted)" }}>
+                    <span
+                      className="text-xs w-16"
+                      style={{ color: "var(--muted)" }}
+                    >
                       [{step.start}, {step.end}]
                     </span>
-                    <div className="flex-1 relative h-8 rounded" style={{ backgroundColor: "var(--bg)" }}>
+                    <div
+                      className="flex-1 relative h-8 rounded"
+                      style={{ backgroundColor: "var(--bg)" }}
+                    >
                       {/* Timeline bar */}
                       <div
                         className="absolute h-8 rounded transition-all"
                         style={{
                           left: `${(step.start / timelineMax) * 100}%`,
-                          width: `${((step.end - step.start) / timelineMax) * 100}%`,
+                          width: `${
+                            ((step.end - step.start) / timelineMax) * 100
+                          }%`,
                           backgroundColor: step.selected
                             ? isActive
                               ? "#10b981"
@@ -421,7 +518,10 @@ const GreedyAlgorithmsVisualizer: React.FC = () => {
                         }}
                       />
                     </div>
-                    <span className="text-xs w-24" style={{ color: step.selected ? "#10b981" : "#ef4444" }}>
+                    <span
+                      className="text-xs w-24"
+                      style={{ color: step.selected ? "#10b981" : "#ef4444" }}
+                    >
                       {step.reason}
                     </span>
                   </div>
@@ -434,15 +534,24 @@ const GreedyAlgorithmsVisualizer: React.FC = () => {
 
       {/* ARRAY VISUALIZATION for Jump Game */}
       {mode === "jump" && (
-        <div className="p-6 rounded-lg" style={{ backgroundColor: "var(--panel)" }}>
-          <h3 className="text-lg font-semibold mb-4" style={{ color: "var(--fg)" }}>
+        <div
+          className="p-6 rounded-lg"
+          style={{ backgroundColor: "var(--panel)" }}
+        >
+          <h3
+            className="text-lg font-semibold mb-4"
+            style={{ color: "var(--fg)" }}
+          >
             Jump Array Visualization
           </h3>
           <div className="flex flex-wrap gap-2 justify-center">
             {jumpArray.map((num, idx) => {
-              const isCurrentIndex = currentStepData && idx === currentStepData.index;
-              const isReachable = currentStepData && idx <= currentStepData.farthest;
-              const isStuck = currentStepData?.stuck && idx === currentStepData.index;
+              const isCurrentIndex =
+                currentStepData && idx === currentStepData.index;
+              const isReachable =
+                currentStepData && idx <= currentStepData.farthest;
+              const isStuck =
+                currentStepData?.stuck && idx === currentStepData.index;
 
               return (
                 <div
@@ -457,7 +566,11 @@ const GreedyAlgorithmsVisualizer: React.FC = () => {
                       : isReachable
                       ? "var(--brand)"
                       : "var(--bg)",
-                    borderColor: isCurrentIndex ? "#f59e0b" : isReachable ? "var(--brand)" : "var(--panel)",
+                    borderColor: isCurrentIndex
+                      ? "#f59e0b"
+                      : isReachable
+                      ? "var(--brand)"
+                      : "var(--panel)",
                     color: isReachable || isStuck ? "white" : "var(--fg)",
                     opacity: isReachable ? 1 : 0.4,
                   }}
@@ -472,8 +585,12 @@ const GreedyAlgorithmsVisualizer: React.FC = () => {
             })}
           </div>
           {currentStepData && (
-            <p className="text-sm text-center mt-4" style={{ color: "var(--muted)" }}>
-              At index {currentStepData.index}: Can jump {currentStepData.value} steps → Farthest reachable: {currentStepData.farthest}
+            <p
+              className="text-sm text-center mt-4"
+              style={{ color: "var(--muted)" }}
+            >
+              At index {currentStepData.index}: Can jump {currentStepData.value}{" "}
+              steps → Farthest reachable: {currentStepData.farthest}
             </p>
           )}
         </div>
@@ -481,15 +598,26 @@ const GreedyAlgorithmsVisualizer: React.FC = () => {
 
       {/* STATIONS VISUALIZATION for Gas Station */}
       {mode === "gas" && (
-        <div className="p-6 rounded-lg" style={{ backgroundColor: "var(--panel)" }}>
-          <h3 className="text-lg font-semibold mb-4" style={{ color: "var(--fg)" }}>
+        <div
+          className="p-6 rounded-lg"
+          style={{ backgroundColor: "var(--panel)" }}
+        >
+          <h3
+            className="text-lg font-semibold mb-4"
+            style={{ color: "var(--fg)" }}
+          >
             Gas Stations Visualization
           </h3>
           <div className="flex flex-wrap gap-2 justify-center">
             {gas.map((g, idx) => {
-              const isCurrentStation = currentStepData && idx === currentStepData.index;
-              const isStartStation = currentStepData && idx === currentStepData.start;
-              const shouldRestart = currentStepData && currentStepData.restart && idx === currentStepData.index;
+              const isCurrentStation =
+                currentStepData && idx === currentStepData.index;
+              const isStartStation =
+                currentStepData && idx === currentStepData.start;
+              const shouldRestart =
+                currentStepData &&
+                currentStepData.restart &&
+                idx === currentStepData.index;
 
               return (
                 <div
@@ -505,14 +633,19 @@ const GreedyAlgorithmsVisualizer: React.FC = () => {
                       ? "#fbbf24"
                       : "var(--bg)",
                     borderColor: isCurrentStation ? "#f59e0b" : "var(--panel)",
-                    color: isCurrentStation || isStartStation || shouldRestart ? "white" : "var(--fg)",
+                    color:
+                      isCurrentStation || isStartStation || shouldRestart
+                        ? "white"
+                        : "var(--fg)",
                   }}
                 >
                   <span className="text-xs font-semibold">Station {idx}</span>
                   <span className="text-sm">+{g} gas</span>
                   <span className="text-sm">-{cost[idx]} cost</span>
                   {currentStepData && idx === currentStepData.index && (
-                    <span className="text-xs mt-1">Tank: {currentStepData.tank}</span>
+                    <span className="text-xs mt-1">
+                      Tank: {currentStepData.tank}
+                    </span>
                   )}
                   {isStartStation && <span className="text-xs">🚀 START</span>}
                 </div>
@@ -522,8 +655,13 @@ const GreedyAlgorithmsVisualizer: React.FC = () => {
         </div>
       )}
 
-      <div className="p-4 rounded-lg text-sm" style={{ backgroundColor: "var(--panel)", color: "var(--fg)" }}>
-        <p><strong>💡 Greedy Strategy:</strong></p>
+      <div
+        className="p-4 rounded-lg text-sm"
+        style={{ backgroundColor: "var(--panel)", color: "var(--fg)" }}
+      >
+        <p>
+          <strong>💡 Greedy Strategy:</strong>
+        </p>
         <ul className="mt-2 space-y-1 ml-4 text-xs">
           {mode === "activity" && (
             <>
@@ -535,7 +673,9 @@ const GreedyAlgorithmsVisualizer: React.FC = () => {
           {mode === "jump" && (
             <>
               <li>• Track farthest reachable position</li>
-              <li>• At each index, update farthest = max(farthest, i + nums[i])</li>
+              <li>
+                • At each index, update farthest = max(farthest, i + nums[i])
+              </li>
               <li>• If current index &gt; farthest, stuck!</li>
             </>
           )}

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SpeedControl from "./SpeedControl";
 
 export default function SelectionSortVisualizer() {
   const [array, setArray] = useState<number[]>([64, 25, 12, 22, 11]);
@@ -6,6 +7,7 @@ export default function SelectionSortVisualizer() {
   const [currentMin, setCurrentMin] = useState<number>(-1);
   const [comparing, setComparing] = useState<number>(-1);
   const [sorted, setSorted] = useState<number[]>([]);
+  const [animationSpeed, setAnimationSpeed] = useState<number>(1);
 
   const shuffle = () => {
     const newArray = Array.from(
@@ -19,7 +21,7 @@ export default function SelectionSortVisualizer() {
   };
 
   const sleep = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
+    new Promise((resolve) => setTimeout(resolve, ms / animationSpeed));
 
   const selectionSort = async () => {
     setSorting(true);
@@ -33,7 +35,6 @@ export default function SelectionSortVisualizer() {
       setCurrentMin(minIdx);
       await sleep(500);
 
-      // Find minimum in unsorted part
       for (let j = i + 1; j < n; j++) {
         setComparing(j);
         await sleep(300);
@@ -45,7 +46,6 @@ export default function SelectionSortVisualizer() {
         }
       }
 
-      // Swap if needed
       if (minIdx !== i) {
         [arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];
         setArray([...arr]);
@@ -73,6 +73,8 @@ export default function SelectionSortVisualizer() {
   return (
     <div className="card p-4 space-y-4 mt-4">
       <h4 className="font-semibold">Selection Sort Visualization</h4>
+
+      <SpeedControl speed={animationSpeed} onSpeedChange={setAnimationSpeed} />
 
       <div className="flex gap-2 flex-wrap">
         <button className="btn" onClick={selectionSort} disabled={sorting}>

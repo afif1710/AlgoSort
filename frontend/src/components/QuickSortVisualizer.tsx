@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SpeedControl from "./SpeedControl";
 
 export default function QuickSortVisualizer() {
   const [array, setArray] = useState<number[]>([10, 7, 8, 9, 1, 5]);
@@ -6,6 +7,7 @@ export default function QuickSortVisualizer() {
   const [pivot, setPivot] = useState<number>(-1);
   const [comparing, setComparing] = useState<number[]>([]);
   const [sorted, setSorted] = useState<number[]>([]);
+  const [animationSpeed, setAnimationSpeed] = useState<number>(1);
 
   const shuffle = () => {
     const newArray = Array.from(
@@ -19,7 +21,7 @@ export default function QuickSortVisualizer() {
   };
 
   const sleep = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
+    new Promise((resolve) => setTimeout(resolve, ms / animationSpeed));
 
   const partition = async (
     arr: number[],
@@ -96,6 +98,8 @@ export default function QuickSortVisualizer() {
   return (
     <div className="card p-4 space-y-4 mt-4">
       <h4 className="font-semibold">Quick Sort Visualization</h4>
+
+      <SpeedControl speed={animationSpeed} onSpeedChange={setAnimationSpeed} />
 
       <div className="flex gap-2 flex-wrap">
         <button className="btn" onClick={quickSort} disabled={sorting}>

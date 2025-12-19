@@ -1,17 +1,34 @@
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from "react";
 
-type Theme = 'light' | 'gray' | 'dark'
-const ThemeCtx = createContext<{ theme: Theme, setTheme: (t: Theme)=> void }>({ theme: 'light', setTheme: ()=>{} })
+type Theme =
+  | "light"
+  | "gray"
+  | "dark"
+  | "midnight"
+  | "sunset"
+  | "dracula"
+  | "nord";
 
-export function ThemeProvider({ children }:{ children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(() => (localStorage.getItem('theme') as Theme) || 'light')
+const ThemeCtx = createContext<{ theme: Theme; setTheme: (t: Theme) => void }>({
+  theme: "midnight",
+  setTheme: () => {},
+});
+
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  // ✅ ALWAYS start with midnight (ignore localStorage)
+  const [theme, setTheme] = useState<Theme>("midnight");
+
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme)
-    localStorage.setItem('theme', theme)
-  }, [theme])
-  return <ThemeCtx.Provider value={{ theme, setTheme }}>{children}</ThemeCtx.Provider>
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
+
+  return (
+    <ThemeCtx.Provider value={{ theme, setTheme }}>
+      {children}
+    </ThemeCtx.Provider>
+  );
 }
 
 export function useTheme() {
-  return useContext(ThemeCtx)
+  return useContext(ThemeCtx);
 }

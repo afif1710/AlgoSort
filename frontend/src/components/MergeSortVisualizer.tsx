@@ -1,10 +1,12 @@
 import { useState } from "react";
+import SpeedControl from "./SpeedControl";
 
 export default function MergeSortVisualizer() {
   const [array, setArray] = useState<number[]>([38, 27, 43, 3, 9, 82, 10]);
   const [sorting, setSorting] = useState(false);
   const [highlights, setHighlights] = useState<number[]>([]);
   const [sorted, setSorted] = useState<number[]>([]);
+  const [animationSpeed, setAnimationSpeed] = useState<number>(1);
 
   const shuffle = () => {
     const newArray = Array.from(
@@ -17,7 +19,7 @@ export default function MergeSortVisualizer() {
   };
 
   const sleep = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
+    new Promise((resolve) => setTimeout(resolve, ms / animationSpeed));
 
   const mergeSortHelper = async (
     arr: number[],
@@ -28,7 +30,6 @@ export default function MergeSortVisualizer() {
 
     const mid = Math.floor((start + end) / 2);
 
-    // Highlight divide phase
     const range = Array.from({ length: end - start + 1 }, (_, i) => start + i);
     setHighlights(range);
     await sleep(600);
@@ -51,7 +52,6 @@ export default function MergeSortVisualizer() {
       j = 0,
       k = start;
 
-    // Highlight merging range
     const mergeRange = Array.from(
       { length: end - start + 1 },
       (_, idx) => start + idx
@@ -115,6 +115,8 @@ export default function MergeSortVisualizer() {
   return (
     <div className="card p-4 space-y-4 mt-4">
       <h4 className="font-semibold">Merge Sort Visualization</h4>
+
+      <SpeedControl speed={animationSpeed} onSpeedChange={setAnimationSpeed} />
 
       <div className="flex gap-2 flex-wrap">
         <button className="btn" onClick={mergeSort} disabled={sorting}>
