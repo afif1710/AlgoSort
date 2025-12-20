@@ -46,6 +46,20 @@ import MSTVisualizer from "../components/MSTVisualizer";
 import BellmanFordVisualizer from "../components/BellmanFordVisualizer";
 import FloydWarshallVisualizer from "../components/FloydWarshallVisualizer";
 import SCCVisualizer from "../components/SCCVisualizer";
+import KMPVisualizer from "../components/KMPVisualizer";
+import ManacherVisualizer from "../components/ManacherVisualizer";
+import NimGameVisualizer from "../components/NimGameVisualizer";
+import ConvexHullVisualizer from "../components/ConvexHullVisualizer";
+import SubsetGrayCodeVisualizer from "../components/SubsetGrayCodeVisualizer";
+import ModularArithmeticVisualizer from "../components/ModularArithmeticVisualizer";
+import MoAlgorithmVisualizer from "../components/MoAlgorithmVisualizer";
+import NQueensVisualizer from "../components/NQueensVisualizer";
+import SudokuVisualizer from "../components/SudokuVisualizer";
+import PalindromePartitionVisualizer from "../components/PalindromePartitionVisualizer";
+import TwoSATVisualizer from "../components/TwoSATVisualizer";
+import HLDVisualizer from "../components/HLDVisualizer";
+import SuffixArrayVisualizer from "../components/SuffixArrayVisualizer";
+import CentroidDecompositionVisualizer from "../components/CentroidDecompositionVisualizer";
 
 type LeetProblem = { title: string; url: string; difficulty: string };
 
@@ -97,6 +111,18 @@ export default function TopicPage() {
     "strongly-connected-components": "Strongly Connected Components",
     "network-flow": "Network Flow",
     "articulation-points-bridges": "Articulation Points & Bridges",
+    "pattern-matching-algorithms": "Pattern Matching Algorithms",
+    "advanced-string-processing": "Advanced String Processing",
+    "game-theory": "Game Theory",
+    "bit-manipulation-advanced": "Bit Manipulation Advanced",
+    "computational-geometry": "Computational Geometry",
+    "advanced-mathematics": "Advanced Mathematics",
+    "advanced-range-queries": "Advanced Range Queries",
+    "advanced-backtracking": "Advanced Backtracking",
+    "2-sat": "2-SAT (Boolean Satisfiability)",
+    "heavy-light-decomposition": "Heavy-Light Decomposition",
+    "suffix-arrays": "Suffix Arrays",
+    "centroid-decomposition": "Centroid Decomposition",
   };
 
   const problemKey = problemKeyMap[topic.slug] || topic.category;
@@ -208,6 +234,32 @@ export default function TopicPage() {
           )}
 
           {topic.slug === "strongly-connected-components" && <SCCVisualizer />}
+          {topic.slug === "pattern-matching-algorithms" && <KMPVisualizer />}
+          {topic.slug === "advanced-string-processing" && (
+            <ManacherVisualizer />
+          )}
+          {topic.slug === "game-theory" && <NimGameVisualizer />}
+          {topic.slug === "bit-manipulation-advanced" && (
+            <SubsetGrayCodeVisualizer />
+          )}
+          {topic.slug === "computational-geometry" && <ConvexHullVisualizer />}
+          {topic.slug === "advanced-mathematics" && (
+            <ModularArithmeticVisualizer />
+          )}
+          {topic.slug === "advanced-range-queries" && <MoAlgorithmVisualizer />}
+          {topic.slug === "advanced-backtracking" && (
+            <>
+              <NQueensVisualizer />
+              <SudokuVisualizer />
+              <PalindromePartitionVisualizer />
+            </>
+          )}
+          {topic.slug === "2-sat" && <TwoSATVisualizer />}
+          {topic.slug === "heavy-light-decomposition" && <HLDVisualizer />}
+          {topic.slug === "suffix-arrays" && <SuffixArrayVisualizer />}
+          {topic.slug === "centroid-decomposition" && (
+            <CentroidDecompositionVisualizer />
+          )}
         </section>
 
         <section className="card p-4 space-y-3">

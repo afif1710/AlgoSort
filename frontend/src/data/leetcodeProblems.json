@@ -241,46 +241,46 @@
     { "title": "Sum of Two Integers", "url": "https://leetcode.com/problems/sum-of-two-integers/", "difficulty": "Medium" }
   ],
   "Trie (Prefix Tree)": [
-  {
-    "title": "Implement Trie (Prefix Tree)",
-    "url": "https://leetcode.com/problems/implement-trie-prefix-tree/",
-    "difficulty": "Medium"
-  },
-  {
-    "title": "Design Add and Search Words Data Structure",
-    "url": "https://leetcode.com/problems/design-add-and-search-words-data-structure/",
-    "difficulty": "Medium"
-  },
-  {
-    "title": "Word Search II",
-    "url": "https://leetcode.com/problems/word-search-ii/",
-    "difficulty": "Hard"
-  },
-  {
-    "title": "Replace Words",
-    "url": "https://leetcode.com/problems/replace-words/",
-    "difficulty": "Medium"
-  },
-  {
-    "title": "Implement Magic Dictionary",
-    "url": "https://leetcode.com/problems/implement-magic-dictionary/",
-    "difficulty": "Medium"
-  },
-  {
-    "title": "Longest Word in Dictionary",
-    "url": "https://leetcode.com/problems/longest-word-in-dictionary/",
-    "difficulty": "Medium"
-  },
-  {
-    "title": "Search Suggestions System",
-    "url": "https://leetcode.com/problems/search-suggestions-system/",
-    "difficulty": "Medium"
-  },
-  {
-    "title": "Word Break II",
-    "url": "https://leetcode.com/problems/word-break-ii/",
-    "difficulty": "Hard"
-  }
+    {
+      "title": "Implement Trie (Prefix Tree)",
+      "url": "https://leetcode.com/problems/implement-trie-prefix-tree/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Design Add and Search Words Data Structure",
+      "url": "https://leetcode.com/problems/design-add-and-search-words-data-structure/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Replace Words",
+      "url": "https://leetcode.com/problems/replace-words/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Implement Magic Dictionary",
+      "url": "https://leetcode.com/problems/implement-magic-dictionary/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Longest Word in Dictionary",
+      "url": "https://leetcode.com/problems/longest-word-in-dictionary/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Search Suggestions System",
+      "url": "https://leetcode.com/problems/search-suggestions-system/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Word Search II",
+      "url": "https://leetcode.com/problems/word-search-ii/",
+      "difficulty": "Hard"
+    },
+    {
+      "title": "Word Break II",
+      "url": "https://leetcode.com/problems/word-break-ii/",
+      "difficulty": "Hard"
+    }
   ],
   "Union Find (Disjoint Set Union)": [
     {
@@ -304,11 +304,6 @@
       "difficulty": "Medium"
     },
     {
-      "title": "Connecting Cities With Minimum Cost",
-      "url": "https://leetcode.com/problems/connecting-cities-with-minimum-cost/",
-      "difficulty": "Medium"
-    },
-    {
       "title": "Smallest String With Swaps",
       "url": "https://leetcode.com/problems/smallest-string-with-swaps/",
       "difficulty": "Medium"
@@ -316,6 +311,11 @@
     {
       "title": "Number of Operations to Make Network Connected",
       "url": "https://leetcode.com/problems/number-of-operations-to-make-network-connected/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Most Stones Removed with Same Row or Column",
+      "url": "https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/",
       "difficulty": "Medium"
     },
     {
@@ -388,7 +388,7 @@
       "difficulty": "Hard"
     }
   ],
-    "Monotonic Stack & Queue": [
+  "Monotonic Stack & Queue": [
     {
       "title": "Next Greater Element I",
       "url": "https://leetcode.com/problems/next-greater-element-i/",
@@ -402,6 +402,16 @@
     {
       "title": "Daily Temperatures",
       "url": "https://leetcode.com/problems/daily-temperatures/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Online Stock Span",
+      "url": "https://leetcode.com/problems/online-stock-span/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Sum of Subarray Minimums",
+      "url": "https://leetcode.com/problems/sum-of-subarray-minimums/",
       "difficulty": "Medium"
     },
     {
@@ -423,16 +433,6 @@
       "title": "Sliding Window Maximum",
       "url": "https://leetcode.com/problems/sliding-window-maximum/",
       "difficulty": "Hard"
-    },
-    {
-      "title": "Online Stock Span",
-      "url": "https://leetcode.com/problems/online-stock-span/",
-      "difficulty": "Medium"
-    },
-    {
-      "title": "Sum of Subarray Minimums",
-      "url": "https://leetcode.com/problems/sum-of-subarray-minimums/",
-      "difficulty": "Medium"
     }
   ],
   "Sparse Table": [
@@ -447,17 +447,17 @@
       "difficulty": "Medium"
     },
     {
-      "title": "Kth Ancestor of a Tree Node",
-      "url": "https://leetcode.com/problems/kth-ancestor-of-a-tree-node/",
-      "difficulty": "Hard"
-    },
-    {
       "title": "Minimum Cost Tree From Leaf Values",
       "url": "https://leetcode.com/problems/minimum-cost-tree-from-leaf-values/",
       "difficulty": "Medium"
+    },
+    {
+      "title": "Kth Ancestor of a Tree Node",
+      "url": "https://leetcode.com/problems/kth-ancestor-of-a-tree-node/",
+      "difficulty": "Hard"
     }
   ],
-    "Bitmask DP": [
+  "Bitmask DP": [
     {
       "title": "Subsets",
       "url": "https://leetcode.com/problems/subsets/",
@@ -499,36 +499,21 @@
       "difficulty": "Hard"
     }
   ],
-    "DP on Trees": [
-    {
-      "title": "House Robber III",
-      "url": "https://leetcode.com/problems/house-robber-iii/",
-      "difficulty": "Medium"
-    },
-    {
-      "title": "Binary Tree Maximum Path Sum",
-      "url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/",
-      "difficulty": "Hard"
-    },
+  "DP on Trees": [
     {
       "title": "Diameter of Binary Tree",
       "url": "https://leetcode.com/problems/diameter-of-binary-tree/",
       "difficulty": "Easy"
     },
     {
-      "title": "Longest Univalue Path",
-      "url": "https://leetcode.com/problems/longest-univalue-path/",
+      "title": "House Robber III",
+      "url": "https://leetcode.com/problems/house-robber-iii/",
       "difficulty": "Medium"
     },
     {
-      "title": "Sum of Distances in Tree",
-      "url": "https://leetcode.com/problems/sum-of-distances-in-tree/",
-      "difficulty": "Hard"
-    },
-    {
-      "title": "Binary Tree Cameras",
-      "url": "https://leetcode.com/problems/binary-tree-cameras/",
-      "difficulty": "Hard"
+      "title": "Longest Univalue Path",
+      "url": "https://leetcode.com/problems/longest-univalue-path/",
+      "difficulty": "Medium"
     },
     {
       "title": "Maximum Product of Splitted Binary Tree",
@@ -539,9 +524,24 @@
       "title": "Count Nodes Equal to Average of Subtree",
       "url": "https://leetcode.com/problems/count-nodes-equal-to-average-of-subtree/",
       "difficulty": "Medium"
+    },
+    {
+      "title": "Binary Tree Maximum Path Sum",
+      "url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/",
+      "difficulty": "Hard"
+    },
+    {
+      "title": "Sum of Distances in Tree",
+      "url": "https://leetcode.com/problems/sum-of-distances-in-tree/",
+      "difficulty": "Hard"
+    },
+    {
+      "title": "Binary Tree Cameras",
+      "url": "https://leetcode.com/problems/binary-tree-cameras/",
+      "difficulty": "Hard"
     }
   ],
-    "State Machine DP": [
+  "State Machine DP": [
     {
       "title": "Best Time to Buy and Sell Stock",
       "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/",
@@ -563,6 +563,16 @@
       "difficulty": "Medium"
     },
     {
+      "title": "House Robber II",
+      "url": "https://leetcode.com/problems/house-robber-ii/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Domino and Tromino Tiling",
+      "url": "https://leetcode.com/problems/domino-and-tromino-tiling/",
+      "difficulty": "Medium"
+    },
+    {
       "title": "Best Time to Buy and Sell Stock III",
       "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/",
       "difficulty": "Hard"
@@ -571,28 +581,18 @@
       "title": "Best Time to Buy and Sell Stock IV",
       "url": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/",
       "difficulty": "Hard"
-    },
-    {
-      "title": "House Robber II",
-      "url": "https://leetcode.com/problems/house-robber-ii/",
-      "difficulty": "Medium"
-    },
-    {
-      "title": "Paint House",
-      "url": "https://leetcode.com/problems/paint-house/",
-      "difficulty": "Medium"
-    },
-    {
-      "title": "Paint House II",
-      "url": "https://leetcode.com/problems/paint-house-ii/",
-      "difficulty": "Hard"
     }
   ],
-    "Digit DP": [
+  "Digit DP": [
     {
       "title": "Count Numbers with Unique Digits",
       "url": "https://leetcode.com/problems/count-numbers-with-unique-digits/",
       "difficulty": "Medium"
+    },
+    {
+      "title": "Count Special Integers",
+      "url": "https://leetcode.com/problems/count-special-integers/",
+      "difficulty": "Hard"
     },
     {
       "title": "Numbers At Most N Given Digit Set",
@@ -602,11 +602,6 @@
     {
       "title": "Number of Digit One",
       "url": "https://leetcode.com/problems/number-of-digit-one/",
-      "difficulty": "Hard"
-    },
-    {
-      "title": "Digit Count in Range",
-      "url": "https://leetcode.com/problems/digit-count-in-range/",
       "difficulty": "Hard"
     },
     {
@@ -620,10 +615,15 @@
       "difficulty": "Hard"
     }
   ],
-    "DP Optimizations": [
+  "DP Optimizations": [
     {
       "title": "Longest Increasing Subsequence",
       "url": "https://leetcode.com/problems/longest-increasing-subsequence/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Jump Game VI",
+      "url": "https://leetcode.com/problems/jump-game-vi/",
       "difficulty": "Medium"
     },
     {
@@ -635,11 +635,6 @@
       "title": "Sliding Window Maximum",
       "url": "https://leetcode.com/problems/sliding-window-maximum/",
       "difficulty": "Hard"
-    },
-    {
-      "title": "Jump Game VI",
-      "url": "https://leetcode.com/problems/jump-game-vi/",
-      "difficulty": "Medium"
     },
     {
       "title": "Constrained Subsequence Sum",
@@ -659,13 +654,13 @@
       "difficulty": "Medium"
     },
     {
-      "title": "Connecting Cities With Minimum Cost",
-      "url": "https://leetcode.com/problems/connecting-cities-with-minimum-cost/",
+      "title": "Smallest String With Swaps",
+      "url": "https://leetcode.com/problems/smallest-string-with-swaps/",
       "difficulty": "Medium"
     },
     {
-      "title": "Optimize Water Distribution in a Village",
-      "url": "https://leetcode.com/problems/optimize-water-distribution-in-a-village/",
+      "title": "Swim in Rising Water",
+      "url": "https://leetcode.com/problems/swim-in-rising-water/",
       "difficulty": "Hard"
     },
     {
@@ -674,7 +669,8 @@
       "difficulty": "Hard"
     }
   ],
-    "Advanced Shortest Path": [
+
+  "Advanced Shortest Path": [
     {
       "title": "Network Delay Time",
       "url": "https://leetcode.com/problems/network-delay-time/",
@@ -701,12 +697,7 @@
       "difficulty": "Hard"
     }
   ],
-    "Strongly Connected Components": [
-    {
-      "title": "Critical Connections in a Network",
-      "url": "https://leetcode.com/problems/critical-connections-in-a-network/",
-      "difficulty": "Hard"
-    },
+  "Strongly Connected Components": [
     {
       "title": "Number of Operations to Make Network Connected",
       "url": "https://leetcode.com/problems/number-of-operations-to-make-network-connected/",
@@ -716,9 +707,14 @@
       "title": "Reorder Routes to Make All Paths Lead to City Zero",
       "url": "https://leetcode.com/problems/reorder-routes-to-make-all-paths-lead-to-the-city-zero/",
       "difficulty": "Medium"
+    },
+    {
+      "title": "Critical Connections in a Network",
+      "url": "https://leetcode.com/problems/critical-connections-in-a-network/",
+      "difficulty": "Hard"
     }
   ],
-    "Network Flow": [
+  "Network Flow": [
     {
       "title": "Maximum Students Taking Exam",
       "url": "https://leetcode.com/problems/maximum-students-taking-exam/",
@@ -730,12 +726,7 @@
       "difficulty": "Hard"
     }
   ],
-    "Articulation Points & Bridges": [
-    {
-      "title": "Critical Connections in a Network",
-      "url": "https://leetcode.com/problems/critical-connections-in-a-network/",
-      "difficulty": "Hard"
-    },
+  "Articulation Points & Bridges": [
     {
       "title": "Number of Operations to Make Network Connected",
       "url": "https://leetcode.com/problems/number-of-operations-to-make-network-connected/",
@@ -747,20 +738,285 @@
       "difficulty": "Medium"
     },
     {
+      "title": "Critical Connections in a Network",
+      "url": "https://leetcode.com/problems/critical-connections-in-a-network/",
+      "difficulty": "Hard"
+    },
+    {
       "title": "Redundant Connection II",
       "url": "https://leetcode.com/problems/redundant-connection-ii/",
       "difficulty": "Hard"
     }
+  ],
+  "Pattern Matching Algorithms": [
+    {
+      "title": "Implement strStr()",
+      "url": "https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Repeated Substring Pattern",
+      "url": "https://leetcode.com/problems/repeated-substring-pattern/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Find All Anagrams in a String",
+      "url": "https://leetcode.com/problems/find-all-anagrams-in-a-string/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Shortest Palindrome",
+      "url": "https://leetcode.com/problems/shortest-palindrome/",
+      "difficulty": "Hard"
+    },
+    {
+      "title": "Longest Happy Prefix",
+      "url": "https://leetcode.com/problems/longest-happy-prefix/",
+      "difficulty": "Hard"
+    },
+    {
+      "title": "Longest Duplicate Substring",
+      "url": "https://leetcode.com/problems/longest-duplicate-substring/",
+      "difficulty": "Hard"
+    }
+  ],
+  "Advanced String Processing": [
+    {
+      "title": "Longest Palindromic Substring",
+      "url": "https://leetcode.com/problems/longest-palindromic-substring/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Palindromic Substrings",
+      "url": "https://leetcode.com/problems/palindromic-substrings/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Shortest Palindrome",
+      "url": "https://leetcode.com/problems/shortest-palindrome/",
+      "difficulty": "Hard"
+    },
+    {
+      "title": "Longest Duplicate Substring",
+      "url": "https://leetcode.com/problems/longest-duplicate-substring/",
+      "difficulty": "Hard"
+    },
+    {
+      "title": "Distinct Echo Substrings",
+      "url": "https://leetcode.com/problems/distinct-echo-substrings/",
+      "difficulty": "Hard"
+    }
+  ],
+  "Game Theory": [
+    {
+      "title": "Nim Game",
+      "url": "https://leetcode.com/problems/nim-game/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Stone Game",
+      "url": "https://leetcode.com/problems/stone-game/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Stone Game II",
+      "url": "https://leetcode.com/problems/stone-game-ii/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Predict the Winner",
+      "url": "https://leetcode.com/problems/predict-the-winner/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Stone Game III",
+      "url": "https://leetcode.com/problems/stone-game-iii/",
+      "difficulty": "Hard"
+    },
+    {
+      "title": "Cat and Mouse",
+      "url": "https://leetcode.com/problems/cat-and-mouse/",
+      "difficulty": "Hard"
+    }
+  ],
+  "Computational Geometry": [
+    {
+      "title": "Valid Square",
+      "url": "https://leetcode.com/problems/valid-square/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Minimum Area Rectangle",
+      "url": "https://leetcode.com/problems/minimum-area-rectangle/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Erect the Fence",
+      "url": "https://leetcode.com/problems/erect-the-fence/",
+      "difficulty": "Hard"
+    },
+    {
+      "title": "Max Points on a Line",
+      "url": "https://leetcode.com/problems/max-points-on-a-line/",
+      "difficulty": "Hard"
+    }
+  ],
+  "Bit Manipulation Advanced": [
+    {
+      "title": "Single Number II",
+      "url": "https://leetcode.com/problems/single-number-ii/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Maximum XOR of Two Numbers in an Array",
+      "url": "https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Concatenation of Consecutive Binary Numbers",
+      "url": "https://leetcode.com/problems/concatenation-of-consecutive-binary-numbers/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Partition to K Equal Sum Subsets",
+      "url": "https://leetcode.com/problems/partition-to-k-equal-sum-subsets/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Beautiful Arrangement",
+      "url": "https://leetcode.com/problems/beautiful-arrangement/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Shortest Path Visiting All Nodes",
+      "url": "https://leetcode.com/problems/shortest-path-visiting-all-nodes/",
+      "difficulty": "Hard"
+    }
+  ],
+  "Advanced Mathematics": [
+    {
+      "title": "Pascal's Triangle II",
+      "url": "https://leetcode.com/problems/pascals-triangle-ii/",
+      "difficulty": "Easy"
+    },
+    {
+      "title": "Pow(x, n)",
+      "url": "https://leetcode.com/problems/powx-n/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Count Primes",
+      "url": "https://leetcode.com/problems/count-primes/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Super Pow",
+      "url": "https://leetcode.com/problems/super-pow/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Nth Digit",
+      "url": "https://leetcode.com/problems/nth-digit/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Ugly Number II",
+      "url": "https://leetcode.com/problems/ugly-number-ii/",
+      "difficulty": "Medium"
+    }
+  ],
+  "Advanced Range Queries": [
+    {
+      "title": "Range Sum Query - Mutable",
+      "url": "https://leetcode.com/problems/range-sum-query-mutable/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Range Sum Query 2D - Mutable",
+      "url": "https://leetcode.com/problems/range-sum-query-2d-mutable/",
+      "difficulty": "Hard"
+    },
+    {
+      "title": "Count of Range Sum",
+      "url": "https://leetcode.com/problems/count-of-range-sum/",
+      "difficulty": "Hard"
+    },
+    {
+      "title": "Kth Ancestor of a Tree Node",
+      "url": "https://leetcode.com/problems/kth-ancestor-of-a-tree-node/",
+      "difficulty": "Hard"
+    }
+  ],
+  "Advanced Backtracking": [
+    {
+      "title": "Palindrome Partitioning",
+      "url": "https://leetcode.com/problems/palindrome-partitioning/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "N-Queens",
+      "url": "https://leetcode.com/problems/n-queens/",
+      "difficulty": "Hard"
+    },
+    {
+      "title": "N-Queens II",
+      "url": "https://leetcode.com/problems/n-queens-ii/",
+      "difficulty": "Hard"
+    },
+    {
+      "title": "Sudoku Solver",
+      "url": "https://leetcode.com/problems/sudoku-solver/",
+      "difficulty": "Hard"
+    },
+    {
+      "title": "Word Break II",
+      "url": "https://leetcode.com/problems/word-break-ii/",
+      "difficulty": "Hard"
+    },
+    {
+      "title": "Expression Add Operators",
+      "url": "https://leetcode.com/problems/expression-add-operators/",
+      "difficulty": "Hard"
+    }
+  ],
+  "Heavy-Light Decomposition": [
+    {
+      "title": "Path Sum III",
+      "url": "https://leetcode.com/problems/path-sum-iii/",
+      "difficulty": "Medium"
+    },
+    {
+      "title": "Binary Tree Maximum Path Sum",
+      "url": "https://leetcode.com/problems/binary-tree-maximum-path-sum/",
+      "difficulty": "Hard"
+    }
+  ],
+  "2-SAT (Boolean Satisfiability)": [
+    {
+      "title": "Satisfiability of Equality Equations",
+      "url": "https://leetcode.com/problems/satisfiability-of-equality-equations/",
+      "difficulty": "Medium"
+    }
+  ],
+  "Suffix Arrays": [
+    {
+      "title": "Longest Duplicate Substring",
+      "url": "https://leetcode.com/problems/longest-duplicate-substring/",
+      "difficulty": "Hard"
+    },
+    {
+      "title": "Distinct Echo Substrings",
+      "url": "https://leetcode.com/problems/distinct-echo-substrings/",
+      "difficulty": "Hard"
+    }
+  ],
+  "Centroid Decomposition": [
+    {
+      "title": "Count Nodes Equal to Average of Subtree",
+      "url": "https://leetcode.com/problems/count-nodes-equal-to-average-of-subtree/",
+      "difficulty": "Medium"
+    }
   ]
-
-
-
-
-
-
-
-
-
 
 
 
