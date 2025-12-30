@@ -1,0 +1,242 @@
+[
+  {
+    "slug": "modular-arithmetic",
+    "title": "Modular Arithmetic",
+    "difficulty": "Easy",
+    "summary": "Foundation of number theory in competitive programming - understand mod operations and their properties.",
+    "tags": ["number-theory", "basics", "mod"],
+    "content": [
+      "Modular arithmetic deals with remainders when dividing integers. For any integers a, b and positive integer m: (a + b) mod m = ((a mod m) + (b mod m)) mod m.",
+      "Multiplication also distributes over mod: (a × b) mod m = ((a mod m) × (b mod m)) mod m. This is crucial for preventing integer overflow.",
+      "Subtraction requires care: (a - b) mod m = ((a mod m) - (b mod m) + m) mod m. The +m ensures non-negative results.",
+      "MOD = 10^9 + 7 (1000000007) is the most common modulus in CP because it's a large prime that fits in 32-bit integers.",
+      "Division in modular arithmetic requires finding the modular multiplicative inverse, covered in the Modular Inverse topic.",
+      "Common pitfall: Always mod after every operation to prevent overflow, not just at the end.",
+      "Time complexity of mod operation is O(1). Space complexity is O(1)."
+    ],
+    "example": {
+      "language": "python",
+      "code": "MOD = 10**9 + 7\n\ndef mod_add(a, b):\n    return (a % MOD + b % MOD) % MOD\n\ndef mod_sub(a, b):\n    return (a % MOD - b % MOD + MOD) % MOD\n\ndef mod_mul(a, b):\n    return (a % MOD * b % MOD) % MOD\n\n# Example: Calculate (123456789 * 987654321) % MOD\nresult = mod_mul(123456789, 987654321)\nprint(f\"Result: {result}\")  # Safe from overflow"
+    }
+  },
+  {
+    "slug": "gcd-lcm",
+    "title": "GCD and LCM",
+    "difficulty": "Easy",
+    "summary": "Greatest Common Divisor and Least Common Multiple - essential for fraction problems and number theory.",
+    "tags": ["number-theory", "euclidean", "basics"],
+    "content": [
+      "GCD (Greatest Common Divisor) is the largest positive integer that divides both numbers. Example: GCD(12, 8) = 4.",
+      "Euclidean Algorithm: GCD(a, b) = GCD(b, a mod b). Base case: GCD(a, 0) = a. Time complexity: O(log(min(a,b))).",
+      "LCM (Least Common Multiple) is the smallest positive integer divisible by both numbers. LCM(a, b) = (a × b) / GCD(a, b).",
+      "Extended Euclidean Algorithm finds x, y such that ax + by = GCD(a, b). Used for modular inverse.",
+      "Property: GCD(a, b) × LCM(a, b) = a × b. This helps compute LCM without overflow.",
+      "GCD is associative: GCD(a, b, c) = GCD(GCD(a, b), c). Same for LCM.",
+      "Common CP pattern: Reduce fractions by dividing numerator and denominator by their GCD."
+    ],
+    "example": {
+      "language": "python",
+      "code": "import math\n\ndef gcd(a, b):\n    while b:\n        a, b = b, a % b\n    return a\n\ndef lcm(a, b):\n    return a // gcd(a, b) * b  # Avoid overflow\n\ndef extended_gcd(a, b):\n    if b == 0:\n        return a, 1, 0\n    g, x1, y1 = extended_gcd(b, a % b)\n    x = y1\n    y = x1 - (a // b) * y1\n    return g, x, y\n\n# Examples\nprint(f\"GCD(48, 18) = {gcd(48, 18)}\")  # 6\nprint(f\"LCM(48, 18) = {lcm(48, 18)}\")  # 144\ng, x, y = extended_gcd(48, 18)\nprint(f\"48*{x} + 18*{y} = {g}\")  # 48*(-1) + 18*3 = 6"
+    }
+  },
+  {
+    "slug": "prime-factorization",
+    "title": "Prime Factorization",
+    "difficulty": "Easy",
+    "summary": "Breaking numbers into prime factors - fundamental for divisor counting and number theory problems.",
+    "tags": ["number-theory", "primes", "factorization"],
+    "content": [
+      "Every positive integer > 1 can be uniquely represented as a product of prime powers (Fundamental Theorem of Arithmetic).",
+      "Basic factorization: Divide by all primes from 2 to sqrt(n). Time complexity: O(sqrt(n)).",
+      "Optimization: Only check 2 separately, then odd numbers from 3 to sqrt(n).",
+      "If n > 1 after the loop, n itself is a prime factor (handles the case when n has a prime factor > sqrt(n)).",
+      "Number of divisors formula: If n = p1^a1 × p2^a2 × ... × pk^ak, then divisor count = (a1+1)(a2+1)...(ak+1).",
+      "Sum of divisors: σ(n) = Π((p_i^(a_i+1) - 1)/(p_i - 1)) for each prime factor.",
+      "For multiple queries, precompute smallest prime factor (SPF) using sieve for O(log n) factorization per query."
+    ],
+    "example": {
+      "language": "python",
+      "code": "def prime_factorization(n):\n    factors = {}\n    d = 2\n    while d * d <= n:\n        while n % d == 0:\n            factors[d] = factors.get(d, 0) + 1\n            n //= d\n        d += 1\n    if n > 1:\n        factors[n] = 1\n    return factors\n\ndef count_divisors(n):\n    factors = prime_factorization(n)\n    count = 1\n    for exp in factors.values():\n        count *= (exp + 1)\n    return count\n\n# Example\nn = 360  # 2^3 × 3^2 × 5^1\nprint(f\"Prime factors of {n}: {prime_factorization(n)}\")\nprint(f\"Number of divisors: {count_divisors(n)}\")  # (3+1)(2+1)(1+1) = 24"
+    }
+  },
+  {
+    "slug": "fast-exponentiation",
+    "title": "Fast Exponentiation",
+    "difficulty": "Easy",
+    "summary": "Calculate a^b mod m efficiently in O(log b) time using binary exponentiation.",
+    "tags": ["number-theory", "exponentiation", "binary"],
+    "content": [
+      "Binary exponentiation computes a^b in O(log b) time instead of O(b) by using the binary representation of b.",
+      "Key insight: a^b = a^(b/2)² if b is even, and a × a^(b-1) if b is odd.",
+      "Also known as 'exponentiation by squaring' or 'fast power'.",
+      "Essential for computing large powers modulo m without overflow.",
+      "Used as building block for: matrix exponentiation, modular inverse (via Fermat's theorem), and more.",
+      "Iterative version uses bit manipulation: process each bit of exponent from LSB to MSB.",
+      "Time complexity: O(log b). Space: O(1) for iterative, O(log b) for recursive."
+    ],
+    "example": {
+      "language": "python",
+      "code": "def fast_pow(base, exp, mod):\n    \"\"\"Calculate base^exp % mod in O(log exp) time\"\"\"\n    result = 1\n    base %= mod\n    while exp > 0:\n        if exp & 1:  # If exp is odd\n            result = (result * base) % mod\n        exp >>= 1  # exp = exp // 2\n        base = (base * base) % mod\n    return result\n\n# Recursive version\ndef fast_pow_recursive(base, exp, mod):\n    if exp == 0:\n        return 1\n    if exp & 1:\n        return base * fast_pow_recursive(base, exp - 1, mod) % mod\n    half = fast_pow_recursive(base, exp // 2, mod)\n    return half * half % mod\n\nMOD = 10**9 + 7\nprint(f\"2^100 mod MOD = {fast_pow(2, 100, MOD)}\")\nprint(f\"3^1000000 mod MOD = {fast_pow(3, 1000000, MOD)}\")"
+    }
+  },
+  {
+    "slug": "sieve-of-eratosthenes",
+    "title": "Sieve of Eratosthenes",
+    "difficulty": "Medium",
+    "summary": "Efficiently find all prime numbers up to n in O(n log log n) time.",
+    "tags": ["number-theory", "primes", "sieve"],
+    "content": [
+      "The Sieve of Eratosthenes is the most efficient way to find all primes smaller than n when n is reasonably small (≤ 10^7).",
+      "Algorithm: Start with all numbers marked as prime. For each prime p, mark all multiples of p (starting from p²) as composite.",
+      "Optimization 1: Start marking from p² because smaller multiples are already marked by smaller primes.",
+      "Optimization 2: Only iterate odd numbers after handling 2, halving memory and time.",
+      "Time complexity: O(n log log n). Space complexity: O(n) for the boolean array.",
+      "Segmented sieve handles cases where n is large (up to 10^12) by processing in blocks.",
+      "Linear sieve (O(n)) computes smallest prime factor for each number, enabling O(log n) factorization."
+    ],
+    "example": {
+      "language": "python",
+      "code": "def sieve_of_eratosthenes(n):\n    \"\"\"Return list of all primes <= n\"\"\"\n    if n < 2:\n        return []\n    is_prime = [True] * (n + 1)\n    is_prime[0] = is_prime[1] = False\n    \n    for i in range(2, int(n**0.5) + 1):\n        if is_prime[i]:\n            # Mark multiples starting from i²\n            for j in range(i*i, n + 1, i):\n                is_prime[j] = False\n    \n    return [i for i in range(n + 1) if is_prime[i]]\n\ndef linear_sieve(n):\n    \"\"\"Return primes and smallest prime factor (SPF) for each number\"\"\"\n    spf = list(range(n + 1))  # spf[i] = i initially\n    primes = []\n    for i in range(2, n + 1):\n        if spf[i] == i:  # i is prime\n            primes.append(i)\n        for p in primes:\n            if p > spf[i] or i * p > n:\n                break\n            spf[i * p] = p\n    return primes, spf\n\nprimes = sieve_of_eratosthenes(100)\nprint(f\"Primes up to 100: {primes}\")"
+    }
+  },
+  {
+    "slug": "modular-inverse",
+    "title": "Modular Multiplicative Inverse",
+    "difficulty": "Medium",
+    "summary": "Find x such that (a × x) mod m = 1. Essential for division in modular arithmetic.",
+    "tags": ["number-theory", "mod", "inverse"],
+    "content": [
+      "The modular inverse of a modulo m is an integer x such that (a × x) ≡ 1 (mod m). Written as a⁻¹ mod m.",
+      "Inverse exists if and only if GCD(a, m) = 1 (a and m are coprime).",
+      "Method 1 - Extended Euclidean Algorithm: Works for any coprime a and m. Time: O(log m).",
+      "Method 2 - Fermat's Little Theorem: If m is prime, a⁻¹ ≡ a^(m-2) (mod m). Use fast exponentiation.",
+      "Method 3 - Precompute inverses for 1 to n: inv[i] = -(m/i) × inv[m%i] mod m. Time: O(n).",
+      "Division in modular arithmetic: (a/b) mod m = (a × b⁻¹) mod m.",
+      "Common use case: Computing nCr mod p requires inverse of factorials."
+    ],
+    "example": {
+      "language": "python",
+      "code": "MOD = 10**9 + 7\n\ndef mod_inverse_fermat(a, m=MOD):\n    \"\"\"Using Fermat's theorem (m must be prime)\"\"\"\n    return pow(a, m - 2, m)\n\ndef mod_inverse_extended_gcd(a, m):\n    \"\"\"Using Extended Euclidean Algorithm\"\"\"\n    def extended_gcd(a, b):\n        if b == 0:\n            return a, 1, 0\n        g, x1, y1 = extended_gcd(b, a % b)\n        return g, y1, x1 - (a // b) * y1\n    \n    g, x, _ = extended_gcd(a % m, m)\n    if g != 1:\n        return None  # Inverse doesn't exist\n    return (x % m + m) % m\n\ndef precompute_inverses(n, m=MOD):\n    \"\"\"Precompute inverses for 1 to n\"\"\"\n    inv = [0, 1] + [0] * (n - 1)\n    for i in range(2, n + 1):\n        inv[i] = (m - (m // i) * inv[m % i] % m) % m\n    return inv\n\n# Example: Division in modular arithmetic\na, b = 100, 7\nresult = (a * mod_inverse_fermat(b)) % MOD\nprint(f\"100 / 7 mod MOD = {result}\")"
+    }
+  },
+  {
+    "slug": "ncr-mod-prime",
+    "title": "nCr Modulo Prime",
+    "difficulty": "Medium",
+    "summary": "Calculate binomial coefficients modulo a prime number efficiently.",
+    "tags": ["combinatorics", "mod", "binomial"],
+    "content": [
+      "nCr (n choose r) = n! / (r! × (n-r)!). Direct computation causes overflow for large n.",
+      "For mod prime p: nCr mod p = (n! mod p) × (r!)⁻¹ mod p × ((n-r)!)⁻¹ mod p.",
+      "Precompute factorials and inverse factorials for O(1) nCr queries.",
+      "Precomputation: O(n) time and space. Each query: O(1).",
+      "Lucas' Theorem: For prime p, nCr mod p can handle n up to 10^18 if p is small.",
+      "Lucas: nCr ≡ Π(n_i C r_i) mod p, where n_i and r_i are digits in base p representation.",
+      "Pascal's Triangle recurrence: nCr = (n-1)C(r-1) + (n-1)Cr. Good for small n."
+    ],
+    "example": {
+      "language": "python",
+      "code": "MOD = 10**9 + 7\nMAX_N = 200001\n\n# Precompute factorials and inverse factorials\nfact = [1] * MAX_N\nfor i in range(1, MAX_N):\n    fact[i] = fact[i-1] * i % MOD\n\ninv_fact = [1] * MAX_N\ninv_fact[MAX_N-1] = pow(fact[MAX_N-1], MOD-2, MOD)\nfor i in range(MAX_N-2, -1, -1):\n    inv_fact[i] = inv_fact[i+1] * (i+1) % MOD\n\ndef nCr(n, r):\n    if r < 0 or r > n:\n        return 0\n    return fact[n] * inv_fact[r] % MOD * inv_fact[n-r] % MOD\n\ndef lucas(n, r, p):\n    \"\"\"Lucas theorem for large n, small prime p\"\"\"\n    if r == 0:\n        return 1\n    return lucas(n // p, r // p, p) * nCr(n % p, r % p) % p\n\nprint(f\"10C3 = {nCr(10, 3)}\")  # 120\nprint(f\"100C50 mod MOD = {nCr(100, 50)}\")"
+    }
+  },
+  {
+    "slug": "pigeonhole-principle",
+    "title": "Pigeonhole Principle",
+    "difficulty": "Medium",
+    "summary": "If n items are put into m containers with n > m, at least one container has more than one item.",
+    "tags": ["combinatorics", "proof-technique", "counting"],
+    "content": [
+      "Basic form: If n pigeons fly into m holes and n > m, at least one hole contains ≥2 pigeons.",
+      "Generalized: If n objects are placed in m boxes, at least one box contains ≥⌈n/m⌉ objects.",
+      "Used for existence proofs - proves something exists without constructing it.",
+      "Common CP applications: proving repeated elements exist, birthday paradox, hash collision arguments.",
+      "Example: Among any 13 people, at least 2 share a birth month (13 pigeons, 12 months).",
+      "Example: In any sequence of n²+1 distinct numbers, there's an increasing or decreasing subsequence of length n+1.",
+      "Often combined with modular arithmetic: among n+1 numbers, two have the same remainder mod n."
+    ],
+    "example": {
+      "language": "python",
+      "code": "def find_duplicate(nums):\n    \"\"\"\n    Array has n+1 integers in range [1,n].\n    By pigeonhole principle, at least one duplicate exists.\n    Floyd's cycle detection finds it in O(n) time, O(1) space.\n    \"\"\"\n    slow = fast = nums[0]\n    while True:\n        slow = nums[slow]\n        fast = nums[nums[fast]]\n        if slow == fast:\n            break\n    \n    slow = nums[0]\n    while slow != fast:\n        slow = nums[slow]\n        fast = nums[fast]\n    return slow\n\ndef has_subset_divisible_by_n(arr):\n    \"\"\"\n    Given n integers, prove there's a non-empty subset\n    with sum divisible by n (Pigeonhole on prefix sums mod n)\n    \"\"\"\n    n = len(arr)\n    prefix_mod = [0] * (n + 1)\n    for i in range(n):\n        prefix_mod[i+1] = (prefix_mod[i] + arr[i]) % n\n    \n    # n+1 prefix sums, n possible remainders -> two must be equal\n    seen = {}\n    for i, mod in enumerate(prefix_mod):\n        if mod in seen:\n            return (seen[mod], i)  # Subarray indices\n        seen[mod] = i\n    return None\n\nprint(find_duplicate([1, 3, 4, 2, 2]))  # 2"
+    }
+  },
+  {
+    "slug": "inclusion-exclusion",
+    "title": "Inclusion-Exclusion Principle",
+    "difficulty": "Hard",
+    "summary": "Count elements in union of sets by alternating addition and subtraction of intersections.",
+    "tags": ["combinatorics", "counting", "sets"],
+    "content": [
+      "|A ∪ B| = |A| + |B| - |A ∩ B|. Generalizes to any number of sets.",
+      "General formula: |A₁ ∪ A₂ ∪ ... ∪ Aₙ| = Σ|Aᵢ| - Σ|Aᵢ ∩ Aⱼ| + Σ|Aᵢ ∩ Aⱼ ∩ Aₖ| - ... + (-1)ⁿ⁺¹|A₁ ∩ ... ∩ Aₙ|",
+      "Alternative view: sum over all non-empty subsets, multiply by (-1)^(size+1).",
+      "Time complexity: O(2^n × cost of computing intersection) for n sets.",
+      "Common applications: count numbers not divisible by any of given primes, derangements, Euler's totient.",
+      "Euler's totient φ(n) = n × Π(1 - 1/p) for all prime factors p of n.",
+      "Can be optimized using bitmask DP when sets have special structure."
+    ],
+    "example": {
+      "language": "python",
+      "code": "def count_coprime(n, primes):\n    \"\"\"Count integers in [1,n] coprime to all given primes\"\"\"\n    m = len(primes)\n    total = 0\n    \n    # Iterate all non-empty subsets using bitmask\n    for mask in range(1, 1 << m):\n        product = 1\n        bits = 0\n        for i in range(m):\n            if mask & (1 << i):\n                product *= primes[i]\n                bits += 1\n        # Add or subtract based on parity\n        if bits & 1:\n            total += n // product\n        else:\n            total -= n // product\n    \n    return n - total  # Numbers NOT divisible by any prime\n\ndef euler_totient(n):\n    \"\"\"Count integers in [1,n] coprime to n\"\"\"\n    result = n\n    p = 2\n    temp = n\n    while p * p <= temp:\n        if temp % p == 0:\n            while temp % p == 0:\n                temp //= p\n            result -= result // p\n        p += 1\n    if temp > 1:\n        result -= result // temp\n    return result\n\nprint(f\"Coprimes to [2,3,5] in [1,30]: {count_coprime(30, [2,3,5])}\")\nprint(f\"φ(12) = {euler_totient(12)}\")  # 4: {1,5,7,11}"
+    }
+  },
+  {
+    "slug": "chinese-remainder-theorem",
+    "title": "Chinese Remainder Theorem",
+    "difficulty": "Hard",
+    "summary": "Solve systems of modular equations with pairwise coprime moduli.",
+    "tags": ["number-theory", "mod", "crt"],
+    "content": [
+      "CRT: Given pairwise coprime moduli m₁, m₂, ..., mₖ and remainders r₁, r₂, ..., rₖ, there exists a unique x mod (m₁×m₂×...×mₖ) satisfying all x ≡ rᵢ (mod mᵢ).",
+      "Construction: x = Σ(rᵢ × Mᵢ × yᵢ) where M = Πmᵢ, Mᵢ = M/mᵢ, and yᵢ = Mᵢ⁻¹ mod mᵢ.",
+      "The yᵢ values are computed using extended GCD or Fermat's theorem (if mᵢ prime).",
+      "Time complexity: O(k × log(max(mᵢ))) for k equations.",
+      "Application: Solve problems separately mod different primes, then combine using CRT.",
+      "Handles large numbers by breaking into smaller moduli: e.g., mod 6 = CRT(mod 2, mod 3).",
+      "Extended CRT handles non-coprime moduli if solution exists (requires compatibility check)."
+    ],
+    "example": {
+      "language": "python",
+      "code": "def extended_gcd(a, b):\n    if b == 0:\n        return a, 1, 0\n    g, x, y = extended_gcd(b, a % b)\n    return g, y, x - (a // b) * y\n\ndef crt(remainders, moduli):\n    \"\"\"\n    Solve system: x ≡ r[i] (mod m[i]) for all i\n    Returns (solution, product_of_moduli)\n    \"\"\"\n    if len(remainders) != len(moduli):\n        return None\n    \n    M = 1\n    for m in moduli:\n        M *= m\n    \n    x = 0\n    for r, m in zip(remainders, moduli):\n        Mi = M // m\n        _, yi, _ = extended_gcd(Mi, m)\n        x += r * Mi * yi\n    \n    return x % M, M\n\n# Example: Find x such that:\n# x ≡ 2 (mod 3)\n# x ≡ 3 (mod 5)\n# x ≡ 2 (mod 7)\nsolution, mod = crt([2, 3, 2], [3, 5, 7])\nprint(f\"x = {solution} (mod {mod})\")  # x = 23 (mod 105)\n\n# Verify\nprint(f\"23 mod 3 = {23 % 3}\")  # 2\nprint(f\"23 mod 5 = {23 % 5}\")  # 3\nprint(f\"23 mod 7 = {23 % 7}\")  # 2"
+    }
+  },
+  {
+    "slug": "matrix-exponentiation",
+    "title": "Matrix Exponentiation",
+    "difficulty": "Hard",
+    "summary": "Compute matrix powers in O(k³ log n) for k×k matrices - used for linear recurrences.",
+    "tags": ["linear-algebra", "dp-optimization", "recurrence"],
+    "content": [
+      "Matrix exponentiation extends binary exponentiation to matrices: compute A^n in O(k³ log n) for k×k matrix.",
+      "Key application: Convert linear recurrences to matrix form to compute n-th term in O(log n).",
+      "Fibonacci example: [F(n+1), F(n)] = [[1,1],[1,0]]^n × [F(1), F(0)]. Computes F(10^18) efficiently.",
+      "General recurrence f(n) = c₁f(n-1) + c₂f(n-2) + ... + cₖf(n-k) can be represented as k×k matrix.",
+      "The transformation matrix has coefficients in first row, identity matrix below (shifted by one).",
+      "Also used for counting paths of exactly n steps in a graph (adjacency matrix raised to power n).",
+      "All operations done mod prime to prevent overflow. Time: O(k³ log n). Space: O(k²)."
+    ],
+    "example": {
+      "language": "python",
+      "code": "MOD = 10**9 + 7\n\ndef mat_mult(A, B):\n    \"\"\"Multiply two square matrices mod MOD\"\"\"\n    n = len(A)\n    C = [[0]*n for _ in range(n)]\n    for i in range(n):\n        for j in range(n):\n            for k in range(n):\n                C[i][j] = (C[i][j] + A[i][k] * B[k][j]) % MOD\n    return C\n\ndef mat_pow(M, exp):\n    \"\"\"Compute M^exp mod MOD using binary exponentiation\"\"\"\n    n = len(M)\n    result = [[1 if i==j else 0 for j in range(n)] for i in range(n)]  # Identity\n    \n    while exp > 0:\n        if exp & 1:\n            result = mat_mult(result, M)\n        M = mat_mult(M, M)\n        exp >>= 1\n    return result\n\ndef fibonacci(n):\n    \"\"\"Compute n-th Fibonacci number in O(log n)\"\"\"\n    if n <= 1:\n        return n\n    M = [[1, 1], [1, 0]]\n    result = mat_pow(M, n - 1)\n    return result[0][0]\n\nprint(f\"F(10) = {fibonacci(10)}\")  # 55\nprint(f\"F(50) = {fibonacci(50)}\")\nprint(f\"F(10^9) mod MOD = {fibonacci(10**9)}\")"
+    }
+  },
+  {
+    "slug": "probability-expected-value",
+    "title": "Probability & Expected Value",
+    "difficulty": "Hard",
+    "summary": "Compute probabilities and expected values using linearity of expectation and recurrences.",
+    "tags": ["probability", "expected-value", "counting"],
+    "content": [
+      "Expected value E[X] = Σ(x × P(X=x)) = Σ P(X≥i) for non-negative integer X.",
+      "Linearity of expectation: E[X + Y] = E[X] + E[Y], even if X and Y are dependent!",
+      "This property is extremely powerful - decompose complex expectations into simpler parts.",
+      "Example: Expected inversions = Σ P(A[i] > A[j]) for all i < j. Each pair contributes independently.",
+      "Geometric distribution: E[trials until success] = 1/p where p is probability of success.",
+      "For probability calculations mod prime: compute as fractions, output numerator × denominator⁻¹ mod p.",
+      "Common patterns: contribution technique, indicator random variables, recursive expectations."
+    ],
+    "example": {
+      "language": "python",
+      "code": "MOD = 10**9 + 7\n\ndef mod_inverse(a, m=MOD):\n    return pow(a, m - 2, m)\n\ndef expected_dice_sum(n):\n    \"\"\"Expected sum of n dice rolls (linearity of expectation)\"\"\"\n    # E[one die] = (1+2+3+4+5+6)/6 = 3.5\n    # E[n dice] = n × 3.5 = 7n/2\n    # Return as fraction mod MOD\n    numerator = 7 * n\n    denominator = 2\n    return numerator * mod_inverse(denominator) % MOD\n\ndef coupon_collector(n):\n    \"\"\"Expected trials to collect all n distinct items\"\"\"\n    # E = n × (1/n + 1/(n-1) + ... + 1/1) = n × H_n\n    # Where H_n is n-th harmonic number\n    result = 0\n    for i in range(1, n + 1):\n        # Add n/i = n × inverse(i)\n        result = (result + n * mod_inverse(i)) % MOD\n    return result\n\ndef expected_inversions_random_permutation(n):\n    \"\"\"Expected inversions in random permutation of n elements\"\"\"\n    # Each pair (i,j) has 1/2 probability of being inverted\n    # Total pairs = n(n-1)/2, expected inversions = n(n-1)/4\n    num = n * (n - 1)\n    return num * mod_inverse(4) % MOD\n\nprint(f\"E[sum of 3 dice] = {expected_dice_sum(3)}\")\nprint(f\"E[collect 10 items] ≈ {coupon_collector(10)}\")"
+    }
+  }
+]

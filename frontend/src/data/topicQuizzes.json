@@ -1,0 +1,3039 @@
+{
+  "array-basics": [
+    {
+      "id": "ab1",
+      "type": "mcq",
+      "question": "What is the time complexity of accessing an element in an array by its index?",
+      "options": [
+        "O(1)",
+        "O(n)",
+        "O(log n)",
+        "O(n²)"
+      ],
+      "correctIndex": 0,
+      "explanation": "Arrays provide O(1) random access because elements are stored at contiguous memory locations, allowing direct calculation of the memory address."
+    },
+    {
+      "id": "ab2",
+      "type": "true_false",
+      "question": "Inserting an element at the end of a dynamic array always takes O(1) time.",
+      "correctAnswer": false,
+      "explanation": "While it's usually O(1) amortized, when the array is full, it needs to resize (typically doubling), which takes O(n) time for that operation."
+    },
+    {
+      "id": "ab3",
+      "type": "mcq",
+      "question": "What is the time complexity of inserting an element in the middle of an array?",
+      "options": [
+        "O(1)",
+        "O(log n)",
+        "O(n)",
+        "O(n log n)"
+      ],
+      "correctIndex": 2,
+      "explanation": "Inserting in the middle requires shifting all subsequent elements by one position, which takes O(n) time."
+    },
+    {
+      "id": "ab4",
+      "type": "short",
+      "question": "In Python, if arr = [10, 20, 30, 40], what does arr[-1] return? (Enter just the number)",
+      "correctAnswer": "40",
+      "explanation": "Negative indexing in Python starts from the end. arr[-1] returns the last element, which is 40."
+    },
+    {
+      "id": "ab5",
+      "type": "mcq",
+      "question": "Which operation is NOT efficient on arrays?",
+      "options": [
+        "Access by index",
+        "Iterating all elements",
+        "Insertion at arbitrary position",
+        "Appending at the end"
+      ],
+      "correctIndex": 2,
+      "explanation": "Insertion at arbitrary position requires shifting elements and is O(n). Other operations are O(1) or O(n) but efficient."
+    },
+    {
+      "id": "ab6",
+      "type": "true_false",
+      "question": "Arrays in Python (lists) are fixed-size and cannot grow dynamically.",
+      "correctAnswer": false,
+      "explanation": "Python lists are dynamic arrays that automatically resize when needed. Fixed-size arrays exist in languages like C/C++/Java."
+    }
+  ],
+  "bubble-sort": [
+    {
+      "id": "bs1",
+      "type": "mcq",
+      "question": "What is the worst-case time complexity of Bubble Sort?",
+      "options": [
+        "O(n)",
+        "O(n log n)",
+        "O(n²)",
+        "O(2^n)"
+      ],
+      "correctIndex": 2,
+      "explanation": "Bubble Sort compares adjacent elements in nested loops, resulting in O(n²) comparisons in the worst case."
+    },
+    {
+      "id": "bs2",
+      "type": "true_false",
+      "question": "Bubble Sort is a stable sorting algorithm.",
+      "correctAnswer": true,
+      "explanation": "Bubble Sort maintains the relative order of equal elements because it only swaps adjacent elements when the left one is strictly greater."
+    },
+    {
+      "id": "bs3",
+      "type": "mcq",
+      "question": "After one complete pass of Bubble Sort on [5, 1, 4, 2, 8], which element is guaranteed to be in its final position?",
+      "options": [
+        "5",
+        "1",
+        "8",
+        "2"
+      ],
+      "correctIndex": 2,
+      "explanation": "After one pass, the largest element 'bubbles up' to the end. So 8 will be at the last position."
+    },
+    {
+      "id": "bs4",
+      "type": "short",
+      "question": "What is the space complexity of Bubble Sort? (Answer: O(?))",
+      "correctAnswer": "O(1)",
+      "explanation": "Bubble Sort is an in-place algorithm that only uses a constant amount of extra space for swapping."
+    },
+    {
+      "id": "bs5",
+      "type": "mcq",
+      "question": "What optimization can make Bubble Sort perform in O(n) for already sorted arrays?",
+      "options": [
+        "Using binary search",
+        "Tracking if any swaps occurred",
+        "Parallelizing the comparisons",
+        "Using extra memory"
+      ],
+      "correctIndex": 1,
+      "explanation": "If no swaps occur in a pass, the array is sorted. We can exit early, making it O(n) for sorted input."
+    },
+    {
+      "id": "bs6",
+      "type": "true_false",
+      "question": "Bubble Sort performs fewer swaps than Selection Sort in the worst case.",
+      "correctAnswer": false,
+      "explanation": "Bubble Sort can perform O(n²) swaps in the worst case (reverse sorted), while Selection Sort always performs exactly n-1 swaps."
+    }
+  ],
+  "merge-sort": [
+    {
+      "id": "ms1",
+      "type": "mcq",
+      "question": "What is the time complexity of Merge Sort in all cases?",
+      "options": [
+        "O(n)",
+        "O(n log n)",
+        "O(n²)",
+        "O(log n)"
+      ],
+      "correctIndex": 1,
+      "explanation": "Merge Sort always divides the array in half (log n levels) and merges in O(n) at each level, giving O(n log n) in all cases."
+    },
+    {
+      "id": "ms2",
+      "type": "mcq",
+      "question": "What is the space complexity of standard Merge Sort?",
+      "options": [
+        "O(1)",
+        "O(log n)",
+        "O(n)",
+        "O(n log n)"
+      ],
+      "correctIndex": 2,
+      "explanation": "Merge Sort requires O(n) auxiliary space for the temporary arrays used during merging."
+    },
+    {
+      "id": "ms3",
+      "type": "true_false",
+      "question": "Merge Sort is a stable sorting algorithm.",
+      "correctAnswer": true,
+      "explanation": "When merging, we take from the left subarray when elements are equal, preserving the original order of equal elements."
+    },
+    {
+      "id": "ms4",
+      "type": "short",
+      "question": "What programming paradigm does Merge Sort use? (Two words, lowercase)",
+      "correctAnswer": "divide and conquer",
+      "explanation": "Merge Sort divides the problem into smaller subproblems, solves them recursively, and combines the solutions."
+    },
+    {
+      "id": "ms5",
+      "type": "mcq",
+      "question": "During the merge step, what determines which element goes into the result array first?",
+      "options": [
+        "Random selection",
+        "The smaller element from the two subarrays",
+        "The element from the left subarray always",
+        "The larger element"
+      ],
+      "correctIndex": 1,
+      "explanation": "We compare the front elements of both subarrays and pick the smaller one to maintain sorted order."
+    },
+    {
+      "id": "ms6",
+      "type": "true_false",
+      "question": "Merge Sort is generally preferred over Quick Sort when stability is required.",
+      "correctAnswer": true,
+      "explanation": "Merge Sort is stable while Quick Sort is typically unstable, making Merge Sort better when preserving relative order matters."
+    }
+  ],
+  "stack-basics": [
+    {
+      "id": "st1",
+      "type": "mcq",
+      "question": "What does LIFO stand for in the context of stacks?",
+      "options": [
+        "Linear In Fixed Out",
+        "Last In First Out",
+        "Least In First Out",
+        "Last Item First Order"
+      ],
+      "correctIndex": 1,
+      "explanation": "LIFO (Last In First Out) means the most recently added element is the first one to be removed."
+    },
+    {
+      "id": "st2",
+      "type": "mcq",
+      "question": "What is the time complexity of push and pop operations on a stack?",
+      "options": [
+        "O(1) and O(n)",
+        "O(n) and O(1)",
+        "O(1) and O(1)",
+        "O(log n) and O(log n)"
+      ],
+      "correctIndex": 2,
+      "explanation": "Both push and pop operate on the top of the stack, requiring only constant time O(1)."
+    },
+    {
+      "id": "st3",
+      "type": "true_false",
+      "question": "A stack can be used to reverse a string.",
+      "correctAnswer": true,
+      "explanation": "Push all characters onto the stack, then pop them off. The LIFO property reverses the order."
+    },
+    {
+      "id": "st4",
+      "type": "short",
+      "question": "What is the matching closing bracket for '(' in valid parentheses problems?",
+      "correctAnswer": ")",
+      "explanation": "Opening parenthesis '(' matches with closing parenthesis ')'."
+    },
+    {
+      "id": "st5",
+      "type": "mcq",
+      "question": "Which application does NOT typically use a stack?",
+      "options": [
+        "Function call management",
+        "Undo operations",
+        "BFS traversal",
+        "Expression evaluation"
+      ],
+      "correctIndex": 2,
+      "explanation": "BFS uses a queue (FIFO). DFS uses a stack. Function calls, undo, and expression evaluation all use stacks."
+    },
+    {
+      "id": "st6",
+      "type": "true_false",
+      "question": "The expression '([)]' has valid parentheses.",
+      "correctAnswer": false,
+      "explanation": "The closing ] doesn't match the most recent opening (, which should be closed with ). Valid nesting required."
+    }
+  ],
+  "binary-search-basics": [
+    {
+      "id": "bsb1",
+      "type": "mcq",
+      "question": "What is the time complexity of binary search?",
+      "options": [
+        "O(n)",
+        "O(log n)",
+        "O(n log n)",
+        "O(1)"
+      ],
+      "correctIndex": 1,
+      "explanation": "Binary search halves the search space with each comparison, resulting in O(log n) time complexity."
+    },
+    {
+      "id": "bsb2",
+      "type": "true_false",
+      "question": "Binary search requires the array to be sorted.",
+      "correctAnswer": true,
+      "explanation": "Binary search relies on the sorted property to decide which half to search. It won't work correctly on unsorted arrays."
+    },
+    {
+      "id": "bsb3",
+      "type": "mcq",
+      "question": "In binary search, what is the safer way to calculate mid to avoid integer overflow?",
+      "options": [
+        "mid = (left + right) / 2",
+        "mid = left + (right - left) / 2",
+        "mid = right - left / 2",
+        "mid = left * right / 2"
+      ],
+      "correctIndex": 1,
+      "explanation": "Using left + (right - left) / 2 prevents potential overflow when left + right exceeds integer limits."
+    },
+    {
+      "id": "bsb4",
+      "type": "short",
+      "question": "How many comparisons does binary search need at most to find an element in a sorted array of 1000 elements? (Just the number)",
+      "correctAnswer": "10",
+      "explanation": "log₂(1000) ≈ 10. Binary search needs at most ⌈log₂(n)⌉ comparisons."
+    },
+    {
+      "id": "bsb5",
+      "type": "mcq",
+      "question": "What should binary search return if the target is not found?",
+      "options": [
+        "The middle index",
+        "The length of the array",
+        "-1 or the insertion position",
+        "The first element"
+      ],
+      "correctIndex": 2,
+      "explanation": "Typically return -1 for 'not found', or the insertion position if you need to know where to insert the target."
+    },
+    {
+      "id": "bsb6",
+      "type": "true_false",
+      "question": "Binary search can only be used on arrays, not on other data structures.",
+      "correctAnswer": false,
+      "explanation": "Binary search concept applies to any monotonic function or sorted sequence, including answer spaces in 'binary search the answer' problems."
+    }
+  ],
+  "binary-trees-intro": [
+    {
+      "id": "bt1",
+      "type": "mcq",
+      "question": "What is the maximum number of children a node can have in a binary tree?",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "Unlimited"
+      ],
+      "correctIndex": 1,
+      "explanation": "By definition, each node in a binary tree can have at most 2 children: left and right."
+    },
+    {
+      "id": "bt2",
+      "type": "mcq",
+      "question": "What is a leaf node?",
+      "options": [
+        "A node with only a left child",
+        "A node with only a right child",
+        "A node with no children",
+        "The root node"
+      ],
+      "correctIndex": 2,
+      "explanation": "A leaf node (or external node) is a node that has no children - both left and right are null."
+    },
+    {
+      "id": "bt3",
+      "type": "true_false",
+      "question": "The height of a tree with only one node (root) is 1.",
+      "correctAnswer": false,
+      "explanation": "By convention, the height of a single-node tree is 0 (or 1 in some definitions counting nodes instead of edges)."
+    },
+    {
+      "id": "bt4",
+      "type": "short",
+      "question": "What is the maximum number of nodes at level 3 of a binary tree? (Level 0 is root)",
+      "correctAnswer": "8",
+      "explanation": "Maximum nodes at level i is 2^i. At level 3: 2³ = 8 nodes."
+    },
+    {
+      "id": "bt5",
+      "type": "mcq",
+      "question": "In a complete binary tree with n nodes, what is the height?",
+      "options": [
+        "O(n)",
+        "O(log n)",
+        "O(n²)",
+        "O(1)"
+      ],
+      "correctIndex": 1,
+      "explanation": "A complete binary tree has height O(log n) because each level doubles the number of nodes."
+    },
+    {
+      "id": "bt6",
+      "type": "true_false",
+      "question": "A binary tree with n nodes has exactly n-1 edges.",
+      "correctAnswer": true,
+      "explanation": "Every node except the root has exactly one parent edge, giving n-1 edges for n nodes."
+    }
+  ],
+  "graph-dfs": [
+    {
+      "id": "gd1",
+      "type": "mcq",
+      "question": "What data structure does DFS typically use (implicitly or explicitly)?",
+      "options": [
+        "Queue",
+        "Stack",
+        "Heap",
+        "Hash Table"
+      ],
+      "correctIndex": 1,
+      "explanation": "DFS uses a stack - either the call stack in recursive implementation or an explicit stack in iterative version."
+    },
+    {
+      "id": "gd2",
+      "type": "mcq",
+      "question": "What is the time complexity of DFS on a graph with V vertices and E edges?",
+      "options": [
+        "O(V)",
+        "O(E)",
+        "O(V + E)",
+        "O(V × E)"
+      ],
+      "correctIndex": 2,
+      "explanation": "DFS visits each vertex once O(V) and explores each edge once O(E), giving O(V + E) total."
+    },
+    {
+      "id": "gd3",
+      "type": "true_false",
+      "question": "DFS can be used to detect cycles in a directed graph.",
+      "correctAnswer": true,
+      "explanation": "Using three states (unvisited, in-stack, done), a back edge to an in-stack node indicates a cycle."
+    },
+    {
+      "id": "gd4",
+      "type": "short",
+      "question": "What is the space complexity of DFS for the recursion stack in a graph with V vertices (worst case)?",
+      "correctAnswer": "O(V)",
+      "explanation": "In the worst case (linear graph), the recursion stack can contain all V vertices."
+    },
+    {
+      "id": "gd5",
+      "type": "mcq",
+      "question": "Which problem is typically solved using DFS?",
+      "options": [
+        "Finding shortest path in unweighted graph",
+        "Topological sorting",
+        "Level-order traversal",
+        "Finding minimum spanning tree"
+      ],
+      "correctIndex": 1,
+      "explanation": "Topological sort uses DFS with post-order to order vertices in a DAG. BFS is for shortest paths/level-order."
+    },
+    {
+      "id": "gd6",
+      "type": "true_false",
+      "question": "DFS always finds the shortest path between two nodes.",
+      "correctAnswer": false,
+      "explanation": "DFS does not guarantee shortest path - it just finds A path. BFS finds shortest path in unweighted graphs."
+    }
+  ],
+  "graph-bfs": [
+    {
+      "id": "gb1",
+      "type": "mcq",
+      "question": "What data structure does BFS use?",
+      "options": [
+        "Stack",
+        "Queue",
+        "Heap",
+        "Linked List"
+      ],
+      "correctIndex": 1,
+      "explanation": "BFS uses a queue (FIFO) to process nodes level by level, ensuring we explore closer nodes first."
+    },
+    {
+      "id": "gb2",
+      "type": "true_false",
+      "question": "BFS can find the shortest path in an unweighted graph.",
+      "correctAnswer": true,
+      "explanation": "BFS explores nodes in order of distance from source, so the first time we reach a node is via the shortest path."
+    },
+    {
+      "id": "gb3",
+      "type": "mcq",
+      "question": "What is the space complexity of BFS on a graph with V vertices?",
+      "options": [
+        "O(1)",
+        "O(log V)",
+        "O(V)",
+        "O(V²)"
+      ],
+      "correctIndex": 2,
+      "explanation": "The queue can contain up to O(V) vertices in the worst case (all vertices at same level)."
+    },
+    {
+      "id": "gb4",
+      "type": "short",
+      "question": "In BFS, what does the queue size represent at each level?",
+      "correctAnswer": "nodes at current level",
+      "explanation": "The queue size before processing a level equals the number of nodes at that distance from the source."
+    },
+    {
+      "id": "gb5",
+      "type": "mcq",
+      "question": "Which problem is best solved using BFS?",
+      "options": [
+        "Detecting cycles in directed graphs",
+        "Finding shortest path in unweighted graph",
+        "Topological sorting",
+        "Finding all paths between nodes"
+      ],
+      "correctIndex": 1,
+      "explanation": "BFS naturally finds shortest paths in unweighted graphs. DFS is better for cycle detection and topological sort."
+    },
+    {
+      "id": "gb6",
+      "type": "true_false",
+      "question": "BFS can detect if a graph is bipartite.",
+      "correctAnswer": true,
+      "explanation": "Using 2-coloring with BFS: assign opposite colors to neighbors. If a neighbor has the same color, it's not bipartite."
+    }
+  ],
+  "sorting-basics": [
+    {
+      "id": "sb1",
+      "type": "mcq",
+      "question": "Which sorting algorithm is considered stable?",
+      "options": ["Quick Sort", "Heap Sort", "Merge Sort", "Selection Sort"],
+      "correctIndex": 2,
+      "explanation": "Merge Sort is stable because it preserves the relative order of equal elements during merging."
+    },
+    {
+      "id": "sb2",
+      "type": "true_false",
+      "question": "In-place sorting algorithms require O(1) extra space.",
+      "correctAnswer": true,
+      "explanation": "In-place sorting algorithms modify the input array directly and use only a constant amount of extra space."
+    },
+    {
+      "id": "sb3",
+      "type": "mcq",
+      "question": "What is the best-case time complexity of comparison-based sorting?",
+      "options": ["O(n)", "O(n log n)", "O(n²)", "O(log n)"],
+      "correctIndex": 1,
+      "explanation": "Comparison-based sorting has a lower bound of O(n log n) in the best case for worst-case algorithms like Merge Sort."
+    },
+    {
+      "id": "sb4",
+      "type": "short",
+      "question": "Which sorting algorithm uses the divide-and-conquer paradigm? (One word)",
+      "correctAnswer": "mergesort",
+      "explanation": "Merge Sort divides the array into halves, sorts recursively, and merges the results."
+    },
+    {
+      "id": "sb5",
+      "type": "mcq",
+      "question": "Which is NOT a comparison-based sorting algorithm?",
+      "options": ["Bubble Sort", "Counting Sort", "Quick Sort", "Insertion Sort"],
+      "correctIndex": 1,
+      "explanation": "Counting Sort uses key values as indices and doesn't compare elements, achieving O(n+k) time."
+    },
+    {
+      "id": "sb6",
+      "type": "true_false",
+      "question": "Adaptive sorting algorithms perform better on partially sorted data.",
+      "correctAnswer": true,
+      "explanation": "Adaptive algorithms like Insertion Sort detect existing order and reduce unnecessary comparisons."
+    }
+  ],
+  "selection-sort": [
+    {
+      "id": "ss1",
+      "type": "mcq",
+      "question": "What is the time complexity of Selection Sort in all cases?",
+      "options": ["O(n)", "O(n log n)", "O(n²)", "O(n³)"],
+      "correctIndex": 2,
+      "explanation": "Selection Sort always performs O(n²) comparisons regardless of input order, making all cases O(n²)."
+    },
+    {
+      "id": "ss2",
+      "type": "true_false",
+      "question": "Selection Sort is a stable sorting algorithm.",
+      "correctAnswer": false,
+      "explanation": "Selection Sort is unstable because it swaps non-adjacent elements, potentially changing the relative order of equal elements."
+    },
+    {
+      "id": "ss3",
+      "type": "mcq",
+      "question": "How many swaps does Selection Sort perform on an array of n elements?",
+      "options": ["O(1)", "O(n)", "O(n log n)", "O(n²)"],
+      "correctIndex": 1,
+      "explanation": "Selection Sort performs exactly n-1 swaps (one per pass), making it useful when write operations are expensive."
+    },
+    {
+      "id": "ss4",
+      "type": "short",
+      "question": "In each pass, Selection Sort finds the minimum and places it at which position? (beginning/end)",
+      "correctAnswer": "beginning",
+      "explanation": "Selection Sort finds the minimum element from the unsorted portion and places it at the beginning."
+    },
+    {
+      "id": "ss5",
+      "type": "mcq",
+      "question": "What is the space complexity of Selection Sort?",
+      "options": ["O(1)", "O(log n)", "O(n)", "O(n²)"],
+      "correctIndex": 0,
+      "explanation": "Selection Sort is in-place and uses only a constant amount of extra space for the temporary swap variable."
+    },
+    {
+      "id": "ss6",
+      "type": "true_false",
+      "question": "Selection Sort is adaptive and performs better on nearly sorted arrays.",
+      "correctAnswer": false,
+      "explanation": "Selection Sort is not adaptive; it always performs O(n²) comparisons regardless of the initial order."
+    }
+  ],
+  "insertion-sort": [
+    {
+      "id": "is1",
+      "type": "mcq",
+      "question": "What is the best-case time complexity of Insertion Sort?",
+      "options": ["O(1)", "O(n)", "O(n log n)", "O(n²)"],
+      "correctIndex": 1,
+      "explanation": "On an already sorted array, Insertion Sort only needs to compare each element once, achieving O(n)."
+    },
+    {
+      "id": "is2",
+      "type": "true_false",
+      "question": "Insertion Sort is stable.",
+      "correctAnswer": true,
+      "explanation": "Insertion Sort maintains the relative order of equal elements because it only shifts elements when they are strictly greater."
+    },
+    {
+      "id": "is3",
+      "type": "mcq",
+      "question": "Insertion Sort works by building a sorted portion from which end?",
+      "options": ["Left (beginning)", "Right (end)", "Middle", "Randomly"],
+      "correctIndex": 0,
+      "explanation": "Insertion Sort builds the sorted portion from the left, inserting each new element into its correct position."
+    },
+    {
+      "id": "is4",
+      "type": "short",
+      "question": "What is the space complexity of Insertion Sort? (Answer: O(?))",
+      "correctAnswer": "O(1)",
+      "explanation": "Insertion Sort is in-place and uses constant extra space."
+    },
+    {
+      "id": "is5",
+      "type": "mcq",
+      "question": "When is Insertion Sort preferred over more advanced algorithms?",
+      "options": ["Large arrays", "Small or nearly sorted arrays", "Random data", "Always"],
+      "correctIndex": 1,
+      "explanation": "Insertion Sort is efficient for small arrays and nearly sorted data due to its simplicity and O(n) best case."
+    },
+    {
+      "id": "is6",
+      "type": "true_false",
+      "question": "Insertion Sort performs more swaps than Selection Sort in the worst case.",
+      "correctAnswer": true,
+      "explanation": "Insertion Sort can perform O(n²) swaps in the worst case, while Selection Sort always performs exactly n-1 swaps."
+    }
+  ],
+  "quick-sort": [
+    {
+      "id": "qs1",
+      "type": "mcq",
+      "question": "What is the average-case time complexity of Quick Sort?",
+      "options": ["O(n)", "O(n log n)", "O(n²)", "O(log n)"],
+      "correctIndex": 1,
+      "explanation": "Quick Sort averages O(n log n) when the pivot divides the array into roughly equal halves."
+    },
+    {
+      "id": "qs2",
+      "type": "true_false",
+      "question": "Quick Sort is a stable sorting algorithm.",
+      "correctAnswer": false,
+      "explanation": "Standard Quick Sort is unstable because partitioning can change the relative order of equal elements."
+    },
+    {
+      "id": "qs3",
+      "type": "mcq",
+      "question": "What is the worst-case time complexity of Quick Sort?",
+      "options": ["O(n)", "O(n log n)", "O(n²)", "O(2^n)"],
+      "correctIndex": 2,
+      "explanation": "When the pivot is always the smallest or largest element (e.g., already sorted array), Quick Sort degrades to O(n²)."
+    },
+    {
+      "id": "qs4",
+      "type": "short",
+      "question": "What technique does Quick Sort use to improve partitioning? (Three words)",
+      "correctAnswer": "divide and conquer",
+      "explanation": "Quick Sort uses divide-and-conquer by partitioning around a pivot and recursively sorting subarrays."
+    },
+    {
+      "id": "qs5",
+      "type": "mcq",
+      "question": "Which pivot selection strategy helps avoid worst-case performance?",
+      "options": ["Always first element", "Always last element", "Random element", "Always middle"],
+      "correctIndex": 2,
+      "explanation": "Randomly selecting the pivot makes worst-case behavior unlikely, ensuring average O(n log n) performance."
+    },
+    {
+      "id": "qs6",
+      "type": "true_false",
+      "question": "Quick Sort has O(1) space complexity.",
+      "correctAnswer": false,
+      "explanation": "Quick Sort uses O(log n) average space for the recursion stack, or O(n) in the worst case."
+    }
+  ],
+  "queue-basics": [
+    {
+      "id": "qb1",
+      "type": "mcq",
+      "question": "What does FIFO stand for in the context of queues?",
+      "options": ["First In First Out", "Fast In Fast Out", "Final In First Out", "First Item Final Order"],
+      "correctIndex": 0,
+      "explanation": "FIFO (First In First Out) means the first element added is the first one removed."
+    },
+    {
+      "id": "qb2",
+      "type": "mcq",
+      "question": "What is the time complexity of enqueue and dequeue in a queue?",
+      "options": ["O(1) and O(1)", "O(n) and O(1)", "O(1) and O(n)", "O(log n) and O(log n)"],
+      "correctIndex": 0,
+      "explanation": "Both enqueue (add to rear) and dequeue (remove from front) are O(1) operations in a properly implemented queue."
+    },
+    {
+      "id": "qb3",
+      "type": "true_false",
+      "question": "A queue can be implemented using two stacks.",
+      "correctAnswer": true,
+      "explanation": "Using two stacks, you can simulate a queue by reversing elements when needed, maintaining FIFO order."
+    },
+    {
+      "id": "qb4",
+      "type": "short",
+      "question": "Which graph traversal algorithm uses a queue? (Three letters)",
+      "correctAnswer": "BFS",
+      "explanation": "Breadth-First Search (BFS) uses a queue to explore nodes level by level."
+    },
+    {
+      "id": "qb5",
+      "type": "mcq",
+      "question": "What happens when you try to dequeue from an empty queue?",
+      "options": ["Returns null", "Throws an error/underflow", "Returns the last element", "Creates a new queue"],
+      "correctIndex": 1,
+      "explanation": "Dequeuing from an empty queue causes an underflow error or exception depending on implementation."
+    },
+    {
+      "id": "qb6",
+      "type": "true_false",
+      "question": "A circular queue can efficiently use fixed-size array space.",
+      "correctAnswer": true,
+      "explanation": "Circular queues wrap around when reaching the end, reusing space and avoiding array resizing."
+    }
+  ],
+  "heap-basics": [
+    {
+      "id": "hb1",
+      "type": "mcq",
+      "question": "In a max heap, where is the largest element located?",
+      "options": ["At the leaf", "At the root", "At the middle", "Anywhere"],
+      "correctIndex": 1,
+      "explanation": "In a max heap, the root always contains the largest element."
+    },
+    {
+      "id": "hb2",
+      "type": "true_false",
+      "question": "Heaps are typically implemented using arrays.",
+      "correctAnswer": true,
+      "explanation": "Heaps use arrays where for node at index i, left child is at 2i+1 and right child is at 2i+2."
+    },
+    {
+      "id": "hb3",
+      "type": "mcq",
+      "question": "What is the time complexity of inserting an element into a heap?",
+      "options": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+      "correctIndex": 1,
+      "explanation": "Insertion involves adding to the end and bubbling up, which takes O(log n) time in the worst case."
+    },
+    {
+      "id": "hb4",
+      "type": "short",
+      "question": "What is the time complexity of extracting the max from a max heap? (Answer: O(?))",
+      "correctAnswer": "O(log n)",
+      "explanation": "Extract-max removes the root and heapifies down, taking O(log n) time."
+    },
+    {
+      "id": "hb5",
+      "type": "mcq",
+      "question": "Which algorithm uses a heap to achieve O(n log n) sorting?",
+      "options": ["Bubble Sort", "Heap Sort", "Insertion Sort", "Selection Sort"],
+      "correctIndex": 1,
+      "explanation": "Heap Sort builds a heap and repeatedly extracts the max/min, achieving O(n log n)."
+    },
+    {
+      "id": "hb6",
+      "type": "true_false",
+      "question": "A heap is a complete binary tree.",
+      "correctAnswer": true,
+      "explanation": "Heaps are complete binary trees, meaning all levels are filled except possibly the last, which fills left-to-right."
+    }
+  ],
+  "linked-list-basics": [
+    {
+      "id": "ll1",
+      "type": "mcq",
+      "question": "What is the time complexity of inserting at the head of a singly linked list?",
+      "options": ["O(1)", "O(log n)", "O(n)", "O(n²)"],
+      "correctIndex": 0,
+      "explanation": "Inserting at the head only requires updating the new node's next pointer and the head reference, which is O(1)."
+    },
+    {
+      "id": "ll2",
+      "type": "true_false",
+      "question": "Linked lists provide O(1) random access by index.",
+      "correctAnswer": false,
+      "explanation": "Linked lists require O(n) time to access an element by index because you must traverse from the head."
+    },
+    {
+      "id": "ll3",
+      "type": "mcq",
+      "question": "What advantage do linked lists have over arrays?",
+      "options": ["Faster access", "Dynamic size without reallocation", "Better cache locality", "Less memory usage"],
+      "correctIndex": 1,
+      "explanation": "Linked lists grow dynamically by allocating nodes as needed, avoiding the need for array resizing."
+    },
+    {
+      "id": "ll4",
+      "type": "short",
+      "question": "What is the name of the pointer in a doubly linked list that points to the previous node?",
+      "correctAnswer": "prev",
+      "explanation": "In a doubly linked list, each node has 'next' and 'prev' pointers for bidirectional traversal."
+    },
+    {
+      "id": "ll5",
+      "type": "mcq",
+      "question": "Which technique is used to detect a cycle in a linked list?",
+      "options": ["Binary search", "Two pointers (fast and slow)", "Sorting", "Hashing all values"],
+      "correctIndex": 1,
+      "explanation": "Floyd's cycle detection (tortoise and hare) uses two pointers moving at different speeds to detect cycles in O(n) time."
+    },
+    {
+      "id": "ll6",
+      "type": "true_false",
+      "question": "Deleting a node from the middle of a singly linked list requires O(n) time.",
+      "correctAnswer": true,
+      "explanation": "You must traverse from the head to find the node before the target, which takes O(n) time."
+    }
+  ],
+  "hashmap-basics": [
+    {
+      "id": "hm1",
+      "type": "mcq",
+      "question": "What is the average-case time complexity for insertion in a hash map?",
+      "options": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+      "correctIndex": 0,
+      "explanation": "With a good hash function and low load factor, hash map insertion averages O(1)."
+    },
+    {
+      "id": "hm2",
+      "type": "true_false",
+      "question": "Hash collisions occur when two keys map to the same index.",
+      "correctAnswer": true,
+      "explanation": "Collisions happen when different keys produce the same hash value, requiring collision resolution strategies."
+    },
+    {
+      "id": "hm3",
+      "type": "mcq",
+      "question": "Which collision resolution method uses linked lists at each bucket?",
+      "options": ["Linear probing", "Quadratic probing", "Chaining", "Double hashing"],
+      "correctIndex": 2,
+      "explanation": "Chaining stores multiple key-value pairs in a linked list at each hash table bucket."
+    },
+    {
+      "id": "hm4",
+      "type": "short",
+      "question": "What is the worst-case time complexity of hash map lookup? (Answer: O(?))",
+      "correctAnswer": "O(n)",
+      "explanation": "In the worst case (all keys collide), lookup degrades to O(n) when searching through a single bucket's chain."
+    },
+    {
+      "id": "hm5",
+      "type": "mcq",
+      "question": "What is the load factor of a hash map?",
+      "options": ["Number of buckets", "Number of keys / number of buckets", "Size of the largest bucket", "Hash function speed"],
+      "correctIndex": 1,
+      "explanation": "Load factor = n/m where n is the number of keys and m is the number of buckets. It measures fullness."
+    },
+    {
+      "id": "hm6",
+      "type": "true_false",
+      "question": "Hash maps maintain insertion order of keys.",
+      "correctAnswer": false,
+      "explanation": "Standard hash maps don't maintain order. LinkedHashMap or OrderedDict variants do maintain insertion order."
+    }
+  ],
+  "array-two-pointer": [
+    {
+      "id": "tp1",
+      "type": "mcq",
+      "question": "What is the typical space complexity of two-pointer solutions?",
+      "options": ["O(1)", "O(log n)", "O(n)", "O(n²)"],
+      "correctIndex": 0,
+      "explanation": "Two-pointer techniques usually operate in-place with constant extra space O(1)."
+    },
+    {
+      "id": "tp2",
+      "type": "true_false",
+      "question": "Two-pointer technique only works on sorted arrays.",
+      "correctAnswer": false,
+      "explanation": "While often used on sorted arrays, two-pointer works on unsorted data too (e.g., fast/slow for cycle detection)."
+    },
+    {
+      "id": "tp3",
+      "type": "mcq",
+      "question": "Which problem uses two pointers starting at opposite ends?",
+      "options": ["Merge two arrays", "Two sum in sorted array", "Remove duplicates", "Find cycle"],
+      "correctIndex": 1,
+      "explanation": "Two sum in a sorted array uses left and right pointers moving inward based on sum comparison."
+    },
+    {
+      "id": "tp4",
+      "type": "short",
+      "question": "What is the time complexity of two-pointer approach for pair sum in sorted array? (Answer: O(?))",
+      "correctAnswer": "O(n)",
+      "explanation": "Two pointers traverse the array once, each moving at most n steps total, giving O(n)."
+    },
+    {
+      "id": "tp5",
+      "type": "mcq",
+      "question": "In partitioning problems, what do the two pointers typically represent?",
+      "options": ["Start and end", "Left partition boundary and current element", "Two different arrays", "Min and max values"],
+      "correctIndex": 1,
+      "explanation": "One pointer marks the partition boundary while the other scans elements to decide placement."
+    },
+    {
+      "id": "tp6",
+      "type": "true_false",
+      "question": "Two-pointer technique can reduce brute force O(n²) solutions to O(n).",
+      "correctAnswer": true,
+      "explanation": "Many problems that naively require nested loops (O(n²)) can be solved in O(n) with two pointers."
+    }
+  ],
+  "array-sliding-window": [
+    {
+      "id": "sw1",
+      "type": "mcq",
+      "question": "What is the time complexity of a fixed-size sliding window solution?",
+      "options": ["O(1)", "O(k)", "O(n)", "O(n×k)"],
+      "correctIndex": 2,
+      "explanation": "Sliding window traverses the array once (O(n)), updating the window in constant time per element."
+    },
+    {
+      "id": "sw2",
+      "type": "true_false",
+      "question": "Sliding window technique is only useful for arrays.",
+      "correctAnswer": false,
+      "explanation": "Sliding window applies to strings, streams, and any sequential data requiring subarray/substring analysis."
+    },
+    {
+      "id": "sw3",
+      "type": "mcq",
+      "question": "Which problem type is best suited for sliding window?",
+      "options": ["Finding all permutations", "Maximum sum of k consecutive elements", "Binary search", "Graph traversal"],
+      "correctIndex": 1,
+      "explanation": "Sliding window efficiently finds subarray properties like max/min sum over a contiguous window."
+    },
+    {
+      "id": "sw4",
+      "type": "short",
+      "question": "In a variable-size sliding window, which pointer expands the window? (left/right)",
+      "correctAnswer": "right",
+      "explanation": "The right pointer expands the window to include new elements, while the left pointer contracts when needed."
+    },
+    {
+      "id": "sw5",
+      "type": "mcq",
+      "question": "What is the advantage of sliding window over brute force for subarray problems?",
+      "options": ["Uses less memory", "Avoids recalculating overlapping portions", "Sorts the array", "Handles negative numbers"],
+      "correctIndex": 1,
+      "explanation": "Sliding window reuses computation from the previous window, avoiding redundant calculations."
+    },
+    {
+      "id": "sw6",
+      "type": "true_false",
+      "question": "Sliding window can find the longest substring with at most k distinct characters in O(n) time.",
+      "correctAnswer": true,
+      "explanation": "Variable-size sliding window with a hash map tracks distinct characters, adjusting the window in O(n)."
+    }
+  ],
+  "tree-traversals-dfs": [
+    {
+      "id": "ttd1",
+      "type": "mcq",
+      "question": "In which order does preorder traversal visit nodes?",
+      "options": ["Left, Root, Right", "Root, Left, Right", "Left, Right, Root", "Right, Root, Left"],
+      "correctIndex": 1,
+      "explanation": "Preorder traversal visits Root first, then Left subtree, then Right subtree."
+    },
+    {
+      "id": "ttd2",
+      "type": "true_false",
+      "question": "Inorder traversal of a BST produces sorted output.",
+      "correctAnswer": true,
+      "explanation": "Inorder (Left, Root, Right) on a BST visits nodes in ascending order."
+    },
+    {
+      "id": "ttd3",
+      "type": "mcq",
+      "question": "Which traversal is used to delete a tree (free memory)?",
+      "options": ["Preorder", "Inorder", "Postorder", "Level-order"],
+      "correctIndex": 2,
+      "explanation": "Postorder ensures children are deleted before the parent, preventing memory leaks."
+    },
+    {
+      "id": "ttd4",
+      "type": "short",
+      "question": "What is the space complexity of recursive DFS traversal due to the call stack? (Answer: O(?))",
+      "correctAnswer": "O(h)",
+      "explanation": "The recursion stack depth equals the tree height h, which is O(log n) for balanced trees and O(n) for skewed trees."
+    },
+    {
+      "id": "ttd5",
+      "type": "mcq",
+      "question": "Which traversal visits the root last?",
+      "options": ["Preorder", "Inorder", "Postorder", "All of them"],
+      "correctIndex": 2,
+      "explanation": "Postorder (Left, Right, Root) processes the root after both subtrees."
+    },
+    {
+      "id": "ttd6",
+      "type": "true_false",
+      "question": "DFS tree traversal can be implemented iteratively using a stack.",
+      "correctAnswer": true,
+      "explanation": "An explicit stack can replace recursion for iterative DFS traversal."
+    }
+  ],
+  "binary-search-trees": [
+    {
+      "id": "bst1",
+      "type": "mcq",
+      "question": "What is the average-case time complexity for search in a BST?",
+      "options": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+      "correctIndex": 1,
+      "explanation": "In a balanced BST, search eliminates half the tree at each step, giving O(log n)."
+    },
+    {
+      "id": "bst2",
+      "type": "true_false",
+      "question": "In a BST, all nodes in the left subtree are less than the root.",
+      "correctAnswer": true,
+      "explanation": "BST property: left subtree < root < right subtree for every node."
+    },
+    {
+      "id": "bst3",
+      "type": "mcq",
+      "question": "What is the worst-case time complexity of insertion in an unbalanced BST?",
+      "options": ["O(1)", "O(log n)", "O(n)", "O(n²)"],
+      "correctIndex": 2,
+      "explanation": "A skewed BST (like a linked list) requires O(n) time for insertion in the worst case."
+    },
+    {
+      "id": "bst4",
+      "type": "short",
+      "question": "Which traversal of a BST gives elements in sorted order? (One word)",
+      "correctAnswer": "inorder",
+      "explanation": "Inorder traversal (Left, Root, Right) produces ascending sorted order in a BST."
+    },
+    {
+      "id": "bst5",
+      "type": "mcq",
+      "question": "How do you find the minimum value in a BST?",
+      "options": ["Go to the leftmost node", "Go to the rightmost node", "Check the root", "Do inorder traversal"],
+      "correctIndex": 0,
+      "explanation": "The minimum value in a BST is always at the leftmost node."
+    },
+    {
+      "id": "bst6",
+      "type": "true_false",
+      "question": "Self-balancing BSTs like AVL maintain O(log n) operations in all cases.",
+      "correctAnswer": true,
+      "explanation": "AVL trees rebalance after insertions/deletions to guarantee O(log n) height and operations."
+    }
+  ],
+  "level-order-traversal": [
+    {
+      "id": "lot1",
+      "type": "mcq",
+      "question": "What data structure is used for level-order traversal?",
+      "options": ["Stack", "Queue", "Heap", "Hash Table"],
+      "correctIndex": 1,
+      "explanation": "Level-order traversal uses a queue (FIFO) to process nodes level by level."
+    },
+    {
+      "id": "lot2",
+      "type": "true_false",
+      "question": "Level-order traversal is the same as BFS for trees.",
+      "correctAnswer": true,
+      "explanation": "Level-order traversal is BFS applied to trees, visiting nodes level by level."
+    },
+    {
+      "id": "lot3",
+      "type": "mcq",
+      "question": "What is the space complexity of level-order traversal?",
+      "options": ["O(1)", "O(log n)", "O(n)", "O(h)"],
+      "correctIndex": 2,
+      "explanation": "The queue can hold up to O(n) nodes in the worst case (last level of a complete tree)."
+    },
+    {
+      "id": "lot4",
+      "type": "short",
+      "question": "How many nodes are at level k in a perfect binary tree? (Answer: 2^k or 2**k)",
+      "correctAnswer": "2^k",
+      "explanation": "A perfect binary tree has 2^k nodes at level k (starting from level 0 at the root)."
+    },
+    {
+      "id": "lot5",
+      "type": "mcq",
+      "question": "Which problem requires level-order traversal?",
+      "options": ["Finding tree height", "Right side view of tree", "Checking if tree is balanced", "Counting leaf nodes"],
+      "correctIndex": 1,
+      "explanation": "Right side view takes the last node at each level, which is naturally found via level-order."
+    },
+    {
+      "id": "lot6",
+      "type": "true_false",
+      "question": "Level-order traversal can detect if a binary tree is complete.",
+      "correctAnswer": true,
+      "explanation": "If a null node is encountered before all nodes are visited, the tree isn't complete."
+    }
+  ],
+  "tree-properties-paths": [
+    {
+      "id": "tpp1",
+      "type": "mcq",
+      "question": "What is the height of a tree with only one node?",
+      "options": ["0", "1", "Undefined", "Depends on convention"],
+      "correctIndex": 0,
+      "explanation": "By convention, a single-node tree has height 0 (counting edges)."
+    },
+    {
+      "id": "tpp2",
+      "type": "true_false",
+      "question": "The diameter of a tree must pass through the root.",
+      "correctAnswer": false,
+      "explanation": "The longest path (diameter) can be between any two leaf nodes, not necessarily through the root."
+    },
+    {
+      "id": "tpp3",
+      "type": "mcq",
+      "question": "What is a path sum problem asking for?",
+      "options": ["Sum of all nodes", "Path from root to leaf with given sum", "Maximum value in tree", "Number of paths"],
+      "correctIndex": 1,
+      "explanation": "Path sum typically asks if there exists a root-to-leaf path with a target sum."
+    },
+    {
+      "id": "tpp4",
+      "type": "short",
+      "question": "What is the maximum number of nodes in a binary tree of height h? (Answer: 2^(h+1)-1)",
+      "correctAnswer": "2^(h+1)-1",
+      "explanation": "A perfect binary tree of height h has 2^(h+1) - 1 nodes (sum of geometric series)."
+    },
+    {
+      "id": "tpp5",
+      "type": "mcq",
+      "question": "Which property defines a balanced tree?",
+      "options": ["All leaves at same level", "Left subtree height - right subtree height ≤ 1", "Equal number of nodes", "No null children"],
+      "correctIndex": 1,
+      "explanation": "A balanced tree has subtree heights differing by at most 1 at every node."
+    },
+    {
+      "id": "tpp6",
+      "type": "true_false",
+      "question": "Lowest Common Ancestor (LCA) of two nodes is the deepest node that is an ancestor of both.",
+      "correctAnswer": true,
+      "explanation": "LCA is the lowest (deepest) node in the tree that has both nodes as descendants."
+    }
+  ],
+  "graph-representation": [
+    {
+      "id": "gr1",
+      "type": "mcq",
+      "question": "What is the space complexity of an adjacency matrix for a graph with V vertices?",
+      "options": ["O(V)", "O(E)", "O(V²)", "O(V + E)"],
+      "correctIndex": 2,
+      "explanation": "An adjacency matrix is a V×V 2D array, requiring O(V²) space."
+    },
+    {
+      "id": "gr2",
+      "type": "true_false",
+      "question": "Adjacency lists are more space-efficient for sparse graphs.",
+      "correctAnswer": true,
+      "explanation": "Adjacency lists use O(V + E) space, which is much less than O(V²) when E << V²."
+    },
+    {
+      "id": "gr3",
+      "type": "mcq",
+      "question": "What is the time complexity to check if an edge exists using an adjacency matrix?",
+      "options": ["O(1)", "O(V)", "O(E)", "O(V + E)"],
+      "correctIndex": 0,
+      "explanation": "Adjacency matrix allows O(1) edge lookup by checking matrix[u][v]."
+    },
+    {
+      "id": "gr4",
+      "type": "short",
+      "question": "Which graph representation is better for dense graphs? (Answer: adjacency matrix or matrix)",
+      "correctAnswer": "adjacency matrix",
+      "explanation": "Dense graphs (E ≈ V²) make adjacency matrix space-efficient and fast for edge queries."
+    },
+    {
+      "id": "gr5",
+      "type": "mcq",
+      "question": "How is a weighted graph represented in an adjacency list?",
+      "options": ["Store only neighbors", "Store (neighbor, weight) pairs", "Use a separate weight array", "Cannot be represented"],
+      "correctIndex": 1,
+      "explanation": "Each adjacency list entry stores both the neighbor node and the edge weight as a pair."
+    },
+    {
+      "id": "gr6",
+      "type": "true_false",
+      "question": "An adjacency matrix can represent both directed and undirected graphs.",
+      "correctAnswer": true,
+      "explanation": "For undirected graphs, the matrix is symmetric; for directed graphs, matrix[u][v] may differ from matrix[v][u]."
+    }
+  ],
+  "shortest-path-dijkstra": [
+    {
+      "id": "dij1",
+      "type": "mcq",
+      "question": "What is the time complexity of Dijkstra's algorithm using a min-heap?",
+      "options": ["O(V)", "O(E log V)", "O(V²)", "O(E²)"],
+      "correctIndex": 1,
+      "explanation": "Using a binary heap, Dijkstra's runs in O(E log V) by processing each edge and updating the heap."
+    },
+    {
+      "id": "dij2",
+      "type": "true_false",
+      "question": "Dijkstra's algorithm works correctly with negative edge weights.",
+      "correctAnswer": false,
+      "explanation": "Dijkstra's fails with negative weights because it assumes once a node is finalized, its distance won't improve."
+    },
+    {
+      "id": "dij3",
+      "type": "mcq",
+      "question": "What data structure is used to efficiently get the minimum distance node in Dijkstra's?",
+      "options": ["Stack", "Queue", "Min-heap/Priority queue", "Hash table"],
+      "correctIndex": 2,
+      "explanation": "A min-heap extracts the node with the smallest tentative distance in O(log V)."
+    },
+    {
+      "id": "dij4",
+      "type": "short",
+      "question": "Dijkstra's algorithm is a type of what search strategy? (One word)",
+      "correctAnswer": "greedy",
+      "explanation": "Dijkstra's is a greedy algorithm that always picks the closest unvisited node."
+    },
+    {
+      "id": "dij5",
+      "type": "mcq",
+      "question": "What does Dijkstra's algorithm compute?",
+      "options": ["Shortest path between two nodes", "Shortest paths from one source to all nodes", "All shortest paths", "Minimum spanning tree"],
+      "correctIndex": 1,
+      "explanation": "Dijkstra's finds shortest paths from a single source to all other reachable nodes."
+    },
+    {
+      "id": "dij6",
+      "type": "true_false",
+      "question": "Dijkstra's algorithm can be optimized to O(V log V + E) using a Fibonacci heap.",
+      "correctAnswer": true,
+      "explanation": "Fibonacci heaps improve decrease-key operations to O(1) amortized, yielding O(V log V + E)."
+    }
+  ],
+  "topological-sort": [
+    {
+      "id": "ts1",
+      "type": "mcq",
+      "question": "Topological sort is only defined for which type of graph?",
+      "options": ["Undirected graphs", "Directed Acyclic Graphs (DAG)", "Graphs with cycles", "Complete graphs"],
+      "correctIndex": 1,
+      "explanation": "Topological sort requires a DAG; cycles make ordering impossible."
+    },
+    {
+      "id": "ts2",
+      "type": "true_false",
+      "question": "Topological sort can be performed using DFS.",
+      "correctAnswer": true,
+      "explanation": "DFS-based topological sort adds nodes to a stack in post-order, then reverses the stack."
+    },
+    {
+      "id": "ts3",
+      "type": "mcq",
+      "question": "What is the time complexity of Kahn's algorithm for topological sort?",
+      "options": ["O(V)", "O(E)", "O(V + E)", "O(V log V)"],
+      "correctIndex": 2,
+      "explanation": "Kahn's algorithm visits each vertex and edge once, giving O(V + E)."
+    },
+    {
+      "id": "ts4",
+      "type": "short",
+      "question": "In Kahn's algorithm, which nodes are processed first? (Nodes with indegree = ?)",
+      "correctAnswer": "0",
+      "explanation": "Kahn's algorithm starts with nodes having indegree 0 (no incoming edges)."
+    },
+    {
+      "id": "ts5",
+      "type": "mcq",
+      "question": "What does topological sort help with?",
+      "options": ["Finding shortest path", "Scheduling tasks with dependencies", "Detecting cycles", "Finding connected components"],
+      "correctIndex": 1,
+      "explanation": "Topological sort orders tasks so that prerequisites come before dependent tasks."
+    },
+    {
+      "id": "ts6",
+      "type": "true_false",
+      "question": "A DAG can have multiple valid topological orderings.",
+      "correctAnswer": true,
+      "explanation": "If there are multiple valid orderings, any one that respects dependencies is correct."
+    }
+  ],
+  "dp-introduction": [
+    {
+      "id": "dpi1",
+      "type": "mcq",
+      "question": "What are the two key properties required for dynamic programming?",
+      "options": ["Greedy choice and optimal substructure", "Overlapping subproblems and optimal substructure", "Recursion and iteration", "Memoization and tabulation"],
+      "correctIndex": 1,
+      "explanation": "DP requires overlapping subproblems (reused computations) and optimal substructure (optimal solution from subproblem solutions)."
+    },
+    {
+      "id": "dpi2",
+      "type": "true_false",
+      "question": "Memoization is a top-down DP approach.",
+      "correctAnswer": true,
+      "explanation": "Memoization uses recursion with caching (top-down), while tabulation builds solutions iteratively (bottom-up)."
+    },
+    {
+      "id": "dpi3",
+      "type": "mcq",
+      "question": "What is the time complexity of Fibonacci using DP?",
+      "options": ["O(2^n)", "O(n²)", "O(n)", "O(log n)"],
+      "correctIndex": 2,
+      "explanation": "DP computes each Fibonacci number once and stores it, reducing exponential time to O(n)."
+    },
+    {
+      "id": "dpi4",
+      "type": "short",
+      "question": "What does DP stand for? (Two words)",
+      "correctAnswer": "dynamic programming",
+      "explanation": "Dynamic Programming is an optimization technique for problems with overlapping subproblems."
+    },
+    {
+      "id": "dpi5",
+      "type": "mcq",
+      "question": "Which problem is a classic DP example?",
+      "options": ["Binary search", "Merge sort", "Coin change", "DFS traversal"],
+      "correctIndex": 2,
+      "explanation": "Coin change (minimum coins to make a value) has overlapping subproblems and optimal substructure."
+    },
+    {
+      "id": "dpi6",
+      "type": "true_false",
+      "question": "DP always uses less space than recursion.",
+      "correctAnswer": false,
+      "explanation": "DP can use O(n) or O(n²) space for tables, sometimes more than O(log n) recursion stack (e.g., tail recursion)."
+    }
+  ],
+  "dp-1d-sequence": [
+    {
+      "id": "dp1d1",
+      "type": "mcq",
+      "question": "What is the time complexity of the Longest Increasing Subsequence (LIS) problem using DP?",
+      "options": ["O(n)", "O(n log n)", "O(n²)", "O(2^n)"],
+      "correctIndex": 2,
+      "explanation": "Basic DP for LIS compares each element with all previous elements, giving O(n²)."
+    },
+    {
+      "id": "dp1d2",
+      "type": "true_false",
+      "question": "The House Robber problem uses 1D DP.",
+      "correctAnswer": true,
+      "explanation": "House Robber uses a 1D DP array where dp[i] = max profit robbing houses 0..i."
+    },
+    {
+      "id": "dp1d3",
+      "type": "mcq",
+      "question": "In the climbing stairs problem, if you can take 1 or 2 steps, what is dp[n]?",
+      "options": ["dp[n-1] + dp[n-2]", "dp[n-1] * dp[n-2]", "max(dp[n-1], dp[n-2])", "dp[n-1]"],
+      "correctIndex": 0,
+      "explanation": "To reach step n, you can come from n-1 (1 step) or n-2 (2 steps), so dp[n] = dp[n-1] + dp[n-2]."
+    },
+    {
+      "id": "dp1d4",
+      "type": "short",
+      "question": "What is the space complexity of 1D DP problems optimized with sliding window? (Answer: O(?))",
+      "correctAnswer": "O(1)",
+      "explanation": "Many 1D DP problems can be optimized to O(1) space by keeping only the last few values."
+    },
+    {
+      "id": "dp1d5",
+      "type": "mcq",
+      "question": "What does dp[i] typically represent in 1D sequence DP?",
+      "options": ["The i-th input value", "Optimal solution for subproblem ending/including index i", "Number of ways to reach i", "All of the above"],
+      "correctIndex": 3,
+      "explanation": "dp[i] can represent optimal value, count of ways, or other metrics for the subproblem up to index i."
+    },
+    {
+      "id": "dp1d6",
+      "type": "true_false",
+      "question": "Maximum subarray sum (Kadane's algorithm) is a 1D DP problem.",
+      "correctAnswer": true,
+      "explanation": "Kadane's uses dp[i] = max(arr[i], dp[i-1] + arr[i]) to track max sum ending at i."
+    }
+  ],
+  "dp-knapsack": [
+    {
+      "id": "dpk1",
+      "type": "mcq",
+      "question": "What is the time complexity of 0/1 Knapsack using DP?",
+      "options": ["O(n)", "O(W)", "O(n × W)", "O(2^n)"],
+      "correctIndex": 2,
+      "explanation": "0/1 Knapsack DP has a table of size n (items) × W (capacity), giving O(n × W)."
+    },
+    {
+      "id": "dpk2",
+      "type": "true_false",
+      "question": "In 0/1 Knapsack, each item can be used multiple times.",
+      "correctAnswer": false,
+      "explanation": "0/1 Knapsack allows each item to be taken at most once. Unbounded Knapsack allows repetition."
+    },
+    {
+      "id": "dpk3",
+      "type": "mcq",
+      "question": "What does dp[i][w] represent in 0/1 Knapsack?",
+      "options": ["Weight of item i", "Maximum value using first i items with capacity w", "Number of ways to fill capacity w", "Minimum weight"],
+      "correctIndex": 1,
+      "explanation": "dp[i][w] = maximum value achievable using the first i items with knapsack capacity w."
+    },
+    {
+      "id": "dpk4",
+      "type": "short",
+      "question": "Can 0/1 Knapsack space be optimized to O(W) instead of O(n×W)? (yes/no)",
+      "correctAnswer": "yes",
+      "explanation": "By iterating backwards, you can use a 1D array of size W, reducing space to O(W)."
+    },
+    {
+      "id": "dpk5",
+      "type": "mcq",
+      "question": "In the recurrence relation, when do we include item i in the knapsack?",
+      "options": ["Always", "If weight[i] ≤ w and including it increases value", "If value[i] is maximum", "Never"],
+      "correctIndex": 1,
+      "explanation": "Include item i if its weight fits (weight[i] ≤ w) and it improves the total value."
+    },
+    {
+      "id": "dpk6",
+      "type": "true_false",
+      "question": "Subset Sum is a special case of 0/1 Knapsack where all values equal 1.",
+      "correctAnswer": true,
+      "explanation": "Subset Sum asks if a subset sums to target, equivalent to Knapsack with value[i] = weight[i] and capacity = target."
+    }
+  ],
+  "dp-strings": [
+    {
+      "id": "dps1",
+      "type": "mcq",
+      "question": "What is the time complexity of Longest Common Subsequence (LCS)?",
+      "options": ["O(m + n)", "O(m × n)", "O(m² × n²)", "O(2^n)"],
+      "correctIndex": 1,
+      "explanation": "LCS uses a 2D DP table of size m × n, where m and n are the lengths of the two strings."
+    },
+    {
+      "id": "dps2",
+      "type": "true_false",
+      "question": "Edit Distance (Levenshtein Distance) measures the minimum operations to transform one string to another.",
+      "correctAnswer": true,
+      "explanation": "Edit Distance counts insertions, deletions, and substitutions needed to convert string A to string B."
+    },
+    {
+      "id": "dps3",
+      "type": "mcq",
+      "question": "In LCS, if s1[i] == s2[j], what is dp[i][j]?",
+      "options": ["dp[i-1][j]", "dp[i][j-1]", "dp[i-1][j-1] + 1", "max(dp[i-1][j], dp[i][j-1])"],
+      "correctIndex": 2,
+      "explanation": "If characters match, extend the LCS from the previous diagonal: dp[i][j] = dp[i-1][j-1] + 1."
+    },
+    {
+      "id": "dps4",
+      "type": "short",
+      "question": "What is the length of the Longest Palindromic Subsequence in 'bbbab'? (Just the number)",
+      "correctAnswer": "4",
+      "explanation": "The longest palindromic subsequence is 'bbbb' with length 4."
+    },
+    {
+      "id": "dps5",
+      "type": "mcq",
+      "question": "Which string DP problem involves minimum operations (insert/delete/replace)?",
+      "options": ["LCS", "Edit Distance", "Longest Palindrome", "String matching"],
+      "correctIndex": 1,
+      "explanation": "Edit Distance calculates the minimum number of operations to transform one string into another."
+    },
+    {
+      "id": "dps6",
+      "type": "true_false",
+      "question": "Palindrome partitioning DP finds the minimum cuts needed to partition a string into palindromes.",
+      "correctAnswer": true,
+      "explanation": "Palindrome partitioning DP minimizes the number of cuts such that each substring is a palindrome."
+    }
+  ],
+  "binary-search-advanced": [
+    {
+      "id": "bsa1",
+      "type": "mcq",
+      "question": "What technique is used when binary searching on answer space rather than array indices?",
+      "options": ["Linear search", "Binary search the answer", "Ternary search", "Exponential search"],
+      "correctIndex": 1,
+      "explanation": "'Binary search the answer' searches a range of possible answers, checking feasibility at each midpoint."
+    },
+    {
+      "id": "bsa2",
+      "type": "true_false",
+      "question": "Binary search can be used on rotated sorted arrays.",
+      "correctAnswer": true,
+      "explanation": "By identifying which half is sorted, binary search can find elements in O(log n) in rotated sorted arrays."
+    },
+    {
+      "id": "bsa3",
+      "type": "mcq",
+      "question": "What is the key property required for binary search on answer space?",
+      "options": ["Array must be sorted", "Answer space must be monotonic", "Array must be unique", "Must have duplicates"],
+      "correctIndex": 1,
+      "explanation": "The predicate function (feasibility check) must be monotonic: if x works, all larger x work (or vice versa)."
+    },
+    {
+      "id": "bsa4",
+      "type": "short",
+      "question": "In 'Koko eating bananas', what are you binary searching? (The minimum eating speed or speed)",
+      "correctAnswer": "speed",
+      "explanation": "You binary search the minimum eating speed (bananas per hour) that allows Koko to finish in time."
+    },
+    {
+      "id": "bsa5",
+      "type": "mcq",
+      "question": "What is the time complexity of binary search on a 2D sorted matrix?",
+      "options": ["O(log(m × n))", "O(m + n)", "O(m log n)", "O(m × n)"],
+      "correctIndex": 1,
+      "explanation": "Efficient 2D binary search starts at top-right (or bottom-left) and eliminates a row or column each step: O(m + n)."
+    },
+    {
+      "id": "bsa6",
+      "type": "true_false",
+      "question": "Binary search can find the first or last occurrence of a target in a sorted array with duplicates.",
+      "correctAnswer": true,
+      "explanation": "By adjusting conditions (continue searching left/right after finding target), you can find boundaries."
+    }
+  ],
+  "greedy-algorithms": [
+    {
+      "id": "ga1",
+      "type": "mcq",
+      "question": "What characterizes a greedy algorithm?",
+      "options": ["Makes optimal choice at each step", "Explores all possibilities", "Uses recursion", "Requires memoization"],
+      "correctIndex": 0,
+      "explanation": "Greedy algorithms make locally optimal choices at each step, hoping to reach a global optimum."
+    },
+    {
+      "id": "ga2",
+      "type": "true_false",
+      "question": "Greedy algorithms always produce the optimal solution.",
+      "correctAnswer": false,
+      "explanation": "Greedy works only for problems with the greedy-choice property; some problems require DP or other approaches."
+    },
+    {
+      "id": "ga3",
+      "type": "mcq",
+      "question": "Which problem is solved optimally by a greedy approach?",
+      "options": ["0/1 Knapsack", "Activity Selection", "Longest Common Subsequence", "Edit Distance"],
+      "correctIndex": 1,
+      "explanation": "Activity Selection (choosing maximum non-overlapping activities) is solved optimally by sorting by end time and greedily picking."
+    },
+    {
+      "id": "ga4",
+      "type": "short",
+      "question": "In the coin change problem, does greedy always give the minimum number of coins? (yes/no)",
+      "correctAnswer": "no",
+      "explanation": "Greedy fails for some coin systems (e.g., coins = [1, 3, 4], target = 6: greedy gives [4,1,1] but optimal is [3,3])."
+    },
+    {
+      "id": "ga5",
+      "type": "mcq",
+      "question": "What is the time complexity of Huffman Coding?",
+      "options": ["O(n)", "O(n log n)", "O(n²)", "O(2^n)"],
+      "correctIndex": 1,
+      "explanation": "Huffman Coding builds a heap of n characters and repeatedly merges, taking O(n log n)."
+    },
+    {
+      "id": "ga6",
+      "type": "true_false",
+      "question": "Dijkstra's algorithm is a greedy algorithm.",
+      "correctAnswer": true,
+      "explanation": "Dijkstra's greedily selects the closest unvisited node at each step."
+    }
+  ],
+  "backtracking-basics": [
+    {
+      "id": "bb1",
+      "type": "mcq",
+      "question": "What is the key idea of backtracking?",
+      "options": ["Dynamic programming", "Explore all possibilities by making choices and undoing them", "Greedy choice", "Divide and conquer"],
+      "correctIndex": 1,
+      "explanation": "Backtracking explores all possibilities by making a choice, recursing, and undoing (backtracking) if it fails."
+    },
+    {
+      "id": "bb2",
+      "type": "true_false",
+      "question": "Backtracking is more efficient than brute force.",
+      "correctAnswer": true,
+      "explanation": "Backtracking prunes invalid branches early, avoiding unnecessary exploration compared to pure brute force."
+    },
+    {
+      "id": "bb3",
+      "type": "mcq",
+      "question": "Which problem is typically solved using backtracking?",
+      "options": ["Binary search", "Merge sort", "N-Queens", "Dijkstra's algorithm"],
+      "correctIndex": 2,
+      "explanation": "N-Queens places queens on a chessboard, backtracking when conflicts arise."
+    },
+    {
+      "id": "bb4",
+      "type": "short",
+      "question": "What is the worst-case time complexity of backtracking for permutations of n elements? (Answer: O(n!))",
+      "correctAnswer": "O(n!)",
+      "explanation": "Generating all permutations explores n! possibilities."
+    },
+    {
+      "id": "bb5",
+      "type": "mcq",
+      "question": "In the subset sum problem, when do you backtrack?",
+      "options": ["When sum equals target", "When sum exceeds target or all elements used", "After every choice", "Never"],
+      "correctIndex": 1,
+      "explanation": "Backtrack when the current sum exceeds the target or no more elements remain."
+    },
+    {
+      "id": "bb6",
+      "type": "true_false",
+      "question": "Backtracking can generate all subsets of a set.",
+      "correctAnswer": true,
+      "explanation": "Backtracking explores including/excluding each element, generating all 2^n subsets."
+    }
+  ],
+  "bit-manipulation-basics": [
+    {
+      "id": "bm1",
+      "type": "mcq",
+      "question": "What does x & (x - 1) do?",
+      "options": ["Sets the rightmost 1-bit to 0", "Counts the number of 1-bits", "Toggles all bits", "Shifts bits left"],
+      "correctIndex": 0,
+      "explanation": "x & (x - 1) clears the lowest set bit (rightmost 1) in x."
+    },
+    {
+      "id": "bm2",
+      "type": "true_false",
+      "question": "XOR of a number with itself equals 0.",
+      "correctAnswer": true,
+      "explanation": "x ^ x = 0 because each bit cancels itself out."
+    },
+    {
+      "id": "bm3",
+      "type": "mcq",
+      "question": "How do you check if the i-th bit of x is set?",
+      "options": ["x & (1 << i)", "x | (1 << i)", "x ^ (1 << i)", "x >> i"],
+      "correctIndex": 0,
+      "explanation": "x & (1 << i) is non-zero if the i-th bit is set."
+    },
+    {
+      "id": "bm4",
+      "type": "short",
+      "question": "What is 5 XOR 3 in decimal? (Just the number)",
+      "correctAnswer": "6",
+      "explanation": "5 = 101₂, 3 = 011₂, 101 XOR 011 = 110₂ = 6."
+    },
+    {
+      "id": "bm5",
+      "type": "mcq",
+      "question": "How do you toggle the i-th bit of x?",
+      "options": ["x & (1 << i)", "x | (1 << i)", "x ^ (1 << i)", "x - (1 << i)"],
+      "correctIndex": 2,
+      "explanation": "x ^ (1 << i) flips the i-th bit (0→1 or 1→0)."
+    },
+    {
+      "id": "bm6",
+      "type": "true_false",
+      "question": "Left shift by 1 (x << 1) is equivalent to multiplying by 2.",
+      "correctAnswer": true,
+      "explanation": "Shifting left by 1 doubles the value: x << 1 = x × 2."
+    }
+  ],
+  "trie-prefix-tree": [
+    {
+      "id": "tr1",
+      "type": "mcq",
+      "question": "What is the time complexity of inserting a word of length m into a trie?",
+      "options": ["O(1)", "O(log m)", "O(m)", "O(m²)"],
+      "correctIndex": 2,
+      "explanation": "Insertion visits each character once, so it's O(m) where m is the word length."
+    },
+    {
+      "id": "tr2",
+      "type": "true_false",
+      "question": "Tries are memory-efficient for storing many short words with common prefixes.",
+      "correctAnswer": true,
+      "explanation": "Tries share common prefixes, saving space compared to storing each word separately."
+    },
+    {
+      "id": "tr3",
+      "type": "mcq",
+      "question": "What operation does a trie excel at compared to hash maps?",
+      "options": ["Exact word lookup", "Prefix search", "Sorting", "Counting words"],
+      "correctIndex": 1,
+      "explanation": "Tries efficiently find all words with a given prefix in O(p + results) time."
+    },
+    {
+      "id": "tr4",
+      "type": "short",
+      "question": "What flag is set at the end of a word in a trie node? (Common name, one word)",
+      "correctAnswer": "isEnd",
+      "explanation": "A boolean flag like isEndOfWord or isEnd marks the end of a valid word."
+    },
+    {
+      "id": "tr5",
+      "type": "mcq",
+      "question": "What is the space complexity of a trie with n words of average length m?",
+      "options": ["O(n)", "O(m)", "O(n × m)", "O(ALPHABET_SIZE × n × m)"],
+      "correctIndex": 3,
+      "explanation": "Each node can have up to ALPHABET_SIZE children, with O(n × m) total characters, giving O(ALPHABET_SIZE × n × m) worst case."
+    },
+    {
+      "id": "tr6",
+      "type": "true_false",
+      "question": "Tries can be used to implement autocomplete features.",
+      "correctAnswer": true,
+      "explanation": "Tries find all words with a prefix efficiently, making them ideal for autocomplete."
+    }
+  ],
+  "union-find-dsu": [
+    {
+      "id": "uf1",
+      "type": "mcq",
+      "question": "What is the amortized time complexity of Union-Find operations with path compression and union by rank?",
+      "options": ["O(1)", "O(log n)", "O(α(n))", "O(n)"],
+      "correctIndex": 2,
+      "explanation": "With both optimizations, operations are nearly O(1), specifically O(α(n)) where α is the inverse Ackermann function."
+    },
+    {
+      "id": "uf2",
+      "type": "true_false",
+      "question": "Union-Find is also known as Disjoint Set Union (DSU).",
+      "correctAnswer": true,
+      "explanation": "Union-Find and DSU are two names for the same data structure."
+    },
+    {
+      "id": "uf3",
+      "type": "mcq",
+      "question": "What does path compression do?",
+      "options": ["Merges two sets", "Flattens the tree during find", "Counts set size", "Finds the root"],
+      "correctIndex": 1,
+      "explanation": "Path compression makes all nodes on the find path point directly to the root, flattening the tree."
+    },
+    {
+      "id": "uf4",
+      "type": "short",
+      "question": "What is the main purpose of Union-Find? (Two words: detecting ...)",
+      "correctAnswer": "connected components",
+      "explanation": "Union-Find efficiently manages and queries connected components in a graph."
+    },
+    {
+      "id": "uf5",
+      "type": "mcq",
+      "question": "In Kruskal's MST algorithm, what does Union-Find detect?",
+      "options": ["Shortest path", "Cycles", "Bipartiteness", "Topological order"],
+      "correctIndex": 1,
+      "explanation": "Union-Find checks if adding an edge creates a cycle by seeing if endpoints are already connected."
+    },
+    {
+      "id": "uf6",
+      "type": "true_false",
+      "question": "Union by rank attaches the smaller tree under the root of the larger tree.",
+      "correctAnswer": true,
+      "explanation": "Union by rank (or size) keeps the tree shallow by merging the shorter tree into the taller one."
+    }
+  ],
+  "segment-tree": [
+    {
+      "id": "sgt1",
+      "type": "mcq",
+      "question": "What is the time complexity of range query and update in a segment tree?",
+      "options": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+      "correctIndex": 1,
+      "explanation": "Segment tree performs both range queries and updates in O(log n) by traversing the tree height."
+    },
+    {
+      "id": "sgt2",
+      "type": "true_false",
+      "question": "Segment trees can handle range minimum query (RMQ) efficiently.",
+      "correctAnswer": true,
+      "explanation": "Segment trees answer RMQ in O(log n) by combining results from left and right children."
+    },
+    {
+      "id": "sgt3",
+      "type": "mcq",
+      "question": "What is the space complexity of a segment tree for an array of size n?",
+      "options": ["O(n)", "O(n log n)", "O(4n)", "O(n²)"],
+      "correctIndex": 2,
+      "explanation": "A segment tree uses approximately 4n space (or 2n for the next power of 2)."
+    },
+    {
+      "id": "sgt4",
+      "type": "short",
+      "question": "What operation combines left and right child values in a segment tree? (merge/combine/aggregate, one word)",
+      "correctAnswer": "merge",
+      "explanation": "The merge (or combine) operation aggregates child results (e.g., sum, min, max)."
+    },
+    {
+      "id": "sgt5",
+      "type": "mcq",
+      "question": "When is a segment tree preferred over a simple array?",
+      "options": ["When data is static", "When frequent range queries and updates are needed", "For sorting", "For single element access"],
+      "correctIndex": 1,
+      "explanation": "Segment trees excel when you need both range queries and updates frequently, avoiding O(n) per operation."
+    },
+    {
+      "id": "sgt6",
+      "type": "true_false",
+      "question": "Lazy propagation optimizes segment trees for range updates.",
+      "correctAnswer": true,
+      "explanation": "Lazy propagation delays updates to children, making range updates O(log n) instead of O(n log n)."
+    }
+  ],
+  "bitmask-dp": [
+    {
+      "id": "bmdp1",
+      "type": "mcq",
+      "question": "What is the typical state space size for bitmask DP with n elements?",
+      "options": ["O(n)", "O(n²)", "O(2^n)", "O(n!)"],
+      "correctIndex": 2,
+      "explanation": "Bitmask DP uses a bitmask to represent subsets, with 2^n possible states for n elements."
+    },
+    {
+      "id": "bmdp2",
+      "type": "true_false",
+      "question": "Bitmask DP is useful for problems with constraints on small sets (n ≤ 20).",
+      "correctAnswer": true,
+      "explanation": "With n ≤ 20, 2^n ≈ 1 million states, which is computationally feasible."
+    },
+    {
+      "id": "bmdp3",
+      "type": "mcq",
+      "question": "In the Traveling Salesman Problem (TSP) with bitmask DP, what does the bitmask represent?",
+      "options": ["Current city", "Set of visited cities", "Path taken", "Distance traveled"],
+      "correctIndex": 1,
+      "explanation": "The bitmask encodes which cities have been visited, with each bit representing one city."
+    },
+    {
+      "id": "bmdp4",
+      "type": "short",
+      "question": "What is the time complexity of TSP using bitmask DP? (Answer: O(n² × 2^n))",
+      "correctAnswer": "O(n²×2^n)",
+      "explanation": "TSP DP iterates over all 2^n subsets and for each, tries n cities from n possible previous cities."
+    },
+    {
+      "id": "bmdp5",
+      "type": "mcq",
+      "question": "How do you check if the i-th bit is set in a bitmask?",
+      "options": ["mask & (1 << i)", "mask | (1 << i)", "mask ^ (1 << i)", "mask >> i"],
+      "correctIndex": 0,
+      "explanation": "mask & (1 << i) returns non-zero if the i-th bit is set."
+    },
+    {
+      "id": "bmdp6",
+      "type": "true_false",
+      "question": "Assignment problems can be solved optimally using bitmask DP.",
+      "correctAnswer": true,
+      "explanation": "Assignment problems (matching tasks to workers) use bitmask DP to track which tasks are assigned."
+    }
+  ],
+  "dp-on-trees": [
+    {
+      "id": "dpt1",
+      "type": "mcq",
+      "question": "What is the typical approach for DP on trees?",
+      "options": ["Iterative BFS", "Recursive DFS with memoization", "Dijkstra's algorithm", "Binary search"],
+      "correctIndex": 1,
+      "explanation": "DP on trees usually uses DFS, computing DP values for children before the parent (post-order)."
+    },
+    {
+      "id": "dpt2",
+      "type": "true_false",
+      "question": "Tree DP often uses two states: including or excluding the current node.",
+      "correctAnswer": true,
+      "explanation": "Common pattern: dp[node][0] = solution excluding node, dp[node][1] = solution including node."
+    },
+    {
+      "id": "dpt3",
+      "type": "mcq",
+      "question": "What is the time complexity of DP on trees with n nodes?",
+      "options": ["O(n)", "O(n log n)", "O(n²)", "O(2^n)"],
+      "correctIndex": 0,
+      "explanation": "Tree DP visits each node once during DFS traversal, giving O(n)."
+    },
+    {
+      "id": "dpt4",
+      "type": "short",
+      "question": "In the maximum independent set problem on trees, what does 'independent set' mean? (No two nodes are...)",
+      "correctAnswer": "adjacent",
+      "explanation": "An independent set contains nodes with no edges between them (no two adjacent nodes)."
+    },
+    {
+      "id": "dpt5",
+      "type": "mcq",
+      "question": "Which problem is solved using tree DP?",
+      "options": ["Shortest path in graph", "Maximum matching in trees", "Topological sort", "Binary search"],
+      "correctIndex": 1,
+      "explanation": "Tree DP solves problems like maximum matching, tree diameter, and subtree properties."
+    },
+    {
+      "id": "dpt6",
+      "type": "true_false",
+      "question": "Rerooting technique allows computing answers for all nodes as roots in O(n) time.",
+      "correctAnswer": true,
+      "explanation": "Rerooting computes the answer for one root, then adjusts answers for other roots in a second DFS pass."
+    }
+  ],
+  "state-machine-dp": [
+    {
+      "id": "smdp1",
+      "type": "mcq",
+      "question": "In stock trading problems, what do states typically represent?",
+      "options": ["Stock prices", "Holding/not holding stock", "Days elapsed", "Total profit"],
+      "correctIndex": 1,
+      "explanation": "States represent whether you currently hold stock, have cooldown, or are free to buy/sell."
+    },
+    {
+      "id": "smdp2",
+      "type": "true_false",
+      "question": "State machine DP models transitions between different states over time.",
+      "correctAnswer": true,
+      "explanation": "State machine DP tracks states and their transitions, computing optimal value for each state at each step."
+    },
+    {
+      "id": "smdp3",
+      "type": "mcq",
+      "question": "What is the space complexity of state machine DP with k states over n days?",
+      "options": ["O(k)", "O(n)", "O(k × n)", "O(n²)"],
+      "correctIndex": 0,
+      "explanation": "Space can be optimized to O(k) by keeping only the current and previous day's states."
+    },
+    {
+      "id": "smdp4",
+      "type": "short",
+      "question": "In 'Best Time to Buy and Sell Stock with Cooldown', how many states are there? (Just the number)",
+      "correctAnswer": "3",
+      "explanation": "Three states: holding stock, sold (cooldown), and can buy."
+    },
+    {
+      "id": "smdp5",
+      "type": "mcq",
+      "question": "State machine DP is useful for problems with:",
+      "options": ["Static data", "Sequential decisions with state constraints", "Graph traversal", "String matching"],
+      "correctIndex": 1,
+      "explanation": "State machine DP handles sequential decisions where current state limits future actions."
+    },
+    {
+      "id": "smdp6",
+      "type": "true_false",
+      "question": "State machine DP can model problems with transaction limits and cooldowns.",
+      "correctAnswer": true,
+      "explanation": "States can encode remaining transactions, cooldown status, and current holdings."
+    }
+  ],
+  "minimum-spanning-tree": [
+    {
+      "id": "mst1",
+      "type": "mcq",
+      "question": "What is the time complexity of Kruskal's algorithm for MST?",
+      "options": ["O(V)", "O(E)", "O(E log E)", "O(V²)"],
+      "correctIndex": 2,
+      "explanation": "Kruskal's sorts edges (O(E log E)) and uses Union-Find (nearly O(1) per edge)."
+    },
+    {
+      "id": "mst2",
+      "type": "true_false",
+      "question": "A minimum spanning tree connects all vertices with the minimum total edge weight.",
+      "correctAnswer": true,
+      "explanation": "An MST is a spanning tree (connects all vertices) with minimum sum of edge weights."
+    },
+    {
+      "id": "mst3",
+      "type": "mcq",
+      "question": "Which algorithm uses a priority queue to build the MST?",
+      "options": ["Kruskal's", "Prim's", "Dijkstra's", "Bellman-Ford"],
+      "correctIndex": 1,
+      "explanation": "Prim's grows the MST from a starting vertex, using a min-heap to pick the cheapest edge."
+    },
+    {
+      "id": "mst4",
+      "type": "short",
+      "question": "What data structure does Kruskal's algorithm use to detect cycles? (Two words)",
+      "correctAnswer": "union find",
+      "explanation": "Kruskal's uses Union-Find (DSU) to check if adding an edge creates a cycle."
+    },
+    {
+      "id": "mst5",
+      "type": "mcq",
+      "question": "How many edges are in a spanning tree of a graph with V vertices?",
+      "options": ["V", "V - 1", "V + 1", "2V"],
+      "correctIndex": 1,
+      "explanation": "A spanning tree is acyclic and connects V vertices, requiring exactly V - 1 edges."
+    },
+    {
+      "id": "mst6",
+      "type": "true_false",
+      "question": "If all edge weights are distinct, the MST is unique.",
+      "correctAnswer": true,
+      "explanation": "With distinct weights, there's only one minimum spanning tree."
+    }
+  ],
+  "advanced-shortest-path": [
+    {
+      "id": "asp1",
+      "type": "mcq",
+      "question": "Which algorithm handles negative edge weights but not negative cycles?",
+      "options": ["Dijkstra's", "Bellman-Ford", "BFS", "DFS"],
+      "correctIndex": 1,
+      "explanation": "Bellman-Ford works with negative weights and can detect negative cycles."
+    },
+    {
+      "id": "asp2",
+      "type": "true_false",
+      "question": "Floyd-Warshall computes shortest paths between all pairs of vertices.",
+      "correctAnswer": true,
+      "explanation": "Floyd-Warshall finds shortest paths from every vertex to every other vertex in O(V³)."
+    },
+    {
+      "id": "asp3",
+      "type": "mcq",
+      "question": "What is the time complexity of Bellman-Ford algorithm?",
+      "options": ["O(V)", "O(E)", "O(V × E)", "O(V³)"],
+      "correctIndex": 2,
+      "explanation": "Bellman-Ford relaxes all E edges V-1 times, giving O(V × E)."
+    },
+    {
+      "id": "asp4",
+      "type": "short",
+      "question": "What is the time complexity of Floyd-Warshall? (Answer: O(V³) or O(V^3))",
+      "correctAnswer": "O(V³)",
+      "explanation": "Floyd-Warshall uses three nested loops over V vertices, giving O(V³)."
+    },
+    {
+      "id": "asp5",
+      "type": "mcq",
+      "question": "How does Bellman-Ford detect negative cycles?",
+      "options": ["Run V iterations", "Run V+1 iterations and check for updates", "Use DFS", "Use Union-Find"],
+      "correctIndex": 1,
+      "explanation": "After V-1 iterations, if any edge can still be relaxed, a negative cycle exists."
+    },
+    {
+      "id": "asp6",
+      "type": "true_false",
+      "question": "A* search uses a heuristic to find shortest paths faster than Dijkstra's.",
+      "correctAnswer": true,
+      "explanation": "A* uses a heuristic to prioritize promising paths, often finding the shortest path faster."
+    }
+  ],
+  "strongly-connected-components": [
+    {
+      "id": "scc1",
+      "type": "mcq",
+      "question": "What algorithm finds strongly connected components in directed graphs?",
+      "options": ["Dijkstra's", "Kosaraju's or Tarjan's", "Kruskal's", "Prim's"],
+      "correctIndex": 1,
+      "explanation": "Kosaraju's and Tarjan's algorithms find SCCs in O(V + E) time."
+    },
+    {
+      "id": "scc2",
+      "type": "true_false",
+      "question": "A strongly connected component is a maximal set of vertices where every vertex is reachable from every other vertex.",
+      "correctAnswer": true,
+      "explanation": "In an SCC, there's a path from any vertex to any other vertex within the component."
+    },
+    {
+      "id": "scc3",
+      "type": "mcq",
+      "question": "What is the time complexity of Kosaraju's algorithm?",
+      "options": ["O(V)", "O(E)", "O(V + E)", "O(V²)"],
+      "correctIndex": 2,
+      "explanation": "Kosaraju's performs two DFS passes on the graph, each taking O(V + E)."
+    },
+    {
+      "id": "scc4",
+      "type": "short",
+      "question": "In Kosaraju's algorithm, what do you do to the graph before the second DFS? (One word)",
+      "correctAnswer": "reverse",
+      "explanation": "Kosaraju's reverses all edges (transpose the graph) before the second DFS."
+    },
+    {
+      "id": "scc5",
+      "type": "mcq",
+      "question": "What structure do SCCs form when viewed as nodes?",
+      "options": ["Tree", "Cycle", "DAG", "Complete graph"],
+      "correctIndex": 2,
+      "explanation": "The condensation graph (SCCs as nodes) is always a DAG."
+    },
+    {
+      "id": "scc6",
+      "type": "true_false",
+      "question": "Tarjan's algorithm finds SCCs in a single DFS pass.",
+      "correctAnswer": true,
+      "explanation": "Tarjan's uses low-link values during a single DFS to identify SCCs."
+    }
+  ],
+  "pattern-matching-algorithms": [
+    {
+      "id": "pma1",
+      "type": "mcq",
+      "question": "What is the time complexity of the KMP algorithm?",
+      "options": ["O(n + m)", "O(n × m)", "O(n²)", "O(m log n)"],
+      "correctIndex": 0,
+      "explanation": "KMP preprocesses the pattern in O(m) and searches in O(n), giving O(n + m) total."
+    },
+    {
+      "id": "pma2",
+      "type": "true_false",
+      "question": "The KMP algorithm uses a failure function (LPS array) to avoid redundant comparisons.",
+      "correctAnswer": true,
+      "explanation": "The Longest Proper Prefix which is also Suffix (LPS) array enables skipping already matched characters."
+    },
+    {
+      "id": "pma3",
+      "type": "mcq",
+      "question": "What does the Rabin-Karp algorithm use for pattern matching?",
+      "options": ["Binary search", "Hashing", "Tries", "Suffix arrays"],
+      "correctIndex": 1,
+      "explanation": "Rabin-Karp uses rolling hash to compare pattern hash with substring hashes in O(n + m) average time."
+    },
+    {
+      "id": "pma4",
+      "type": "short",
+      "question": "What is the worst-case time complexity of naive string matching? (Answer: O(n×m))",
+      "correctAnswer": "O(n×m)",
+      "explanation": "Naive matching checks the pattern at each position, comparing up to m characters n times."
+    },
+    {
+      "id": "pma5",
+      "type": "mcq",
+      "question": "Which algorithm is best for multiple pattern matching?",
+      "options": ["KMP", "Rabin-Karp", "Aho-Corasick", "Boyer-Moore"],
+      "correctIndex": 2,
+      "explanation": "Aho-Corasick builds a trie with failure links to find all patterns in O(n + m + z) where z is output size."
+    },
+    {
+      "id": "pma6",
+      "type": "true_false",
+      "question": "Boyer-Moore algorithm can skip portions of the text, making it fast in practice.",
+      "correctAnswer": true,
+      "explanation": "Boyer-Moore uses bad character and good suffix heuristics to skip sections, often achieving sublinear time."
+    }
+  ],
+  "advanced-string-processing": [
+    {
+      "id": "aspr1",
+      "type": "mcq",
+      "question": "What problem does Manacher's algorithm solve?",
+      "options": ["Longest common substring", "Longest palindromic substring", "Pattern matching", "String compression"],
+      "correctIndex": 1,
+      "explanation": "Manacher's finds the longest palindromic substring in O(n) time."
+    },
+    {
+      "id": "aspr2",
+      "type": "true_false",
+      "question": "Z-algorithm computes the length of the longest substring starting from each position that matches a prefix.",
+      "correctAnswer": true,
+      "explanation": "Z-algorithm builds the Z-array where Z[i] = length of longest substring starting at i matching the prefix."
+    },
+    {
+      "id": "aspr3",
+      "type": "mcq",
+      "question": "What is the time complexity of building a suffix array?",
+      "options": ["O(n)", "O(n log n)", "O(n²)", "O(n² log n)"],
+      "correctIndex": 1,
+      "explanation": "Efficient suffix array construction (e.g., prefix doubling) takes O(n log n)."
+    },
+    {
+      "id": "aspr4",
+      "type": "short",
+      "question": "What data structure can answer LCP (Longest Common Prefix) queries efficiently after preprocessing?",
+      "correctAnswer": "suffix array",
+      "explanation": "Suffix array with LCP array answers range LCP queries in O(log n) or O(1) with additional preprocessing."
+    },
+    {
+      "id": "aspr5",
+      "type": "mcq",
+      "question": "What is a suffix tree used for?",
+      "options": ["Sorting", "Fast substring search and pattern matching", "Graph traversal", "Dynamic programming"],
+      "correctIndex": 1,
+      "explanation": "Suffix trees enable O(m) pattern matching and various string queries after O(n) preprocessing."
+    },
+    {
+      "id": "aspr6",
+      "type": "true_false",
+      "question": "Suffix trees can be built in linear time using Ukkonen's algorithm.",
+      "correctAnswer": true,
+      "explanation": "Ukkonen's algorithm constructs a suffix tree in O(n) time."
+    }
+  ],
+  "game-theory": [
+    {
+      "id": "gt1",
+      "type": "mcq",
+      "question": "In Nim game, what determines the winner?",
+      "options": ["Player with most moves", "XOR of all pile sizes", "Sum of pile sizes", "Number of piles"],
+      "correctIndex": 1,
+      "explanation": "The current player wins if XOR of all pile sizes is non-zero (there exists a winning move)."
+    },
+    {
+      "id": "gt2",
+      "type": "true_false",
+      "question": "In combinatorial game theory, a position is a winning position if there exists a move to a losing position.",
+      "correctAnswer": true,
+      "explanation": "A winning position allows forcing the opponent into a losing position."
+    },
+    {
+      "id": "gt3",
+      "type": "mcq",
+      "question": "What is a Grundy number (nimber)?",
+      "options": ["Number of moves left", "Minimum Excludant (MEX) of reachable positions", "Sum of all values", "Maximum value"],
+      "correctIndex": 1,
+      "explanation": "Grundy number is the MEX (smallest non-negative integer not in the set) of Grundy numbers of reachable positions."
+    },
+    {
+      "id": "gt4",
+      "type": "short",
+      "question": "In a game where a player can't move, their position is called a... position? (winning/losing)",
+      "correctAnswer": "losing",
+      "explanation": "A position with no valid moves is a losing position (the current player loses)."
+    },
+    {
+      "id": "gt5",
+      "type": "mcq",
+      "question": "What is the Sprague-Grundy theorem used for?",
+      "options": ["Sorting algorithms", "Combining independent games", "Graph coloring", "String matching"],
+      "correctIndex": 1,
+      "explanation": "Sprague-Grundy theorem states that the XOR of Grundy numbers of independent games gives the combined game's Grundy number."
+    },
+    {
+      "id": "gt6",
+      "type": "true_false",
+      "question": "The game of Nim with two piles is a winning position if the pile sizes are equal.",
+      "correctAnswer": false,
+      "explanation": "If pile sizes are equal, XOR = 0, making it a losing position for the current player."
+    }
+  ],
+  "bit-manipulation-advanced": [
+    {
+      "id": "bma1",
+      "type": "mcq",
+      "question": "How many subsets does a set of n elements have?",
+      "options": ["n", "n²", "2^n", "n!"],
+      "correctIndex": 2,
+      "explanation": "Each element can be included or excluded, giving 2^n subsets."
+    },
+    {
+      "id": "bma2",
+      "type": "true_false",
+      "question": "Gray code is a binary sequence where successive values differ by only one bit.",
+      "correctAnswer": true,
+      "explanation": "Gray code changes only one bit between consecutive numbers, useful for minimizing errors."
+    },
+    {
+      "id": "bma3",
+      "type": "mcq",
+      "question": "What is the formula to compute Gray code from binary?",
+      "options": ["n", "n ^ (n << 1)", "n ^ (n >> 1)", "n & (n - 1)"],
+      "correctIndex": 2,
+      "explanation": "Gray code G(n) = n ^ (n >> 1)."
+    },
+    {
+      "id": "bma4",
+      "type": "short",
+      "question": "How many 1-bits are in 15 (binary 1111)? (Just the number)",
+      "correctAnswer": "4",
+      "explanation": "15 in binary is 1111, which has four 1-bits."
+    },
+    {
+      "id": "bma5",
+      "type": "mcq",
+      "question": "What does __builtin_popcount(x) do in C++?",
+      "options": ["Counts leading zeros", "Counts 1-bits", "Finds rightmost 1-bit", "Reverses bits"],
+      "correctIndex": 1,
+      "explanation": "__builtin_popcount(x) counts the number of 1-bits in x."
+    },
+    {
+      "id": "bma6",
+      "type": "true_false",
+      "question": "Bit manipulation can be used to iterate through all subsets of a set efficiently.",
+      "correctAnswer": true,
+      "explanation": "Iterating from 0 to 2^n - 1 and checking each bit gives all subsets."
+    }
+  ],
+  "computational-geometry": [
+    {
+      "id": "cg1",
+      "type": "mcq",
+      "question": "What is the time complexity of Graham's scan for convex hull?",
+      "options": ["O(n)", "O(n log n)", "O(n²)", "O(n³)"],
+      "correctIndex": 1,
+      "explanation": "Graham's scan sorts points (O(n log n)) and processes them in O(n), giving O(n log n) total."
+    },
+    {
+      "id": "cg2",
+      "type": "true_false",
+      "question": "The convex hull of n points is the smallest convex polygon containing all points.",
+      "correctAnswer": true,
+      "explanation": "A convex hull is the minimal convex boundary enclosing all points."
+    },
+    {
+      "id": "cg3",
+      "type": "mcq",
+      "question": "How do you check if three points are collinear?",
+      "options": ["Check if cross product is zero", "Check if distances are equal", "Check if slopes are different", "Check if dot product is zero"],
+      "correctIndex": 0,
+      "explanation": "Cross product of vectors (p2-p1) and (p3-p1) equals zero if points are collinear."
+    },
+    {
+      "id": "cg4",
+      "type": "short",
+      "question": "What operation determines if a point turns left or right at a vertex? (Two words)",
+      "correctAnswer": "cross product",
+      "explanation": "Cross product's sign indicates turn direction: positive = left, negative = right, zero = collinear."
+    },
+    {
+      "id": "cg5",
+      "type": "mcq",
+      "question": "Which algorithm finds the closest pair of points?",
+      "options": ["Brute force O(n²)", "Divide and conquer O(n log n)", "Graham's scan", "Both A and B"],
+      "correctIndex": 3,
+      "explanation": "Brute force checks all pairs in O(n²); divide-and-conquer achieves O(n log n)."
+    },
+    {
+      "id": "cg6",
+      "type": "true_false",
+      "question": "Sweep line algorithm processes geometric events in sorted order.",
+      "correctAnswer": true,
+      "explanation": "Sweep line moves across the plane, processing events (intersections, endpoints) in sorted order."
+    }
+  ],
+  "advanced-mathematics": [
+    {
+      "id": "am1",
+      "type": "mcq",
+      "question": "What is Euler's totient function φ(n)?",
+      "options": ["Number of divisors of n", "Count of integers ≤ n coprime to n", "Sum of divisors", "Prime factorization count"],
+      "correctIndex": 1,
+      "explanation": "φ(n) counts integers from 1 to n that are coprime (gcd = 1) with n."
+    },
+    {
+      "id": "am2",
+      "type": "true_false",
+      "question": "Modular exponentiation can compute (a^b) mod m in O(log b) time.",
+      "correctAnswer": true,
+      "explanation": "Using binary exponentiation (repeated squaring), we compute powers in O(log b) multiplications."
+    },
+    {
+      "id": "am3",
+      "type": "mcq",
+      "question": "What is the time complexity of the Sieve of Eratosthenes for finding all primes up to n?",
+      "options": ["O(n)", "O(n log n)", "O(n log log n)", "O(n²)"],
+      "correctIndex": 2,
+      "explanation": "Sieve marks multiples of each prime, taking O(n log log n) time."
+    },
+    {
+      "id": "am4",
+      "type": "short",
+      "question": "What is gcd(12, 18)? (Just the number)",
+      "correctAnswer": "6",
+      "explanation": "The greatest common divisor of 12 and 18 is 6."
+    },
+    {
+      "id": "am5",
+      "type": "mcq",
+      "question": "What does Fermat's Little Theorem state (for prime p and a not divisible by p)?",
+      "options": ["a^p ≡ a (mod p)", "a^(p-1) ≡ 1 (mod p)", "a^p ≡ 0 (mod p)", "a + p ≡ a (mod p)"],
+      "correctIndex": 1,
+      "explanation": "Fermat's Little Theorem: if p is prime and gcd(a,p)=1, then a^(p-1) ≡ 1 (mod p)."
+    },
+    {
+      "id": "am6",
+      "type": "true_false",
+      "question": "The Chinese Remainder Theorem solves systems of modular congruences.",
+      "correctAnswer": true,
+      "explanation": "CRT finds x satisfying multiple congruences x ≡ a_i (mod m_i) when m_i are pairwise coprime."
+    }
+  ],
+  "advanced-range-queries": [
+    {
+      "id": "arq1",
+      "type": "mcq",
+      "question": "What is the time complexity of Mo's algorithm for Q queries on an array of size n?",
+      "options": ["O(Q)", "O(Q log n)", "O((n + Q) × √n)", "O(Q × n)"],
+      "correctIndex": 2,
+      "explanation": "Mo's algorithm processes queries in blocks of √n, giving O((n+Q)√n) time."
+    },
+    {
+      "id": "arq2",
+      "type": "true_false",
+      "question": "Square root decomposition divides an array into √n blocks.",
+      "correctAnswer": true,
+      "explanation": "Square root decomposition splits n elements into √n blocks of size √n each."
+    },
+    {
+      "id": "arq3",
+      "type": "mcq",
+      "question": "What is the query time for square root decomposition?",
+      "options": ["O(1)", "O(√n)", "O(log n)", "O(n)"],
+      "correctIndex": 1,
+      "explanation": "Queries touch at most 2 partial blocks + √n full blocks, giving O(√n)."
+    },
+    {
+      "id": "arq4",
+      "type": "short",
+      "question": "What data structure answers static RMQ in O(1) after O(n log n) preprocessing?",
+      "correctAnswer": "sparse table",
+      "explanation": "Sparse Table precomputes range minimums for all powers of 2, enabling O(1) queries."
+    },
+    {
+      "id": "arq5",
+      "type": "mcq",
+      "question": "What does Mo's algorithm require queries to be sorted by?",
+      "options": ["Left endpoint", "Right endpoint", "Block of left endpoint, then right endpoint", "Query ID"],
+      "correctIndex": 2,
+      "explanation": "Mo's sorts queries by block of left endpoint, breaking ties by right endpoint to minimize pointer movements."
+    },
+    {
+      "id": "arq6",
+      "type": "true_false",
+      "question": "Fenwick Tree (BIT) supports range updates and range queries in O(log n).",
+      "correctAnswer": true,
+      "explanation": "With difference arrays or 2 BITs, Fenwick Trees handle both range updates and range queries in O(log n)."
+    }
+  ],
+  "advanced-backtracking": [
+    {
+      "id": "ab1",
+      "type": "mcq",
+      "question": "What is the time complexity of solving the N-Queens problem?",
+      "options": ["O(n!)", "O(n^n)", "O(2^n)", "O(n²)"],
+      "correctIndex": 0,
+      "explanation": "N-Queens explores at most n choices for row 1, n-1 for row 2, etc., bounded by O(n!)."
+    },
+    {
+      "id": "ab2",
+      "type": "true_false",
+      "question": "Sudoku solving uses backtracking with constraint propagation.",
+      "correctAnswer": true,
+      "explanation": "Sudoku solvers try values and backtrack when constraints are violated, often using constraint propagation to prune."
+    },
+    {
+      "id": "ab3",
+      "type": "mcq",
+      "question": "In N-Queens, how do you efficiently check diagonal conflicts?",
+      "options": ["Check all previous queens", "Use diagonal indices (row ± col)", "Use a 2D array", "Cannot be optimized"],
+      "correctIndex": 1,
+      "explanation": "Track diagonals using row-col and row+col as indices in sets for O(1) conflict detection."
+    },
+    {
+      "id": "ab4",
+      "type": "short",
+      "question": "What is the size of a standard Sudoku board? (Answer: 9×9 or 9x9)",
+      "correctAnswer": "9x9",
+      "explanation": "Standard Sudoku is a 9×9 grid divided into nine 3×3 subgrids."
+    },
+    {
+      "id": "ab5",
+      "type": "mcq",
+      "question": "What pruning technique reduces backtracking search space?",
+      "options": ["Random selection", "Forward checking and arc consistency", "Always pick first option", "Depth-first only"],
+      "correctIndex": 1,
+      "explanation": "Forward checking eliminates values that violate constraints, and arc consistency propagates constraints further."
+    },
+    {
+      "id": "ab6",
+      "type": "true_false",
+      "question": "Palindrome partitioning can be solved using backtracking.",
+      "correctAnswer": true,
+      "explanation": "Backtracking explores all ways to partition a string into palindromic substrings."
+    }
+  ],
+  "2-sat": [
+    {
+      "id": "tsat1",
+      "type": "mcq",
+      "question": "What type of problem does 2-SAT solve?",
+      "options": ["Graph coloring", "Boolean satisfiability with 2 literals per clause", "Shortest path", "String matching"],
+      "correctIndex": 1,
+      "explanation": "2-SAT determines if a boolean formula with clauses of 2 literals can be satisfied."
+    },
+    {
+      "id": "tsat2",
+      "type": "true_false",
+      "question": "2-SAT can be solved in polynomial time.",
+      "correctAnswer": true,
+      "explanation": "2-SAT is solvable in O(V + E) using SCC detection on the implication graph."
+    },
+    {
+      "id": "tsat3",
+      "type": "mcq",
+      "question": "What graph is built for 2-SAT?",
+      "options": ["Dependency graph", "Implication graph", "Tree", "Bipartite graph"],
+      "correctIndex": 1,
+      "explanation": "Each clause (a OR b) creates implications: NOT a → b and NOT b → a."
+    },
+    {
+      "id": "tsat4",
+      "type": "short",
+      "question": "When is a 2-SAT formula unsatisfiable? (When a variable and its negation are in the same...)",
+      "correctAnswer": "SCC",
+      "explanation": "If x and NOT x are in the same SCC, the formula is unsatisfiable."
+    },
+    {
+      "id": "tsat5",
+      "type": "mcq",
+      "question": "What is the time complexity of solving 2-SAT?",
+      "options": ["O(n)", "O(n + m)", "O(n²)", "O(2^n)"],
+      "correctIndex": 1,
+      "explanation": "2-SAT uses SCC finding on a graph with n variables (2n vertices) and m clauses (2m edges), giving O(n + m)."
+    },
+    {
+      "id": "tsat6",
+      "type": "true_false",
+      "question": "3-SAT is NP-complete, but 2-SAT is in P.",
+      "correctAnswer": true,
+      "explanation": "2-SAT has polynomial solutions, but 3-SAT (3 literals per clause) is NP-complete."
+    }
+  ],
+  "heavy-light-decomposition": [
+    {
+      "id": "hld1",
+      "type": "mcq",
+      "question": "What problem does Heavy-Light Decomposition (HLD) solve?",
+      "options": ["Path queries on trees", "Graph coloring", "Shortest paths", "String matching"],
+      "correctIndex": 0,
+      "explanation": "HLD enables efficient path queries and updates on tree paths in O(log² n)."
+    },
+    {
+      "id": "hld2",
+      "type": "true_false",
+      "question": "HLD decomposes a tree into O(log n) heavy paths per node.",
+      "correctAnswer": true,
+      "explanation": "Each node belongs to exactly one heavy path, and any root-to-node path crosses at most O(log n) heavy paths."
+    },
+    {
+      "id": "hld3",
+      "type": "mcq",
+      "question": "What is the time complexity of a path query using HLD with a segment tree?",
+      "options": ["O(1)", "O(log n)", "O(log² n)", "O(n)"],
+      "correctIndex": 2,
+      "explanation": "Path crosses O(log n) heavy paths, each queried in O(log n) with a segment tree, giving O(log² n)."
+    },
+    {
+      "id": "hld4",
+      "type": "short",
+      "question": "In HLD, what is the 'heavy child' of a node? (The child with the largest...)",
+      "correctAnswer": "subtree",
+      "explanation": "The heavy child is the child with the largest subtree size."
+    },
+    {
+      "id": "hld5",
+      "type": "mcq",
+      "question": "What data structure is commonly paired with HLD for range queries?",
+      "options": ["Hash table", "Segment tree", "Stack", "Queue"],
+      "correctIndex": 1,
+      "explanation": "HLD maps tree paths to array ranges, which are queried using a segment tree."
+    },
+    {
+      "id": "hld6",
+      "type": "true_false",
+      "question": "HLD can handle subtree queries as well as path queries.",
+      "correctAnswer": true,
+      "explanation": "Subtree nodes form a contiguous segment in HLD's DFS ordering, enabling efficient subtree queries."
+    }
+  ],
+  "suffix-arrays": [
+    {
+      "id": "sfa1",
+      "type": "mcq",
+      "question": "What is a suffix array?",
+      "options": ["Array of all prefixes", "Sorted array of all suffix indices", "Array of characters", "Hash array"],
+      "correctIndex": 1,
+      "explanation": "A suffix array stores indices of suffixes sorted lexicographically."
+    },
+    {
+      "id": "sfa2",
+      "type": "true_false",
+      "question": "Suffix arrays can be built in O(n log n) time.",
+      "correctAnswer": true,
+      "explanation": "Algorithms like prefix doubling or DC3 build suffix arrays in O(n log n) or even O(n)."
+    },
+    {
+      "id": "sfa3",
+      "type": "mcq",
+      "question": "What does the LCP array store?",
+      "options": ["Length of each suffix", "Longest Common Prefix between consecutive suffixes in suffix array", "Character frequencies", "Hash values"],
+      "correctIndex": 1,
+      "explanation": "LCP[i] stores the length of the longest common prefix between suffix[SA[i]] and suffix[SA[i-1]]."
+    },
+    {
+      "id": "sfa4",
+      "type": "short",
+      "question": "What is the time complexity of pattern matching using a suffix array with binary search? (Answer: O(m log n))",
+      "correctAnswer": "O(m log n)",
+      "explanation": "Binary search on suffix array compares the pattern (length m) with suffixes in O(log n) steps."
+    },
+    {
+      "id": "sfa5",
+      "type": "mcq",
+      "question": "Suffix arrays are more space-efficient than what alternative structure?",
+      "options": ["Hash tables", "Suffix trees", "Tries", "Segment trees"],
+      "correctIndex": 1,
+      "explanation": "Suffix arrays use O(n) space compared to suffix trees which use O(n) but with much larger constants."
+    },
+    {
+      "id": "sfa6",
+      "type": "true_false",
+      "question": "The LCP array can be computed in O(n) time from the suffix array.",
+      "correctAnswer": true,
+      "explanation": "Kasai's algorithm computes the LCP array in linear time O(n)."
+    }
+  ],
+  "centroid-decomposition": [
+    {
+      "id": "cd1",
+      "type": "mcq",
+      "question": "What is a centroid of a tree?",
+      "options": ["The root", "A node whose removal splits tree into subtrees of size ≤ n/2", "The deepest node", "Any leaf"],
+      "correctIndex": 1,
+      "explanation": "A centroid is a node whose removal creates no subtree larger than n/2."
+    },
+    {
+      "id": "cd2",
+      "type": "true_false",
+      "question": "Centroid decomposition creates a tree of height O(log n).",
+      "correctAnswer": true,
+      "explanation": "Repeatedly finding centroids creates a decomposition tree with O(log n) depth."
+    },
+    {
+      "id": "cd3",
+      "type": "mcq",
+      "question": "What is the time complexity of building a centroid decomposition?",
+      "options": ["O(n)", "O(n log n)", "O(n²)", "O(n log² n)"],
+      "correctIndex": 1,
+      "explanation": "Finding centroids and recursing takes O(n) per level and O(log n) levels, giving O(n log n)."
+    },
+    {
+      "id": "cd4",
+      "type": "short",
+      "question": "Centroid decomposition is useful for solving what type of queries on trees? (One word: path)",
+      "correctAnswer": "path",
+      "explanation": "Centroid decomposition efficiently handles path queries by decomposing paths through centroids."
+    },
+    {
+      "id": "cd5",
+      "type": "mcq",
+      "question": "What problem can centroid decomposition solve efficiently?",
+      "options": ["Finding tree diameter", "Counting paths with specific properties", "Tree traversal", "Finding leaves"],
+      "correctIndex": 1,
+      "explanation": "Centroid decomposition counts paths through centroids, enabling efficient path counting and queries."
+    },
+    {
+      "id": "cd6",
+      "type": "true_false",
+      "question": "Every tree has at least one centroid.",
+      "correctAnswer": true,
+      "explanation": "Every tree has at least one (and at most two) centroids."
+    }
+  ],
+  "fenwick-tree-bit": [
+    {
+      "id": "ft1",
+      "type": "mcq",
+      "question": "What is another name for a Fenwick Tree?",
+      "options": ["Segment Tree", "Binary Indexed Tree (BIT)", "AVL Tree", "Red-Black Tree"],
+      "correctIndex": 1,
+      "explanation": "Fenwick Tree is also known as Binary Indexed Tree (BIT), invented by Peter Fenwick."
+    },
+    {
+      "id": "ft2",
+      "type": "true_false",
+      "question": "Fenwick Tree uses less space than a Segment Tree.",
+      "correctAnswer": true,
+      "explanation": "Fenwick Tree uses exactly n space, while Segment Tree uses approximately 4n space."
+    },
+    {
+      "id": "ft3",
+      "type": "mcq",
+      "question": "What is the time complexity of update and query in a Fenwick Tree?",
+      "options": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+      "correctIndex": 1,
+      "explanation": "Both update and prefix sum query operations take O(log n) time."
+    },
+    {
+      "id": "ft4",
+      "type": "short",
+      "question": "What does the operation i & -i compute in Fenwick Tree? (Answer: lowest set bit or LSB)",
+      "correctAnswer": "lowest set bit",
+      "explanation": "i & -i isolates the lowest set bit, which determines the range a BIT node is responsible for."
+    },
+    {
+      "id": "ft5",
+      "type": "mcq",
+      "question": "What type of query is Fenwick Tree best suited for?",
+      "options": ["Range minimum query", "Prefix sum query", "Longest common prefix", "Pattern matching"],
+      "correctIndex": 1,
+      "explanation": "Fenwick Tree excels at prefix sum queries and point updates in O(log n)."
+    },
+    {
+      "id": "ft6",
+      "type": "true_false",
+      "question": "Fenwick Tree can handle range updates with difference arrays.",
+      "correctAnswer": true,
+      "explanation": "Using a difference array or two BITs, Fenwick Trees can perform range updates in O(log n)."
+    }
+  ],
+  "monotonic-stack-queue": [
+    {
+      "id": "msq1",
+      "type": "mcq",
+      "question": "What property does a monotonic stack maintain?",
+      "options": ["Random order", "Increasing or decreasing order", "Sorted order", "FIFO order"],
+      "correctIndex": 1,
+      "explanation": "Monotonic stacks maintain elements in increasing or decreasing order by popping violating elements."
+    },
+    {
+      "id": "msq2",
+      "type": "true_false",
+      "question": "Monotonic stacks can find the next greater element for all elements in O(n) time.",
+      "correctAnswer": true,
+      "explanation": "Each element is pushed and popped at most once, giving O(n) total time."
+    },
+    {
+      "id": "msq3",
+      "type": "mcq",
+      "question": "What problem does a monotonic queue solve efficiently?",
+      "options": ["Sorting", "Sliding window maximum", "Binary search", "String matching"],
+      "correctIndex": 1,
+      "explanation": "Monotonic deque maintains maximum/minimum in a sliding window in O(1) amortized per element."
+    },
+    {
+      "id": "msq4",
+      "type": "short",
+      "question": "What is the total time complexity for finding next greater element for all n elements? (Answer: O(n))",
+      "correctAnswer": "O(n)",
+      "explanation": "Though it seems nested, each element enters and exits the stack once, giving O(n) total."
+    },
+    {
+      "id": "msq5",
+      "type": "mcq",
+      "question": "In a monotonic increasing stack, when do you pop elements?",
+      "options": ["When new element is larger", "When new element is smaller", "Never", "Always"],
+      "correctIndex": 1,
+      "explanation": "Pop elements when the new element is smaller to maintain the increasing property."
+    },
+    {
+      "id": "msq6",
+      "type": "true_false",
+      "question": "Monotonic queues can be implemented using a deque (double-ended queue).",
+      "correctAnswer": true,
+      "explanation": "Deque allows removal from both ends, necessary for maintaining the monotonic property in sliding windows."
+    }
+  ],
+  "sparse-table": [
+    {
+      "id": "spt1",
+      "type": "mcq",
+      "question": "What is the query time complexity of a Sparse Table?",
+      "options": ["O(1)", "O(log n)", "O(√n)", "O(n)"],
+      "correctIndex": 0,
+      "explanation": "Sparse Table answers range queries in O(1) time after O(n log n) preprocessing."
+    },
+    {
+      "id": "spt2",
+      "type": "true_false",
+      "question": "Sparse Table can handle dynamic updates efficiently.",
+      "correctAnswer": false,
+      "explanation": "Sparse Table is static; updates require O(n log n) rebuilding. Use Segment Tree for updates."
+    },
+    {
+      "id": "spt3",
+      "type": "mcq",
+      "question": "What does st[i][j] store in a Sparse Table?",
+      "options": ["Element at index i", "Minimum/maximum in range [i, i+2^j-1]", "Sum of range", "Sorted elements"],
+      "correctIndex": 1,
+      "explanation": "st[i][j] stores the result (min/max) for the range starting at i with length 2^j."
+    },
+    {
+      "id": "spt4",
+      "type": "short",
+      "question": "What is the space complexity of Sparse Table? (Answer: O(n log n))",
+      "correctAnswer": "O(n log n)",
+      "explanation": "Sparse Table stores answers for n starting positions and log n powers of 2."
+    },
+    {
+      "id": "spt5",
+      "type": "mcq",
+      "question": "Which property must the operation have for Sparse Table to work with overlapping ranges?",
+      "options": ["Associative", "Commutative", "Idempotent", "Distributive"],
+      "correctIndex": 2,
+      "explanation": "Operations like min/max are idempotent (f(x,x)=x), allowing overlapping ranges to be queried."
+    },
+    {
+      "id": "spt6",
+      "type": "true_false",
+      "question": "Sparse Table can answer RMQ (Range Minimum Query) in O(1).",
+      "correctAnswer": true,
+      "explanation": "By querying two overlapping power-of-2 ranges that cover [L,R], RMQ is answered in O(1)."
+    }
+  ],
+  "strings-basics": [
+    {
+      "id": "strm1",
+      "type": "mcq",
+      "question": "What is the time complexity of checking if a string is a palindrome?",
+      "options": ["O(1)", "O(log n)", "O(n)", "O(n²)"],
+      "correctIndex": 2,
+      "explanation": "Checking palindrome requires comparing characters from both ends, taking O(n) time."
+    },
+    {
+      "id": "strm2",
+      "type": "true_false",
+      "question": "String concatenation in a loop can lead to O(n²) time complexity in some languages.",
+      "correctAnswer": true,
+      "explanation": "In languages where strings are immutable, each concatenation creates a new string, causing O(n²) total time."
+    },
+    {
+      "id": "strm3",
+      "type": "mcq",
+      "question": "Which data structure efficiently reverses words in a sentence?",
+      "options": ["Array", "Stack", "Queue", "Heap"],
+      "correctIndex": 1,
+      "explanation": "Stack (LIFO) naturally reverses order; push words and pop them to reverse."
+    },
+    {
+      "id": "strm4",
+      "type": "short",
+      "question": "What is the space complexity of reversing a string in-place? (Answer: O(1))",
+      "correctAnswer": "O(1)",
+      "explanation": "In-place reversal swaps characters using two pointers, requiring only constant extra space."
+    },
+    {
+      "id": "strm5",
+      "type": "mcq",
+      "question": "What is anagram detection typically done using?",
+      "options": ["Sorting or frequency counting", "Binary search", "DFS", "Dijkstra's"],
+      "correctIndex": 0,
+      "explanation": "Sort both strings and compare (O(n log n)) or count character frequencies (O(n))."
+    },
+    {
+      "id": "strm6",
+      "type": "true_false",
+      "question": "Two-pointer technique can remove duplicates from a string in O(n) time.",
+      "correctAnswer": true,
+      "explanation": "One pointer reads, another writes unique characters, processing each character once."
+    }
+  ],
+  "network-flow": [
+    {
+      "id": "nf1",
+      "type": "mcq",
+      "question": "What algorithm uses BFS to find augmenting paths in max flow?",
+      "options": ["Ford-Fulkerson", "Edmonds-Karp", "Dijkstra's", "Bellman-Ford"],
+      "correctIndex": 1,
+      "explanation": "Edmonds-Karp is Ford-Fulkerson with BFS for finding shortest augmenting paths, guaranteeing O(VE²) time."
+    },
+    {
+      "id": "nf2",
+      "type": "true_false",
+      "question": "The maximum flow value equals the minimum cut capacity.",
+      "correctAnswer": true,
+      "explanation": "This is the Max-Flow Min-Cut Theorem, a fundamental result in network flow theory."
+    },
+    {
+      "id": "nf3",
+      "type": "mcq",
+      "question": "What is a residual edge in network flow?",
+      "options": ["Original edge only", "Reverse edge only", "Both forward and reverse edges with available capacity", "Edges with zero flow"],
+      "correctIndex": 2,
+      "explanation": "Residual graph includes forward edges with remaining capacity and reverse edges representing flow that can be undone."
+    },
+    {
+      "id": "nf4",
+      "type": "short",
+      "question": "What capacity is used for edges in bipartite matching reduction to max flow? (Answer: 1)",
+      "correctAnswer": "1",
+      "explanation": "All edges have capacity 1 in bipartite matching, ensuring each vertex matches at most once."
+    },
+    {
+      "id": "nf5",
+      "type": "mcq",
+      "question": "What does an augmenting path represent?",
+      "options": ["Shortest path", "Path from source to sink with available capacity", "Minimum cost path", "Longest path"],
+      "correctIndex": 1,
+      "explanation": "An augmenting path is any path from source to sink where all edges have residual capacity > 0."
+    },
+    {
+      "id": "nf6",
+      "type": "true_false",
+      "question": "Bipartite matching can be solved by reducing it to a max flow problem.",
+      "correctAnswer": true,
+      "explanation": "Add source to left set, sink to right set, all capacities 1. Max flow equals maximum matching."
+    }
+  ],
+  "articulation-points-bridges": [
+    {
+      "id": "apb1",
+      "type": "mcq",
+      "question": "What is an articulation point?",
+      "options": ["Edge that connects two components", "Vertex whose removal increases connected components", "Bridge between nodes", "Cycle in graph"],
+      "correctIndex": 1,
+      "explanation": "An articulation point (cut vertex) is a vertex that, when removed, increases the number of connected components."
+    },
+    {
+      "id": "apb2",
+      "type": "true_false",
+      "question": "Tarjan's algorithm can find both articulation points and bridges in a single DFS traversal.",
+      "correctAnswer": true,
+      "explanation": "Tarjan's algorithm computes discovery times and low-link values in one DFS pass to identify both."
+    },
+    {
+      "id": "apb3",
+      "type": "mcq",
+      "question": "What is a bridge in graph theory?",
+      "options": ["Vertex connecting components", "Edge whose removal increases connected components", "Shortest path", "Cycle"],
+      "correctIndex": 1,
+      "explanation": "A bridge (cut edge) is an edge that, when removed, increases the number of connected components."
+    },
+    {
+      "id": "apb4",
+      "type": "short",
+      "question": "What is the time complexity of Tarjan's algorithm? (Answer: O(V+E))",
+      "correctAnswer": "O(V+E)",
+      "explanation": "Tarjan's algorithm performs a single DFS traversal, visiting each vertex and edge once."
+    },
+    {
+      "id": "apb5",
+      "type": "mcq",
+      "question": "For an edge (u,v) to be a bridge, what condition must hold?",
+      "options": ["low[v] > disc[u]", "low[v] >= disc[u]", "low[v] < disc[u]", "low[v] == disc[u]"],
+      "correctIndex": 0,
+      "explanation": "Edge (u,v) is a bridge if low[v] > disc[u], meaning v's subtree cannot reach u or above without using (u,v)."
+    },
+    {
+      "id": "apb6",
+      "type": "true_false",
+      "question": "Every bridge connects two different biconnected components.",
+      "correctAnswer": true,
+      "explanation": "Bridges separate biconnected components; removing a bridge splits the graph into disconnected parts."
+    }
+  ],
+  "digit-dp": [
+    {
+      "id": "ddp1",
+      "type": "mcq",
+      "question": "What does the 'tight' constraint track in digit DP?",
+      "options": ["Digit sum", "Whether we're still bounded by the upper limit", "Number of digits", "Leading zeros"],
+      "correctIndex": 1,
+      "explanation": "The 'tight' flag indicates if we're still constrained by the upper bound's digits at the current position."
+    },
+    {
+      "id": "ddp2",
+      "type": "true_false",
+      "question": "Digit DP processes numbers digit by digit from left to right.",
+      "correctAnswer": true,
+      "explanation": "Digit DP builds valid numbers by placing digits from most significant to least significant (left to right)."
+    },
+    {
+      "id": "ddp3",
+      "type": "mcq",
+      "question": "How do you count numbers in range [L, R] using digit DP?",
+      "options": ["count(R) - count(L)", "count(R) - count(L-1)", "count(L) + count(R)", "count(R) / count(L)"],
+      "correctIndex": 1,
+      "explanation": "Use the standard range trick: count(0 to R) - count(0 to L-1) gives count in [L, R]."
+    },
+    {
+      "id": "ddp4",
+      "type": "short",
+      "question": "What is the typical time complexity of digit DP? (Answer: O(d * states * 10) where d is number of digits)",
+      "correctAnswer": "O(d * states * 10)",
+      "explanation": "For each of d digit positions, we try 10 possible digits across all state combinations."
+    },
+    {
+      "id": "ddp5",
+      "type": "mcq",
+      "question": "Why do we track 'started' in digit DP?",
+      "options": ["To count total digits", "To handle leading zeros separately", "To check if number is odd", "To sum digits"],
+      "correctIndex": 1,
+      "explanation": "The 'started' flag indicates whether we've placed a non-zero digit yet, handling leading zeros correctly."
+    },
+    {
+      "id": "ddp6",
+      "type": "true_false",
+      "question": "Digit DP can count numbers with sum of digits equal to K much faster than brute force.",
+      "correctAnswer": true,
+      "explanation": "Digit DP counts in O(d² * K) time instead of O(R-L) brute force, making it efficient for large ranges."
+    }
+  ],
+  "dp-optimizations": [
+    {
+      "id": "dpo1",
+      "type": "mcq",
+      "question": "What does Convex Hull Trick optimize?",
+      "options": ["Substring problems", "DP transitions of form dp[i] = min(dp[j] + a[j]*b[i])", "Graph traversal", "Sorting"],
+      "correctIndex": 1,
+      "explanation": "Convex Hull Trick optimizes linear DP transitions (y = mx + b form) from O(n²) to O(n log n) or O(n)."
+    },
+    {
+      "id": "dpo2",
+      "type": "true_false",
+      "question": "Monotonic deque can solve sliding window min/max in O(n) total time.",
+      "correctAnswer": true,
+      "explanation": "Each element enters and exits the deque at most once, achieving O(n) amortized time for all windows."
+    },
+    {
+      "id": "dpo3",
+      "type": "mcq",
+      "question": "When can you reduce 2D DP space from O(n*m) to O(m)?",
+      "options": ["Never", "When each row only depends on the previous row", "Only for knapsack", "When m < n"],
+      "correctIndex": 1,
+      "explanation": "If row i only depends on row i-1, you can use rolling arrays or process in-place, saving space."
+    },
+    {
+      "id": "dpo4",
+      "type": "short",
+      "question": "What optimization reduces Fibonacci from O(n) to O(log n)? (Answer: matrix exponentiation)",
+      "correctAnswer": "matrix exponentiation",
+      "explanation": "Matrix exponentiation computes F(n) by raising a 2x2 matrix to the n-th power in O(log n) time."
+    },
+    {
+      "id": "dpo5",
+      "type": "mcq",
+      "question": "What property must a cost function satisfy for Divide and Conquer DP to work?",
+      "options": ["Monotonicity", "Quadrangle inequality", "Linearity", "Convexity"],
+      "correctIndex": 1,
+      "explanation": "Divide and Conquer DP requires the quadrangle inequality (or monotonicity of optimal split points)."
+    },
+    {
+      "id": "dpo6",
+      "type": "true_false",
+      "question": "Space optimization can reduce knapsack space from O(n*W) to O(W).",
+      "correctAnswer": true,
+      "explanation": "Process items one at a time, updating the DP array in reverse order, using only O(W) space."
+    }
+  ]
+
+
+
+}

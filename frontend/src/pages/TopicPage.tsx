@@ -1,9 +1,12 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import topics from "../data/topics.json";
 import leetcode from "../data/leetcodeProblems.json";
-import quizzes from "../data/quizzes.json";
-import Quiz from "../components/Quiz";
+
+import TrainingTab from "../components/TrainingTab";
+import NotesTab from "../components/NotesTab";
+
+// Visualizers (keep your existing imports)
 import SortingVisualizer from "../components/SortingVisualizer";
 import QueueVisualizer from "../components/QueueVisualizer";
 import HeapVisualizer from "../components/HeapVisualizer";
@@ -62,22 +65,19 @@ import SuffixArrayVisualizer from "../components/SuffixArrayVisualizer";
 import CentroidDecompositionVisualizer from "../components/CentroidDecompositionVisualizer";
 
 type LeetProblem = { title: string; url: string; difficulty: string };
+type TabType = "learn" | "training" | "notes";
 
 export default function TopicPage() {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<TabType>("learn");
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
-    const timer = setTimeout(() => {
-      window.scrollTo(0, 0);
-    }, 0);
-
-    return () => clearTimeout(timer);
+    setActiveTab("learn");
   }, [slug]);
 
-  const topic = topics.find((t) => t.slug === slug);
+  const topic = (topics as any[]).find((t) => t.slug === slug);
   if (!topic) return <div>Topic not found.</div>;
 
   const problemKeyMap: Record<string, string> = {
@@ -129,10 +129,13 @@ export default function TopicPage() {
   const topicProblems: LeetProblem[] =
     (leetcode as Record<string, LeetProblem[]>)[problemKey] || [];
 
-  const qset = (quizzes as any)[topic.slug] || [];
+  const tabs: { id: TabType; label: string }[] = [
+    { id: "learn", label: "Learn" },
+    { id: "training", label: "Training" },
+    { id: "notes", label: "Notes" },
+  ];
 
   return (
-    // ✅ ADDED: py-6 wrapper for padding
     <div className="py-6">
       <div className="space-y-6">
         <div className="flex items-center">
@@ -166,141 +169,149 @@ export default function TopicPage() {
           <p className="text-[var(--muted)]">{topic.summary}</p>
         </header>
 
-        <section className="card p-4 space-y-3">
-          <h3 className="font-semibold">Concept</h3>
-          {topic.content.map((p: string, i: number) => (
-            <p key={i}>{p}</p>
+        {/* Tabs */}
+        <div
+          className="flex gap-2 border-b"
+          style={{ borderColor: "rgba(148,163,184,.35)" }}
+        >
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className="px-4 py-2 text-sm font-medium transition-all relative"
+              style={{
+                color: activeTab === tab.id ? "var(--brand)" : "var(--muted)",
+              }}
+            >
+              {tab.label}
+              {activeTab === tab.id && (
+                <div
+                  className="absolute bottom-0 left-0 right-0 h-0.5"
+                  style={{ backgroundColor: "var(--brand)" }}
+                />
+              )}
+            </button>
           ))}
+        </div>
 
-          {/* Visualizations */}
-          {topic.slug === "sorting-basics" && <SortingVisualizer />}
-          {topic.slug === "bubble-sort" && <SortingVisualizer />}
-          {topic.slug === "selection-sort" && <SelectionSortVisualizer />}
-          {topic.slug === "insertion-sort" && <InsertionSortVisualizer />}
-          {topic.slug === "merge-sort" && <MergeSortVisualizer />}
-          {topic.slug === "quick-sort" && <QuickSortVisualizer />}
-          {topic.slug === "queue-basics" && <QueueVisualizer />}
-          {topic.slug === "stack-basics" && <StackVisualizer />}
-          {topic.slug === "heap-basics" && <HeapVisualizer />}
-          {topic.slug === "linked-list-basics" && <LinkedListVisualizer />}
-          {topic.slug === "hashmap-basics" && <HashMapVisualizer />}
-          {topic.slug === "heap-basics" && <MaxHeapVisualizer />}
-          {topic.slug === "array-two-pointer" && <TwoPointerVisualizer />}
-          {topic.slug === "array-sliding-window" && <SlidingWindowVisualizer />}
-          {topic.slug === "binary-trees-intro" && <BinaryTreeVisualizer />}
-          {topic.slug === "tree-traversals-dfs" && <TreeTraversalVisualizer />}
-          {topic.slug === "binary-search-trees" && <BSTVisualizer />}
-          {topic.slug === "level-order-traversal" && <LevelOrderVisualizer />}
-          {topic.slug === "tree-properties-paths" && (
-            <TreePropertiesVisualizer />
-          )}
-          {topic.slug === "graph-representation" && (
-            <GraphRepresentationVisualizer />
-          )}
-          {topic.slug === "graph-dfs" && <GraphDFSVisualizer />}
-          {topic.slug === "graph-bfs" && <GraphBFSVisualizer />}
-          {topic.slug === "shortest-path-dijkstra" && <DijkstraVisualizer />}
-          {topic.slug === "topological-sort" && <TopologicalSortVisualizer />}
-          {topic.slug === "dp-introduction" && <DPIntroVisualizer />}
-          {topic.slug === "dp-1d-sequence" && <DP1DSequenceVisualizer />}
-          {topic.slug === "dp-knapsack" && <DPKnapsackVisualizer />}
-          {topic.slug === "dp-strings" && <DPStringsVisualizer />}
-          {topic.slug === "binary-search-basics" && (
-            <BinarySearchBasicsVisualizer />
-          )}
-
-          {topic.slug === "binary-search-advanced" && (
-            <BinarySearchAdvancedVisualizer />
-          )}
-          {topic.slug === "greedy-algorithms" && <GreedyAlgorithmsVisualizer />}
-          {topic.slug === "backtracking-basics" && (
-            <BacktrackingBasicsVisualizer />
-          )}
-          {topic.slug === "bit-manipulation-basics" && (
-            <BitManipulationBasicsVisualizer />
-          )}
-          {topic.slug === "trie-prefix-tree" && <TrieVisualizer />}
-          {topic.slug === "union-find-dsu" && <UnionFindVisualizer />}
-          {topic.slug === "segment-tree" && <SegmentTreeVisualizer />}
-          {topic.slug === "bitmask-dp" && <BitmaskDPVisualizer />}
-          {topic.slug === "dp-on-trees" && <DPOnTreesVisualizer />}
-          {topic.slug === "state-machine-dp" && <StateMachineDPVisualizer />}
-          {topic.slug === "minimum-spanning-tree" && <MSTVisualizer />}
-          {topic.slug === "advanced-shortest-path" && (
-            <div className="space-y-4">
-              <BellmanFordVisualizer />
-              <FloydWarshallVisualizer />
-            </div>
-          )}
-
-          {topic.slug === "strongly-connected-components" && <SCCVisualizer />}
-          {topic.slug === "pattern-matching-algorithms" && <KMPVisualizer />}
-          {topic.slug === "advanced-string-processing" && (
-            <ManacherVisualizer />
-          )}
-          {topic.slug === "game-theory" && <NimGameVisualizer />}
-          {topic.slug === "bit-manipulation-advanced" && (
-            <SubsetGrayCodeVisualizer />
-          )}
-          {topic.slug === "computational-geometry" && <ConvexHullVisualizer />}
-          {topic.slug === "advanced-mathematics" && (
-            <ModularArithmeticVisualizer />
-          )}
-          {topic.slug === "advanced-range-queries" && <MoAlgorithmVisualizer />}
-          {topic.slug === "advanced-backtracking" && (
-            <>
-              <NQueensVisualizer />
-              <SudokuVisualizer />
-              <PalindromePartitionVisualizer />
-            </>
-          )}
-          {topic.slug === "2-sat" && <TwoSATVisualizer />}
-          {topic.slug === "heavy-light-decomposition" && <HLDVisualizer />}
-          {topic.slug === "suffix-arrays" && <SuffixArrayVisualizer />}
-          {topic.slug === "centroid-decomposition" && (
-            <CentroidDecompositionVisualizer />
-          )}
-        </section>
-
-        <section className="card p-4 space-y-3">
-          <h3 className="font-semibold">Example Code</h3>
-          <pre className="bg-[var(--panel)] p-4 rounded-lg overflow-x-auto">
-            <code className="text-sm">{topic.example.code}</code>
-          </pre>
-        </section>
-
-        <section className="space-y-3">
-          <h3 className="font-semibold">Practice Problems</h3>
-          {topicProblems.length === 0 ? (
-            <p className="text-sm text-[var(--muted)]">
-              No curated problems yet for this topic.
-            </p>
-          ) : (
-            <ul className="grid sm:grid-cols-2 gap-3">
-              {topicProblems.map((p, idx) => (
-                <li key={idx} className="card p-3">
-                  <a
-                    href={p.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="font-medium link"
-                  >
-                    {p.title}
-                  </a>
-                  <div className="text-sm text-[var(--muted)]">
-                    {p.difficulty}
-                  </div>
-                </li>
+        {/* Learn */}
+        {activeTab === "learn" && (
+          <>
+            <section className="card p-4 space-y-3">
+              <h3 className="font-semibold">Concept</h3>
+              {topic.content.map((p: string, i: number) => (
+                <p key={i}>{p}</p>
               ))}
-            </ul>
-          )}
-        </section>
 
-        {qset.length > 0 && (
-          <section>
-            <Quiz questions={qset as any} storageKey={`quiz:${topic.slug}`} />
-          </section>
+              {/* Visualizations (kept from your original TopicPage) */}
+              {topic.slug === "sorting-basics" && <SortingVisualizer />}
+              {topic.slug === "bubble-sort" && <SortingVisualizer />}
+              {topic.slug === "selection-sort" && <SelectionSortVisualizer />}
+              {topic.slug === "insertion-sort" && <InsertionSortVisualizer />}
+              {topic.slug === "merge-sort" && <MergeSortVisualizer />}
+              {topic.slug === "quick-sort" && <QuickSortVisualizer />}
+              {topic.slug === "queue-basics" && <QueueVisualizer />}
+              {topic.slug === "stack-basics" && <StackVisualizer />}
+              {topic.slug === "heap-basics" && <HeapVisualizer />}
+              {topic.slug === "linked-list-basics" && <LinkedListVisualizer />}
+              {topic.slug === "hashmap-basics" && <HashMapVisualizer />}
+              {topic.slug === "heap-basics" && <MaxHeapVisualizer />}
+              {topic.slug === "array-two-pointer" && <TwoPointerVisualizer />}
+              {topic.slug === "array-sliding-window" && <SlidingWindowVisualizer />}
+              {topic.slug === "binary-trees-intro" && <BinaryTreeVisualizer />}
+              {topic.slug === "tree-traversals-dfs" && <TreeTraversalVisualizer />}
+              {topic.slug === "binary-search-trees" && <BSTVisualizer />}
+              {topic.slug === "level-order-traversal" && <LevelOrderVisualizer />}
+              {topic.slug === "tree-properties-paths" && <TreePropertiesVisualizer />}
+              {topic.slug === "graph-representation" && <GraphRepresentationVisualizer />}
+              {topic.slug === "graph-dfs" && <GraphDFSVisualizer />}
+              {topic.slug === "graph-bfs" && <GraphBFSVisualizer />}
+              {topic.slug === "shortest-path-dijkstra" && <DijkstraVisualizer />}
+              {topic.slug === "topological-sort" && <TopologicalSortVisualizer />}
+              {topic.slug === "dp-introduction" && <DPIntroVisualizer />}
+              {topic.slug === "dp-1d-sequence" && <DP1DSequenceVisualizer />}
+              {topic.slug === "dp-knapsack" && <DPKnapsackVisualizer />}
+              {topic.slug === "dp-strings" && <DPStringsVisualizer />}
+              {topic.slug === "binary-search-basics" && <BinarySearchBasicsVisualizer />}
+              {topic.slug === "binary-search-advanced" && <BinarySearchAdvancedVisualizer />}
+              {topic.slug === "greedy-algorithms" && <GreedyAlgorithmsVisualizer />}
+              {topic.slug === "backtracking-basics" && <BacktrackingBasicsVisualizer />}
+              {topic.slug === "bit-manipulation-basics" && <BitManipulationBasicsVisualizer />}
+              {topic.slug === "trie-prefix-tree" && <TrieVisualizer />}
+              {topic.slug === "union-find-dsu" && <UnionFindVisualizer />}
+              {topic.slug === "segment-tree" && <SegmentTreeVisualizer />}
+              {topic.slug === "bitmask-dp" && <BitmaskDPVisualizer />}
+              {topic.slug === "dp-on-trees" && <DPOnTreesVisualizer />}
+              {topic.slug === "state-machine-dp" && <StateMachineDPVisualizer />}
+              {topic.slug === "minimum-spanning-tree" && <MSTVisualizer />}
+              {topic.slug === "advanced-shortest-path" && (
+                <div className="space-y-4">
+                  <BellmanFordVisualizer />
+                  <FloydWarshallVisualizer />
+                </div>
+              )}
+              {topic.slug === "strongly-connected-components" && <SCCVisualizer />}
+              {topic.slug === "pattern-matching-algorithms" && <KMPVisualizer />}
+              {topic.slug === "advanced-string-processing" && <ManacherVisualizer />}
+              {topic.slug === "game-theory" && <NimGameVisualizer />}
+              {topic.slug === "bit-manipulation-advanced" && <SubsetGrayCodeVisualizer />}
+              {topic.slug === "computational-geometry" && <ConvexHullVisualizer />}
+              {topic.slug === "advanced-mathematics" && <ModularArithmeticVisualizer />}
+              {topic.slug === "advanced-range-queries" && <MoAlgorithmVisualizer />}
+              {topic.slug === "advanced-backtracking" && (
+                <>
+                  <NQueensVisualizer />
+                  <SudokuVisualizer />
+                  <PalindromePartitionVisualizer />
+                </>
+              )}
+              {topic.slug === "2-sat" && <TwoSATVisualizer />}
+              {topic.slug === "heavy-light-decomposition" && <HLDVisualizer />}
+              {topic.slug === "suffix-arrays" && <SuffixArrayVisualizer />}
+              {topic.slug === "centroid-decomposition" && <CentroidDecompositionVisualizer />}
+            </section>
+
+            <section className="card p-4 space-y-3">
+              <h3 className="font-semibold">Example Code</h3>
+              <pre className="bg-[var(--panel)] p-4 rounded-lg overflow-x-auto">
+                <code className="text-sm">{topic.example.code}</code>
+              </pre>
+            </section>
+
+            <section className="space-y-3">
+              <h3 className="font-semibold">Practice Problems</h3>
+              {topicProblems.length === 0 ? (
+                <p className="text-sm text-[var(--muted)]">
+                  No curated problems yet for this topic.
+                </p>
+              ) : (
+                <ul className="grid sm:grid-cols-2 gap-3">
+                  {topicProblems.map((p, idx) => (
+                    <li key={idx} className="card p-3">
+                      <a
+                        href={p.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-medium link"
+                      >
+                        {p.title}
+                      </a>
+                      <div className="text-sm text-[var(--muted)]">
+                        {p.difficulty}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          </>
         )}
+
+        {/* Training */}
+        {activeTab === "training" && <TrainingTab topicSlug={topic.slug} />}
+
+        {/* Notes */}
+        {activeTab === "notes" && <NotesTab topicSlug={topic.slug} />}
       </div>
     </div>
   );
