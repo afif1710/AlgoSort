@@ -1,0 +1,7 @@
+organization=afif1710
+projectKey=afif1710_AlgoSort
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.78371
+dashboardUrl=https://sonarcloud.io/dashboard?id=afif1710_AlgoSort&branch=feat%2Fci-workflows&resolved=false
+ceTaskId=AZukBmf5rfSEqZy2vBJw
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZukBmf5rfSEqZy2vBJw
