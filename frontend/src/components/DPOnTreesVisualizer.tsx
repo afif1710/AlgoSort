@@ -369,9 +369,8 @@ const DPOnTreesVisualizer: React.FC = () => {
           Tree Structure
         </h3>
         <svg
-          width="400"
-          height="280"
-          style={{ width: "100%", maxWidth: "400px" }}
+          viewBox="0 0 400 280"
+          className="w-full h-auto max-w-[400px]"
         >
           {/* Edges */}
           {nodes.map((node) =>

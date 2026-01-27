@@ -338,9 +338,8 @@ const MSTVisualizer: React.FC = () => {
           Graph Structure
         </h3>
         <svg
-          width="400"
-          height="260"
-          style={{ width: "100%", maxWidth: "400px" }}
+          viewBox="0 0 400 260"
+          className="w-full h-auto max-w-[400px]"
         >
           {/* Draw edges */}
           {edges.map((edge, idx) => {

@@ -224,7 +224,7 @@ const GraphRepresentationVisualizer: React.FC = () => {
             >
               Add Edge (nodes: 0 to {numNodes - 1})
             </label>
-            <div className="flex gap-2 items-center">
+            <div className="flex flex-wrap gap-2 items-center">
               <input
                 type="number"
                 value={fromNode}
@@ -232,7 +232,7 @@ const GraphRepresentationVisualizer: React.FC = () => {
                 placeholder="From"
                 min="0"
                 max={numNodes - 1}
-                className="w-20 px-3 py-2 rounded border text-sm"
+                className="w-20 sm:w-24 px-3 py-2 rounded border text-sm flex-grow sm:flex-grow-0"
                 style={{
                   backgroundColor: "var(--bg)",
                   color: "var(--fg)",
@@ -248,7 +248,7 @@ const GraphRepresentationVisualizer: React.FC = () => {
                 placeholder="To"
                 min="0"
                 max={numNodes - 1}
-                className="w-20 px-3 py-2 rounded border text-sm"
+                className="w-20 sm:w-24 px-3 py-2 rounded border text-sm flex-grow sm:flex-grow-0"
                 style={{
                   backgroundColor: "var(--bg)",
                   color: "var(--fg)",
@@ -257,7 +257,7 @@ const GraphRepresentationVisualizer: React.FC = () => {
               />
               <button
                 onClick={handleAddEdge}
-                className="build-tree-btn px-4 py-2 rounded font-medium text-sm"
+                className="build-tree-btn px-4 py-2 rounded font-medium text-sm flex-grow sm:flex-grow-0"
                 style={{ backgroundColor: "var(--brand)", color: "white" }}
               >
                 Add Edge
@@ -276,7 +276,7 @@ const GraphRepresentationVisualizer: React.FC = () => {
             <div className="flex gap-2 flex-wrap">
               <button
                 onClick={() => loadExample("linear")}
-                className="tree-example-btn px-3 py-2 rounded text-sm"
+                className="tree-example-btn px-3 py-2 rounded text-sm flex-grow sm:flex-grow-0"
                 style={{
                   backgroundColor: "var(--card-hover-bg)",
                   color: "var(--fg)",
@@ -286,7 +286,7 @@ const GraphRepresentationVisualizer: React.FC = () => {
               </button>
               <button
                 onClick={() => loadExample("cycle")}
-                className="tree-example-btn px-3 py-2 rounded text-sm"
+                className="tree-example-btn px-3 py-2 rounded text-sm flex-grow sm:flex-grow-0"
                 style={{
                   backgroundColor: "var(--card-hover-bg)",
                   color: "var(--fg)",
@@ -296,7 +296,7 @@ const GraphRepresentationVisualizer: React.FC = () => {
               </button>
               <button
                 onClick={() => loadExample("complete")}
-                className="tree-example-btn px-3 py-2 rounded text-sm"
+                className="tree-example-btn px-3 py-2 rounded text-sm flex-grow sm:flex-grow-0"
                 style={{
                   backgroundColor: "var(--card-hover-bg)",
                   color: "var(--fg)",
@@ -306,7 +306,7 @@ const GraphRepresentationVisualizer: React.FC = () => {
               </button>
               <button
                 onClick={() => loadExample("star")}
-                className="tree-example-btn px-3 py-2 rounded text-sm"
+                className="tree-example-btn px-3 py-2 rounded text-sm flex-grow sm:flex-grow-0"
                 style={{
                   backgroundColor: "var(--card-hover-bg)",
                   color: "var(--fg)",
@@ -316,7 +316,7 @@ const GraphRepresentationVisualizer: React.FC = () => {
               </button>
               <button
                 onClick={handleClearGraph}
-                className="tree-example-btn px-3 py-2 rounded text-sm"
+                className="tree-example-btn px-3 py-2 rounded text-sm flex-grow sm:flex-grow-0"
                 style={{
                   backgroundColor: "#ef4444",
                   color: "white",
@@ -377,9 +377,8 @@ const GraphRepresentationVisualizer: React.FC = () => {
           Graph Visualization
         </h3>
         <svg
-          width="400"
-          height="350"
-          style={{ width: "100%", maxWidth: "400px" }}
+          viewBox="0 0 400 350"
+          className="w-full h-auto max-w-[400px]"
         >
           {/* Draw Edges */}
           {edges.map((edge, idx) => {

@@ -217,16 +217,14 @@ const ConvexHullVisualizer: React.FC = () => {
               Click to add points ({points.length} points):
             </label>
             <svg
-              width="400"
-              height="300"
+              viewBox="0 0 400 300"
               onClick={addPoint}
+              className="w-full h-auto max-w-[400px]"
               style={{
                 backgroundColor: "var(--bg)",
                 border: "2px solid var(--brand)",
                 borderRadius: "8px",
                 cursor: animating ? "not-allowed" : "crosshair",
-                width: "100%",
-                maxWidth: "400px",
               }}
             >
               {/* Draw hull polygon */}

@@ -753,9 +753,8 @@ const GraphBFSVisualizer: React.FC = () => {
           Graph Visualization
         </h3>
         <svg
-          width="400"
-          height="350"
-          style={{ width: "100%", maxWidth: "400px" }}
+          viewBox="0 0 400 350"
+          className="w-full h-auto max-w-[400px]"
         >
           {/* Edges */}
           {edges.map((edge, idx) => {

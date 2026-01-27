@@ -314,8 +314,8 @@ const TwoSATVisualizer: React.FC = () => {
               Implication Graph:
             </label>
             <svg
-              width="400"
-              height="300"
+              viewBox="0 0 400 300"
+              className="w-full h-auto max-w-[400px]"
               style={{
                 backgroundColor: "var(--bg)",
                 border: "2px solid var(--brand)",

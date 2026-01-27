@@ -146,7 +146,7 @@ export default function GlobalSearch() {
         }}
         onFocus={() => setIsOpen(true)}
         onKeyDown={handleKeyDown}
-        className="w-48 md:w-64 px-3 py-1.5 text-sm rounded-md"
+        className="w-full md:w-64 px-4 py-2 text-sm rounded-lg transition-all focus:ring-2 focus:ring-brand/50"
         style={{
           background: "var(--panel)",
           border: "1px solid rgba(148,163,184,.35)",

@@ -294,9 +294,8 @@ const BinaryTreeVisualizer: React.FC = () => {
           style={{ backgroundColor: "var(--panel)" }}
         >
           <svg
-            width="600"
-            height="400"
-            style={{ width: "100%", maxWidth: "600px" }}
+            viewBox="0 0 600 400"
+            className="w-full h-auto max-w-[600px]"
           >
             {renderEdges(tree)}
             {renderNodes(tree)}

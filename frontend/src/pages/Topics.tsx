@@ -52,10 +52,10 @@ export default function Topics() {
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex justify-center gap-3">
+          <div className="flex gap-3 overflow-x-auto pb-2 snap-x hide-scrollbar md:justify-center">
             <button
               onClick={() => scrollToSection("beginner")}
-              className="level-nav-btn px-8 py-3 rounded-lg font-semibold text-sm uppercase tracking-wider transition-all duration-300"
+              className="level-nav-btn whitespace-nowrap px-6 py-3 rounded-lg font-semibold text-sm uppercase tracking-wider transition-all duration-300 flex-shrink-0 snap-center"
               style={{
                 backgroundColor: "var(--panel)",
                 color: "var(--fg)",
@@ -66,7 +66,7 @@ export default function Topics() {
             </button>
             <button
               onClick={() => scrollToSection("intermediate")}
-              className="level-nav-btn px-8 py-3 rounded-lg font-semibold text-sm uppercase tracking-wider transition-all duration-300"
+              className="level-nav-btn whitespace-nowrap px-6 py-3 rounded-lg font-semibold text-sm uppercase tracking-wider transition-all duration-300 flex-shrink-0 snap-center"
               style={{
                 backgroundColor: "var(--panel)",
                 color: "var(--fg)",
@@ -77,7 +77,7 @@ export default function Topics() {
             </button>
             <button
               onClick={() => scrollToSection("advanced")}
-              className="level-nav-btn px-8 py-3 rounded-lg font-semibold text-sm uppercase tracking-wider transition-all duration-300"
+              className="level-nav-btn whitespace-nowrap px-6 py-3 rounded-lg font-semibold text-sm uppercase tracking-wider transition-all duration-300 flex-shrink-0 snap-center"
               style={{
                 backgroundColor: "var(--panel)",
                 color: "var(--fg)",
