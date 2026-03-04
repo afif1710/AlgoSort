@@ -1,3 +1,5 @@
+/* Copyright (c) 2026 AlgoSort. All Rights Reserved.
+   Unauthorized copying, redistribution, or modification prohibited. */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -509,4 +511,13 @@ main {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
   }
+}
+
+/* Custom Utilities */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

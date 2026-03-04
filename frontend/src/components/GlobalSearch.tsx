@@ -1,3 +1,5 @@
+// Copyright (c) 2026 AlgoSort. All Rights Reserved.
+// Unauthorized copying, redistribution, or modification prohibited.
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import topics from "../data/topics.json";
@@ -27,21 +29,33 @@ export default function GlobalSearch() {
       return;
     }
     const lowerQ = q.toLowerCase();
-    const found: SearchResult[] = [];
+    const found: (SearchResult & { score: number })[] = [];
 
     // Search tutorials
     (topics as any[]).forEach((t) => {
-      const inTitle = t.title.toLowerCase().includes(lowerQ);
-      const inSummary = t.summary.toLowerCase().includes(lowerQ);
+      let score = 0;
+      const lowerTitle = t.title.toLowerCase();
+      const lowerSummary = t.summary.toLowerCase();
+      
+      if (lowerTitle === lowerQ) score += 100;
+      else if (lowerTitle.startsWith(lowerQ)) score += 80;
+      else if (lowerTitle.includes(lowerQ)) score += 50;
+      
+      if (t.category && t.category.toLowerCase().includes(lowerQ)) score += 20;
+      if (lowerSummary.includes(lowerQ)) score += 10;
+      
       const inContent = t.content.some((c: string) =>
         c.toLowerCase().includes(lowerQ)
       );
-      if (inTitle || inSummary || inContent) {
+      if (inContent) score += 5;
+
+      if (score > 0) {
         found.push({
           type: "tutorial",
           title: t.title,
           slug: t.slug,
           category: t.category,
+          score
         });
       }
     });
@@ -49,15 +63,26 @@ export default function GlobalSearch() {
     // Search problems
     Object.entries(leetcode as Record<string, any[]>).forEach(
       ([category, problems]) => {
+        const lowerCategory = category.toLowerCase();
+        
         problems.forEach((p) => {
-          const inTitle = p.title.toLowerCase().includes(lowerQ);
-          const inCategory = category.toLowerCase().includes(lowerQ);
-          if (inTitle || inCategory) {
+          let score = 0;
+          const lowerTitle = p.title.toLowerCase();
+          
+          if (lowerTitle === lowerQ) score += 100;
+          else if (lowerTitle.startsWith(lowerQ)) score += 80;
+          else if (lowerTitle.includes(lowerQ)) score += 50;
+          
+          if (lowerCategory === lowerQ) score += 20;
+          else if (lowerCategory.includes(lowerQ)) score += 10;
+
+          if (score > 0) {
             found.push({
               type: "problem",
               title: p.title,
               category,
               url: p.url,
+              score
             });
           }
         });
@@ -66,17 +91,29 @@ export default function GlobalSearch() {
 
     // Search math topics
     (mathTopics as any[]).forEach((m) => {
-      const inTitle = m.title.toLowerCase().includes(lowerQ);
-      const inSummary = m.summary.toLowerCase().includes(lowerQ);
-      const inTags = m.tags.some((tag: string) =>
+      let score = 0;
+      const lowerTitle = m.title.toLowerCase();
+      const lowerSummary = m.summary.toLowerCase();
+      
+      if (lowerTitle === lowerQ) score += 100;
+      else if (lowerTitle.startsWith(lowerQ)) score += 80;
+      else if (lowerTitle.includes(lowerQ)) score += 50;
+      
+      if (lowerSummary.includes(lowerQ)) score += 10;
+      
+      const inTags = m.tags && m.tags.some((tag: string) =>
         tag.toLowerCase().includes(lowerQ)
       );
-      if (inTitle || inSummary || inTags) {
-        found.push({ type: "math", title: m.title, slug: m.slug });
+      if (inTags) score += 15;
+
+      if (score > 0) {
+        found.push({ type: "math", title: m.title, slug: m.slug, score });
       }
     });
 
-    setResults(found.slice(0, 15));
+    found.sort((a, b) => b.score - a.score);
+
+    setResults(found.slice(0, 15).map(({score, ...rest}) => rest as SearchResult));
     setSelectedIndex(0);
   }, []);
 

@@ -1,3 +1,5 @@
+// Copyright (c) 2026 AlgoSort. All Rights Reserved.
+// Unauthorized copying, redistribution, or modification prohibited.
 // Typed localStorage helpers with versioned root key
 const STORAGE_KEY = 'algosort.user.v1';
 

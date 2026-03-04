@@ -1,3 +1,5 @@
+// Copyright (c) 2026 AlgoSort. All Rights Reserved.
+// Unauthorized copying, redistribution, or modification prohibited.
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import topics from "../data/topics.json";

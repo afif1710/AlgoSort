@@ -1,3 +1,5 @@
+// Copyright (c) 2026 AlgoSort. All Rights Reserved.
+// Unauthorized copying, redistribution, or modification prohibited.
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
@@ -277,6 +279,15 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <footer className="w-full text-center py-8 mt-auto border-t border-[var(--panel)]">
+        <p className="text-sm font-medium" style={{ color: "var(--muted)" }}>
+          AlgoSort
+        </p>
+        <p className="text-xs mt-1" style={{ color: "var(--muted)" }}>
+          Copyright &copy; 2026 AlgoSort. All Rights Reserved.
+        </p>
+      </footer>
     </div>
   );
 }

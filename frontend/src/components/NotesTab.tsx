@@ -1,3 +1,5 @@
+// Copyright (c) 2026 AlgoSort. All Rights Reserved.
+// Unauthorized copying, redistribution, or modification prohibited.
 import { useState, useEffect, useRef } from "react";
 import { getNotes, saveNotes, clearNotes } from "../utils/storage";
 

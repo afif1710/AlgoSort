@@ -1,3 +1,5 @@
+// Copyright (c) 2026 AlgoSort. All Rights Reserved.
+// Unauthorized copying, redistribution, or modification prohibited.
 import { useState } from "react";
 import Editor from "@monaco-editor/react";
 import { useTheme } from "../utils/theme";

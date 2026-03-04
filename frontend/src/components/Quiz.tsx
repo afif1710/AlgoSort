@@ -1,3 +1,5 @@
+// Copyright (c) 2026 AlgoSort. All Rights Reserved.
+// Unauthorized copying, redistribution, or modification prohibited.
 import { useEffect, useState } from 'react'
 
 type Q = { id: string, prompt: string, choices: string[], answer: number, explanation?: string }

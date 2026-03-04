@@ -1,3 +1,5 @@
+// Copyright (c) 2026 AlgoSort. All Rights Reserved.
+// Unauthorized copying, redistribution, or modification prohibited.
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import topics from "../data/topics.json";
@@ -5,6 +7,7 @@ import leetcode from "../data/leetcodeProblems.json";
 
 import TrainingTab from "../components/TrainingTab";
 import NotesTab from "../components/NotesTab";
+import TeachingBlock from "../components/tutorial/TeachingBlock";
 
 // Visualizers (keep your existing imports)
 import SortingVisualizer from "../components/SortingVisualizer";
@@ -65,7 +68,7 @@ import SuffixArrayVisualizer from "../components/SuffixArrayVisualizer";
 import CentroidDecompositionVisualizer from "../components/CentroidDecompositionVisualizer";
 
 type LeetProblem = { title: string; url: string; difficulty: string };
-type TabType = "learn" | "training" | "notes";
+type TabType = "learn" | "training" | "code" | "practice" | "notes";
 
 export default function TopicPage() {
   const { slug } = useParams();
@@ -132,6 +135,8 @@ export default function TopicPage() {
   const tabs: { id: TabType; label: string }[] = [
     { id: "learn", label: "Learn" },
     { id: "training", label: "Training" },
+    { id: "code", label: "Example Code" },
+    { id: "practice", label: "Practice problems" },
     { id: "notes", label: "Notes" },
   ];
 
@@ -171,14 +176,14 @@ export default function TopicPage() {
 
         {/* Tabs */}
         <div
-          className="flex gap-2 border-b"
+          className="flex gap-2 border-b overflow-x-auto scrollbar-hide whitespace-nowrap"
           style={{ borderColor: "rgba(148,163,184,.35)" }}
         >
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className="px-4 py-2 text-sm font-medium transition-all relative"
+              className="px-4 py-2 text-sm font-medium transition-all relative flex-shrink-0"
               style={{
                 color: activeTab === tab.id ? "var(--brand)" : "var(--muted)",
               }}
@@ -197,12 +202,18 @@ export default function TopicPage() {
         {/* Learn */}
         {activeTab === "learn" && (
           <>
-            <section className="card p-4 space-y-3">
-              <h3 className="font-semibold">Concept</h3>
-              {topic.content.map((p: string, i: number) => (
-                <p key={i}>{p}</p>
-              ))}
+            {topic.teaching ? (
+              <TeachingBlock teaching={topic.teaching} />
+            ) : (
+              <section className="card p-4 space-y-3">
+                <h3 className="font-semibold">Concept</h3>
+                {topic.content.map((p: string, i: number) => (
+                  <p key={i}>{p}</p>
+                ))}
+              </section>
+            )}
 
+            <section className="card p-4 space-y-3 mt-4">
               {/* Visualizations (kept from your original TopicPage) */}
               {topic.slug === "sorting-basics" && <SortingVisualizer />}
               {topic.slug === "bubble-sort" && <SortingVisualizer />}
@@ -271,44 +282,51 @@ export default function TopicPage() {
               {topic.slug === "centroid-decomposition" && <CentroidDecompositionVisualizer />}
             </section>
 
-            <section className="card p-4 space-y-3">
-              <h3 className="font-semibold">Example Code</h3>
-              <pre className="bg-[var(--panel)] p-4 rounded-lg overflow-x-auto">
-                <code className="text-sm">{topic.example.code}</code>
-              </pre>
-            </section>
-
-            <section className="space-y-3">
-              <h3 className="font-semibold">Practice Problems</h3>
-              {topicProblems.length === 0 ? (
-                <p className="text-sm text-[var(--muted)]">
-                  No curated problems yet for this topic.
-                </p>
-              ) : (
-                <ul className="grid sm:grid-cols-2 gap-3">
-                  {topicProblems.map((p, idx) => (
-                    <li key={idx} className="card p-3">
-                      <a
-                        href={p.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="font-medium link"
-                      >
-                        {p.title}
-                      </a>
-                      <div className="text-sm text-[var(--muted)]">
-                        {p.difficulty}
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </section>
           </>
+        )}
+
+        {/* Code */}
+        {activeTab === "code" && (
+          <section className="card p-4 space-y-3">
+            <h3 className="font-semibold">Example Implementation</h3>
+            <pre className="bg-[var(--panel)] p-4 rounded-lg overflow-x-auto border" style={{ borderColor: 'rgba(148,163,184,0.1)' }}>
+              <code className="text-sm">{topic.example.code}</code>
+            </pre>
+          </section>
         )}
 
         {/* Training */}
         {activeTab === "training" && <TrainingTab topicSlug={topic.slug} />}
+
+        {/* Practice Problems */}
+        {activeTab === "practice" && (
+          <section className="space-y-3">
+            <h3 className="font-semibold">Practice Problems</h3>
+            {topicProblems.length === 0 ? (
+              <p className="text-sm text-[var(--muted)]">
+                No curated problems yet for this topic.
+              </p>
+            ) : (
+              <ul className="grid sm:grid-cols-2 gap-3">
+                {topicProblems.map((p, idx) => (
+                  <li key={idx} className="card p-3">
+                    <a
+                      href={p.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-medium link"
+                    >
+                      {p.title}
+                    </a>
+                    <div className="text-sm text-[var(--muted)]">
+                      {p.difficulty}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        )}
 
         {/* Notes */}
         {activeTab === "notes" && <NotesTab topicSlug={topic.slug} />}

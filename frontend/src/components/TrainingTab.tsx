@@ -1,3 +1,5 @@
+// Copyright (c) 2026 AlgoSort. All Rights Reserved.
+// Unauthorized copying, redistribution, or modification prohibited.
 import { useState, useEffect } from "react";
 import quizzes from "../data/topicQuizzes.json";
 import { getQuizStat, saveQuizStat } from "../utils/storage";

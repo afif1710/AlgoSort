@@ -1,3 +1,5 @@
+// Copyright (c) 2026 AlgoSort. All Rights Reserved.
+// Unauthorized copying, redistribution, or modification prohibited.
 import { Link } from "react-router-dom";
 import mathTopics from "../data/mathTopics.json";
 
@@ -7,6 +9,7 @@ interface MathTopic {
   difficulty: "Easy" | "Medium" | "Hard";
   summary: string;
   tags: string[];
+  frequency?: "very-common" | "common" | "rare";
 }
 
 export default function Math() {
@@ -19,6 +22,12 @@ export default function Math() {
     Easy: "#22c55e",
     Medium: "#f59e0b",
     Hard: "#ef4444",
+  };
+
+  const frequencyStyles: Record<string, { bg: string; color: string }> = {
+    "very-common": { bg: "rgba(34,197,94,0.15)", color: "#22c55e" },
+    common: { bg: "rgba(245,158,11,0.15)", color: "#f59e0b" },
+    rare: { bg: "rgba(148,163,184,0.15)", color: "var(--muted)" },
   };
 
   const renderSection = (title: string, items: MathTopic[], color: string) => (
@@ -43,12 +52,25 @@ export default function Math() {
               <h4 className="font-semibold" style={{ color: "var(--fg)" }}>
                 {topic.title}
               </h4>
-              <span
-                className="text-xs px-2 py-0.5 rounded"
-                style={{ backgroundColor: color, color: "white" }}
-              >
-                {topic.difficulty}
-              </span>
+              <div className="flex items-center gap-1.5 flex-shrink-0">
+                {topic.frequency && frequencyStyles[topic.frequency] && (
+                  <span
+                    className="text-[10px] px-1.5 py-0.5 rounded"
+                    style={{
+                      backgroundColor: frequencyStyles[topic.frequency].bg,
+                      color: frequencyStyles[topic.frequency].color,
+                    }}
+                  >
+                    {topic.frequency}
+                  </span>
+                )}
+                <span
+                  className="text-xs px-2 py-0.5 rounded"
+                  style={{ backgroundColor: color, color: "white" }}
+                >
+                  {topic.difficulty}
+                </span>
+              </div>
             </div>
             <p className="text-sm" style={{ color: "var(--muted)" }}>
               {topic.summary}

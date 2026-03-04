@@ -1,3 +1,5 @@
+// Copyright (c) 2026 AlgoSort. All Rights Reserved.
+// Unauthorized copying, redistribution, or modification prohibited.
 import { useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import data from "../data/leetcodeProblems.json";

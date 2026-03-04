@@ -1,3 +1,5 @@
+// Copyright (c) 2026 AlgoSort. All Rights Reserved.
+// Unauthorized copying, redistribution, or modification prohibited.
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Topics from "./pages/Topics";

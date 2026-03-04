@@ -4,7 +4,11 @@
     "title": "Modular Arithmetic",
     "difficulty": "Easy",
     "summary": "Foundation of number theory in competitive programming - understand mod operations and their properties.",
-    "tags": ["number-theory", "basics", "mod"],
+    "tags": [
+      "number-theory",
+      "basics",
+      "mod"
+    ],
     "content": [
       "Modular arithmetic deals with remainders when dividing integers. For any integers a, b and positive integer m: (a + b) mod m = ((a mod m) + (b mod m)) mod m.",
       "Multiplication also distributes over mod: (a × b) mod m = ((a mod m) × (b mod m)) mod m. This is crucial for preventing integer overflow.",
@@ -17,14 +21,166 @@
     "example": {
       "language": "python",
       "code": "MOD = 10**9 + 7\n\ndef mod_add(a, b):\n    return (a % MOD + b % MOD) % MOD\n\ndef mod_sub(a, b):\n    return (a % MOD - b % MOD + MOD) % MOD\n\ndef mod_mul(a, b):\n    return (a % MOD * b % MOD) % MOD\n\n# Example: Calculate (123456789 * 987654321) % MOD\nresult = mod_mul(123456789, 987654321)\nprint(f\"Result: {result}\")  # Safe from overflow"
-    }
+    },
+    "teaching": {
+      "tldr": "Modular arithmetic is about remainders. It allows us to perform math safely within bounds, preventing integer overflow.",
+      "intuition": [
+        "Imagine a clock face with 12 numbers. When you add 3 hours to 10 o'clock, you don't get 13 o'clock; you wrap around to 1 o'clock.",
+        "This 'wrapping around' is the core of modular arithmetic. We restrict our numbers to a set range from 0 to m-1, where m is the modulus.",
+        "In programming, intermediate calculations can easily exceed the maximum limit of an integer. By taking the modulo at each step, we keep the numbers small without affecting the final relative result."
+      ],
+      "definitions": [
+        "Modulus (m): The wrap-around point, typically a prime like 10^9 + 7.",
+        "a ≡ b (mod m): 'a is congruent to b modulo m', meaning a and b have the same remainder when divided by m.",
+        "x mod m: The remainder of x divided by m, practically computed as x % m."
+      ],
+      "keyIdeas": [
+        "Addition: (a + b) mod m = ((a mod m) + (b mod m)) mod m",
+        "Multiplication: (a * b) mod m = ((a mod m) * (b mod m)) mod m",
+        "Subtraction: (a - b) mod m = ((a mod m) - (b mod m) + m) mod m. We add m before the final mod to handle negative intermediate results.",
+        "Division cannot simply be distributed like addition. It requires finding a 'modular multiplicative inverse'."
+      ],
+      "proofSketch": [
+        "Let a = q1*m + r1, and b = q2*m + r2. Thus r1 = a mod m, and r2 = b mod m.",
+        "Add them: a + b = q1*m + r1 + q2*m + r2 = (q1+q2)*m + (r1+r2).",
+        "Taking this modulo m entirely eliminates the (q1+q2)*m term, leaving just (r1+r2) mod m.",
+        "This logic applies identically for multiplication, meaning we can replace any number with its remainder at any time."
+      ],
+      "workedExamples": [
+        {
+          "title": "Preventing Overflow in Multiplication",
+          "steps": [
+            "Suppose we want to compute (10^5 * 10^5) mod 7.",
+            "Naive approach: 10^5 * 10^5 = 10^10. Then 10^10 mod 7 = 4.",
+            "Modular approach: (10^5 mod 7) * (10^5 mod 7) = 5 * 5 = 25.",
+            "Then 25 mod 7 = 4.",
+            "By modding the smaller parts first, we never had to hold the massive number 10^10 in memory."
+          ],
+          "takeaway": "Apply modulo to intermediate operands to keep numbers small."
+        },
+        {
+          "title": "Handling Subtraction Safely",
+          "steps": [
+            "Compute (3 - 8) mod 5.",
+            "If we just do 3 - 8 = -5, then -5 mod 5 = 0.",
+            "If we do (3 mod 5) - (8 mod 5) = 3 - 3 = 0, this happens to work.",
+            "But consider (2 - 6) mod 5. 2 - 6 = -4. In many languages, -4 % 5 gives -4.",
+            "Correct way: ((2 mod 5) - (6 mod 5) + 5) mod 5 = (2 - 1 + 5) mod 5 = 6 mod 5 = 1."
+          ],
+          "takeaway": "Always add the modulus when subtracting to prevent native language bugs with negative remainders."
+        }
+      ],
+      "commonMistakes": [
+        "Forgetting to mod a variable during an intermediate addition or multiplication.",
+        "Using negative numbers with the % operator in languages like C++ or Java, which return negative remainders.",
+        "Trying to distribute modulo over division like (a/b) mod m = (a mod m)/(b mod m). This is mathematically false."
+      ],
+      "programmingNotes": [
+        "For languages like C++ or Java, standard variables risk overflow. 10^9 + 7 squared requires 64-bit integers (long long).",
+        "Python handles arbitrarily large integers automatically, but taking modulo early is still slightly faster."
+      ],
+      "visualizerHints": [
+        "Try the modular arithmetic playground to step through addition and multiplication.",
+        "Look at how negative numbers wrap around positively."
+      ],
+      "summaryCheatSheet": {
+        "formulas": [
+          "(a + b) % m = ((a % m) + (b % m)) % m",
+          "(a * b) % m = ((a % m) * (b % m)) % m",
+          "(a - b) % m = ((a % m) - (b % m) + m) % m"
+        ],
+        "rulesOfThumb": [
+          "Mod early, mod often.",
+          "When in doubt about subtraction, add m."
+        ]
+      }
+    },
+    "frequency": "very-common",
+    "prerequisites": [],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "large numbers",
+          "answer mod 10^9+7"
+        ],
+        "think": "Modular arithmetic",
+        "why": "Prevents overflow while preserving correctness"
+      },
+      {
+        "ifYouSee": [
+          "counting problems",
+          "combinatorics"
+        ],
+        "think": "Mod at every step",
+        "why": "Intermediate values can overflow even 64-bit integers"
+      }
+    ],
+    "pitfalls": [
+      "Forgetting to mod after subtraction can yield negative values — always add MOD before taking mod",
+      "Division requires modular inverse, not regular division",
+      "Using int instead of long long causes overflow before mod is applied"
+    ],
+    "complexities": {
+      "time": "O(1) per operation",
+      "space": "O(1)"
+    },
+    "problems": [
+      {
+        "platform": "LeetCode",
+        "title": "Pow(x, n)",
+        "url": "https://leetcode.com/problems/powx-n/",
+        "difficulty": "Medium",
+        "why": "Direct application of modular exponentiation"
+      },
+      {
+        "platform": "Codeforces",
+        "title": "Ehab and a Special Coloring",
+        "url": "https://codeforces.com/problemset/problem/1174/A",
+        "difficulty": "1000",
+        "why": "Basic mod properties"
+      },
+      {
+        "platform": "CSES",
+        "title": "Exponentiation",
+        "url": "https://cses.fi/problemset/task/1095",
+        "why": "Classic modular exponentiation practice"
+      }
+    ],
+    "visualizers": [
+      {
+        "key": "modular-playground",
+        "enabled": true
+      }
+    ],
+    "microChecks": [
+      {
+        "question": "What is -4 mod 7 in most CP implementations (like C++ or Python's logic for non-negative results)?",
+        "answer": "3",
+        "hint": "Use ((x % m) + m) % m"
+      },
+      {
+        "question": "Does 4 have a modular multiplicative inverse modulo 10?",
+        "answer": "No",
+        "hint": "Inverse exists if and only if gcd(a, m) = 1"
+      },
+      {
+        "question": "True or False: The sequence a^k mod m will always enter a cycle within at most m steps.",
+        "answer": "True",
+        "hint": "Pigeonhole Principle applies to the m possible remainders"
+      }
+    ],
+    "schemaVersion": 1
   },
   {
     "slug": "gcd-lcm",
     "title": "GCD and LCM",
     "difficulty": "Easy",
     "summary": "Greatest Common Divisor and Least Common Multiple - essential for fraction problems and number theory.",
-    "tags": ["number-theory", "euclidean", "basics"],
+    "tags": [
+      "number-theory",
+      "euclidean",
+      "basics"
+    ],
     "content": [
       "GCD (Greatest Common Divisor) is the largest positive integer that divides both numbers. Example: GCD(12, 8) = 4.",
       "Euclidean Algorithm: GCD(a, b) = GCD(b, a mod b). Base case: GCD(a, 0) = a. Time complexity: O(log(min(a,b))).",
@@ -37,14 +193,130 @@
     "example": {
       "language": "python",
       "code": "import math\n\ndef gcd(a, b):\n    while b:\n        a, b = b, a % b\n    return a\n\ndef lcm(a, b):\n    return a // gcd(a, b) * b  # Avoid overflow\n\ndef extended_gcd(a, b):\n    if b == 0:\n        return a, 1, 0\n    g, x1, y1 = extended_gcd(b, a % b)\n    x = y1\n    y = x1 - (a // b) * y1\n    return g, x, y\n\n# Examples\nprint(f\"GCD(48, 18) = {gcd(48, 18)}\")  # 6\nprint(f\"LCM(48, 18) = {lcm(48, 18)}\")  # 144\ng, x, y = extended_gcd(48, 18)\nprint(f\"48*{x} + 18*{y} = {g}\")  # 48*(-1) + 18*3 = 6"
-    }
+    },
+    "teaching": {
+      "tldr": "GCD finds the largest shared factor between two numbers, while LCM finds their smallest shared multiple.",
+      "intuition": [
+        "To find the Greatest Common Divisor (GCD), imagine trying to tile a rectangular floor with identical perfectly square tiles. The GCD is the largest possible side length for that square tile.",
+        "To find the Least Common Multiple (LCM), imagine two gears of different sizes spinning. The LCM represents the total number of teeth that must pass before both gears perfectly realign to their starting state.",
+        "The Euclidean Algorithm beautifully simplifies finding the GCD without needing to factor the numbers entirely, by continually subtracting the smaller piece from the larger."
+      ],
+      "definitions": [
+        "GCD(a, b): The largest integer that divides both a and b with no remainder.",
+        "LCM(a, b): The smallest positive integer that is divisible by both a and b."
+      ],
+      "keyIdeas": [
+        "The Euclidean Algorithm: GCD(a, b) = GCD(b, a mod b).",
+        "This recursive relation dramatically shrinks the numbers in logarithmic time.",
+        "Any two numbers satisfy the identity: a * b = GCD(a, b) * LCM(a, b).",
+        "From this, we easily derive LCM(a, b) = (a * b) / GCD(a, b)."
+      ],
+      "proofSketch": [
+        "Why does GCD(a, b) = GCD(b, a mod b)?",
+        "Let a = q*b + r, where r is a mod b. So r = a - q*b.",
+        "If some number d divides both a and b, then it must also divide r, since r is just a combination of a and b.",
+        "Similarly, if d divides b and r, it must also divide a (since a = q*b + r).",
+        "Since the set of common divisors for (a, b) and (b, r) is identical, their greatest common divisor must also be exactly identical."
+      ],
+      "workedExamples": [
+        {
+          "title": "Euclidean Algorithm in Action",
+          "steps": [
+            "Find GCD(48, 18).",
+            "Step 1: a=48, b=18. remainder = 48 mod 18 = 12.",
+            "Step 2: a=18, b=12. remainder = 18 mod 12 = 6.",
+            "Step 3: a=12, b=6. remainder = 12 mod 6 = 0.",
+            "Stop when remainder is 0. The last non-zero divisor is 6."
+          ],
+          "takeaway": "Using remainders quickly crushes the size of the inputs."
+        },
+        {
+          "title": "Finding the LCM safely",
+          "steps": [
+            "Find LCM(15, 20).",
+            "First compute GCD(15, 20). 15 mod 20 = 15 -> 20 mod 15 = 5 -> 15 mod 5 = 0. GCD is 5.",
+            "Now, LCM = (15 * 20) / 5 = 300 / 5 = 60.",
+            "To avoid overflow during multiplication, compute as (15 / 5) * 20 = 3 * 20 = 60."
+          ],
+          "takeaway": "Always divide by the GCD before multiplying by the second number to keep values within bounds."
+        }
+      ],
+      "commonMistakes": [
+        "Computing LCM(a, b) as (a * b) / GCD(a, b) blindly can cause integer overflow if a * b exceeds 64-bit limits.",
+        "Forgetting the base cases where one of the numbers is 0. GCD(a, 0) is fundamentally 'a'."
+      ],
+      "programmingNotes": [
+        "Most standard library math packages now include an optimized `gcd()` function. It is generally best to use it.",
+        "When rolling your own, the iterative version `while(b != 0) { tmp=b; b=a%b; a=tmp; }` is slightly faster than recursion due to stack overhead."
+      ],
+      "summaryCheatSheet": {
+        "formulas": [
+          "GCD(a, b) = GCD(b, a % b)",
+          "LCM(a, b) = a / GCD(a, b) * b"
+        ],
+        "rulesOfThumb": [
+          "Divide before multiplying for LCM.",
+          "GCD(a, 0) is a."
+        ]
+      }
+    },
+    "frequency": "very-common",
+    "prerequisites": [
+      "modular-arithmetic"
+    ],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "reduce fraction",
+          "common factor"
+        ],
+        "think": "GCD to simplify",
+        "why": "GCD finds the largest shared divisor"
+      },
+      {
+        "ifYouSee": [
+          "synchronization",
+          "cycle alignment"
+        ],
+        "think": "LCM",
+        "why": "LCM finds when cycles re-align"
+      }
+    ],
+    "pitfalls": [
+      "LCM overflow: compute a/gcd(a,b)*b instead of a*b/gcd(a,b)",
+      "GCD(0,x) = x, not 0 — handle zero inputs"
+    ],
+    "complexities": {
+      "time": "O(log min(a,b))",
+      "space": "O(1) iterative, O(log min(a,b)) recursive"
+    },
+    "problems": [
+      {
+        "platform": "LeetCode",
+        "title": "Greatest Common Divisor of Strings",
+        "url": "https://leetcode.com/problems/greatest-common-divisor-of-strings/",
+        "difficulty": "Easy",
+        "why": "GCD applied to string lengths"
+      },
+      {
+        "platform": "CSES",
+        "title": "Common Divisors",
+        "url": "https://cses.fi/problemset/task/1081",
+        "why": "Counting divisors with GCD thinking"
+      }
+    ],
+    "schemaVersion": 1
   },
   {
     "slug": "prime-factorization",
     "title": "Prime Factorization",
     "difficulty": "Easy",
     "summary": "Breaking numbers into prime factors - fundamental for divisor counting and number theory problems.",
-    "tags": ["number-theory", "primes", "factorization"],
+    "tags": [
+      "number-theory",
+      "primes",
+      "factorization"
+    ],
     "content": [
       "Every positive integer > 1 can be uniquely represented as a product of prime powers (Fundamental Theorem of Arithmetic).",
       "Basic factorization: Divide by all primes from 2 to sqrt(n). Time complexity: O(sqrt(n)).",
@@ -57,14 +329,113 @@
     "example": {
       "language": "python",
       "code": "def prime_factorization(n):\n    factors = {}\n    d = 2\n    while d * d <= n:\n        while n % d == 0:\n            factors[d] = factors.get(d, 0) + 1\n            n //= d\n        d += 1\n    if n > 1:\n        factors[n] = 1\n    return factors\n\ndef count_divisors(n):\n    factors = prime_factorization(n)\n    count = 1\n    for exp in factors.values():\n        count *= (exp + 1)\n    return count\n\n# Example\nn = 360  # 2^3 × 3^2 × 5^1\nprint(f\"Prime factors of {n}: {prime_factorization(n)}\")\nprint(f\"Number of divisors: {count_divisors(n)}\")  # (3+1)(2+1)(1+1) = 24"
-    }
+    },
+    "teaching": {
+      "tldr": "Every number can be uniquely broken down into prime multiplying blocks. Finding them takes O(sqrt(N)) time.",
+      "intuition": [
+        "Think of prime numbers as the fundamental 'atoms' of mathematics. Just like molecules are made of atoms, every integer greater than 1 is made by multiplying prime numbers together.",
+        "Instead of checking every number up to N to see if it's a factor, we only need to check up to the square root of N. Why? Because factors come in pairs. If a * b = N, one of them MUST be less than or equal to sqrt(N)."
+      ],
+      "definitions": [
+        "Prime number: A number greater than 1 that has exactly two divisors: 1 and itself.",
+        "Fundamental Theorem of Arithmetic: The guarantee that every integer > 1 has exactly one unique prime factorization."
+      ],
+      "keyIdeas": [
+        "To find prime factors, we start from the smallest prime (2) and repeatedly divide N by it until it no longer divides evenly.",
+        "Then we move to 3, then 5, up to sqrt(N).",
+        "If after checking up to sqrt(N), N has been repeatedly divided but is still > 1, then whatever remains of N is exactly one final large prime factor."
+      ],
+      "proofSketch": [
+        "Suppose N = p * q. If both p and q were greater than sqrt(N), then p * q would be strictly greater than N, which is a contradiction.",
+        "Thus, any composite number must have at least one prime factor <= sqrt(N)."
+      ],
+      "workedExamples": [
+        {
+          "title": "Factorizing 84",
+          "steps": [
+            "Start with N = 84, divisor d = 2. Sqrt(84) ~ 9.1.",
+            "84 is divisible by 2. Add 2 to factors. Update N = 42.",
+            "42 is divisible by 2. Add 2 to factors. Update N = 21.",
+            "21 is not divisible by 2. Increment d to 3.",
+            "21 is divisible by 3. Add 3 to factors. Update N = 7.",
+            "7 is not divisible by 3. Increment d sequentially. d=4, d=5, d=6 all fail.",
+            "Wait! Loop condition is d*d <= N. We are checking N=7. Since 3*3 = 9 > 7, our loop terminates!",
+            "Since the remaining N (7) > 1, it must be the last prime factor itself.",
+            "Result: 2^2 * 3^1 * 7^1."
+          ],
+          "takeaway": "Stopping at sqrt(N) and appending the final remainder is crucial for efficiency."
+        }
+      ],
+      "commonMistakes": [
+        "Forgetting to check if N > 1 after the while loop finishes. This ruins the factorization for any number that has a prime factor larger than its square root."
+      ],
+      "programmingNotes": [
+        "You don't need a list of primes to do O(sqrt(N)) factorization. Just checking every integer d from 2 up to sqrt(N) works, because composite d's will gracefully fail since their prime components would have already divided out N!"
+      ],
+      "summaryCheatSheet": {
+        "formulas": [
+          "Divisor Count = (a1 + 1) * (a2 + 1) * ... * (ak + 1)"
+        ],
+        "rulesOfThumb": [
+          "Only loop up to d * d <= N.",
+          "If N > 1 at the end, N is prime."
+        ]
+      }
+    },
+    "frequency": "very-common",
+    "prerequisites": [],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "count divisors",
+          "number of factors"
+        ],
+        "think": "Prime factorize then (e1+1)(e2+1)...",
+        "why": "Divisor count formula from fundamental theorem"
+      },
+      {
+        "ifYouSee": [
+          "multiple queries about factors"
+        ],
+        "think": "Sieve + SPF preprocessing",
+        "why": "O(log n) per query after O(n) precomputation"
+      }
+    ],
+    "pitfalls": [
+      "Not checking remainder after loop — miss prime factors > sqrt(n)",
+      "Using trial division for multiple large numbers — use SPF sieve instead"
+    ],
+    "complexities": {
+      "time": "O(√n) single, O(n log log n) sieve + O(log n) per query",
+      "space": "O(1) single, O(n) sieve"
+    },
+    "problems": [
+      {
+        "platform": "LeetCode",
+        "title": "Count Primes",
+        "url": "https://leetcode.com/problems/count-primes/",
+        "difficulty": "Medium",
+        "why": "Sieve application"
+      },
+      {
+        "platform": "CSES",
+        "title": "Sum of Divisors",
+        "url": "https://cses.fi/problemset/task/1082",
+        "why": "Requires understanding prime factorization deeply"
+      }
+    ],
+    "schemaVersion": 1
   },
   {
     "slug": "fast-exponentiation",
     "title": "Fast Exponentiation",
     "difficulty": "Easy",
     "summary": "Calculate a^b mod m efficiently in O(log b) time using binary exponentiation.",
-    "tags": ["number-theory", "exponentiation", "binary"],
+    "tags": [
+      "number-theory",
+      "exponentiation",
+      "binary"
+    ],
     "content": [
       "Binary exponentiation computes a^b in O(log b) time instead of O(b) by using the binary representation of b.",
       "Key insight: a^b = a^(b/2)² if b is even, and a × a^(b-1) if b is odd.",
@@ -77,14 +448,119 @@
     "example": {
       "language": "python",
       "code": "def fast_pow(base, exp, mod):\n    \"\"\"Calculate base^exp % mod in O(log exp) time\"\"\"\n    result = 1\n    base %= mod\n    while exp > 0:\n        if exp & 1:  # If exp is odd\n            result = (result * base) % mod\n        exp >>= 1  # exp = exp // 2\n        base = (base * base) % mod\n    return result\n\n# Recursive version\ndef fast_pow_recursive(base, exp, mod):\n    if exp == 0:\n        return 1\n    if exp & 1:\n        return base * fast_pow_recursive(base, exp - 1, mod) % mod\n    half = fast_pow_recursive(base, exp // 2, mod)\n    return half * half % mod\n\nMOD = 10**9 + 7\nprint(f\"2^100 mod MOD = {fast_pow(2, 100, MOD)}\")\nprint(f\"3^1000000 mod MOD = {fast_pow(3, 1000000, MOD)}\")"
-    }
+    },
+    "teaching": {
+      "tldr": "Fast exponentiation calculates a^b in O(log b) time by continuously squaring the base, avoiding the slow O(b) iterative multiplication.",
+      "intuition": [
+        "If you need to calculate 2^8, you don't need to multiply 2 by itself eight times (2*2*2*2*2*2*2*2).",
+        "Instead, you can calculate 2^2 = 4. Then square that: 4^2 = 16. Then square that: 16^2 = 256. We reached the answer in just three multiplications.",
+        "By looking at the binary representation of the exponent, we can decide precisely when to multiply the accumulated result."
+      ],
+      "definitions": [
+        "Base (a): The number being multiplied.",
+        "Exponent (b): The number of times to multiply.",
+        "Binary Exponentiation: Also known as exponentiation by squaring."
+      ],
+      "keyIdeas": [
+        "If the exponent b is even: a^b = (a^(b/2))^2.",
+        "If the exponent b is odd: a^b = a * (a^((b-1)/2))^2.",
+        "This recursive halving of the exponent means we only need logarithmic steps.",
+        "We almost always perform this modulo m, keeping the base small via a = a mod m."
+      ],
+      "proofSketch": [
+        "Any exponent b can be written in binary notation, basically as a sum of powers of 2 (e.g., 13 = 8 + 4 + 1).",
+        "Therefore, a^13 = a^(8 + 4 + 1) = a^8 * a^4 * a^1.",
+        "We can maintain a running 'base' that squares itself at each step (a^1 -> a^2 -> a^4 -> a^8).",
+        "We simply multiply this running base to our total answer whenever the corresponding binary bit of the exponent is a 1."
+      ],
+      "workedExamples": [
+        {
+          "title": "Computing 3^5",
+          "steps": [
+            "We want 3^5. Exponent 5 in binary is 101.",
+            "Base is 3. Result starts at 1.",
+            "Bit 1 (from 101): It's 1 (odd). Result = Result * Base = 1 * 3 = 3. Square Base = 3*3 = 9. Exponent becomes 5 // 2 = 2.",
+            "Bit 2: Exponent 2 is even (0). Result is untouched (still 3). Square Base = 9*9 = 81. Exponent becomes 2 // 2 = 1.",
+            "Bit 3: Exponent 1 is odd (1). Result = Result * Base = 3 * 81 = 243. Exponent is 0. We're done."
+          ],
+          "takeaway": "Squaring the base at every step represents the powers of 2. We multiply into the result only on bits that are 1."
+        }
+      ],
+      "commonMistakes": [
+        "Forgetting to apply modulo to the initial base before the loop begins.",
+        "Not handling the case where exponent is 0. Any number to the power of 0 is 1."
+      ],
+      "programmingNotes": [
+        "Iterative binary shifting (`b >>= 1`) and bitwise AND (`if (b & 1)`) is the standard pattern because it requires no recursive overhead."
+      ],
+      "summaryCheatSheet": {
+        "formulas": [
+          "If b is even: a^b = (a^2)^(b/2)",
+          "If b is odd: a^b = a * a^(b-1)"
+        ],
+        "rulesOfThumb": [
+          "a^0 = 1",
+          "Square the base, halve the exponent."
+        ]
+      }
+    },
+    "frequency": "very-common",
+    "prerequisites": [
+      "modular-arithmetic"
+    ],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "compute a^b mod m",
+          "large exponent"
+        ],
+        "think": "Binary exponentiation",
+        "why": "O(log b) instead of O(b)"
+      },
+      {
+        "ifYouSee": [
+          "matrix power",
+          "linear recurrence nth term"
+        ],
+        "think": "Matrix exponentiation (uses fast pow)",
+        "why": "Extends binary exp to matrices"
+      }
+    ],
+    "pitfalls": [
+      "Off-by-one in Fermat's inverse: use pow(a, m-2, m) not pow(a, m-1, m)",
+      "Base case: a^0 = 1, not 0"
+    ],
+    "complexities": {
+      "time": "O(log b)",
+      "space": "O(1) iterative"
+    },
+    "problems": [
+      {
+        "platform": "LeetCode",
+        "title": "Pow(x, n)",
+        "url": "https://leetcode.com/problems/powx-n/",
+        "difficulty": "Medium",
+        "why": "Direct fast pow implementation"
+      },
+      {
+        "platform": "CSES",
+        "title": "Exponentiation II",
+        "url": "https://cses.fi/problemset/task/1712",
+        "why": "Nested modular exponentiation"
+      }
+    ],
+    "schemaVersion": 1
   },
   {
     "slug": "sieve-of-eratosthenes",
     "title": "Sieve of Eratosthenes",
     "difficulty": "Medium",
     "summary": "Efficiently find all prime numbers up to n in O(n log log n) time.",
-    "tags": ["number-theory", "primes", "sieve"],
+    "tags": [
+      "number-theory",
+      "primes",
+      "sieve"
+    ],
     "content": [
       "The Sieve of Eratosthenes is the most efficient way to find all primes smaller than n when n is reasonably small (≤ 10^7).",
       "Algorithm: Start with all numbers marked as prime. For each prime p, mark all multiples of p (starting from p²) as composite.",
@@ -97,14 +573,121 @@
     "example": {
       "language": "python",
       "code": "def sieve_of_eratosthenes(n):\n    \"\"\"Return list of all primes <= n\"\"\"\n    if n < 2:\n        return []\n    is_prime = [True] * (n + 1)\n    is_prime[0] = is_prime[1] = False\n    \n    for i in range(2, int(n**0.5) + 1):\n        if is_prime[i]:\n            # Mark multiples starting from i²\n            for j in range(i*i, n + 1, i):\n                is_prime[j] = False\n    \n    return [i for i in range(n + 1) if is_prime[i]]\n\ndef linear_sieve(n):\n    \"\"\"Return primes and smallest prime factor (SPF) for each number\"\"\"\n    spf = list(range(n + 1))  # spf[i] = i initially\n    primes = []\n    for i in range(2, n + 1):\n        if spf[i] == i:  # i is prime\n            primes.append(i)\n        for p in primes:\n            if p > spf[i] or i * p > n:\n                break\n            spf[i * p] = p\n    return primes, spf\n\nprimes = sieve_of_eratosthenes(100)\nprint(f\"Primes up to 100: {primes}\")"
-    }
+    },
+    "teaching": {
+      "tldr": "The Sieve of Eratosthenes is a blazingly fast algorithm to find *all* prime numbers up to N by iteratively crossing out the multiples of known primes.",
+      "intuition": [
+        "Imagine writing down all numbers from 2 to 100.",
+        "The first number is 2. Knowing it's prime, you take a red pen and cross out every second number (4, 6, 8...). None of them can be prime.",
+        "The next uncrossed number is 3. Since it wasn't crossed out, it must be prime! You then cross out every third number (9, 15, 21...).",
+        "By repeating this process, every number that survives the crossing-out gauntlet is guaranteed to be a prime."
+      ],
+      "definitions": [
+        "Sieve: A filter used to extract desired elements. Here, we filter out composites to leave behind primes."
+      ],
+      "keyIdeas": [
+        "We use an array of booleans `is_prime[]`, initialized to True for all slots.",
+        "As we scan from 2 upwards, if we find a `True` value, it's a prime. We immediately iterate through all its multiples and set them to `False`.",
+        "We only need to scan the outer loop up to `sqrt(N)`, because any composite number larger than that must have already been crossed out by a smaller prime.",
+        "We can optimize the inner loop by starting to cross out multiples beginning at `p^2`, because `p * 2`, `p * 3` etc. were already crossed out when we processed 2, 3, etc."
+      ],
+      "proofSketch": [
+        "Every composite number C has a prime factor p that is <= sqrt(C).",
+        "Thus, if we have crossed out all multiples of all primes up to sqrt(N), every remaining uncrossed number up to N must be prime.",
+        "The time complexity involves the sum of the harmonic series of primes (N/2 + N/3 + N/5 + ...). Mathematically, this bounds to incredibly fast O(N log log N)."
+      ],
+      "workedExamples": [
+        {
+          "title": "Sieve up to 20",
+          "steps": [
+            "Start: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]",
+            "p = 2. It is prime. Cross out 4, 6, 8, 10, 12, 14, 16, 18, 20.",
+            "Remaining: [2, 3, 5, 7, 9, 11, 13, 15, 17, 19]",
+            "p = 3. Uncrossed, so it's prime. Cross out starting at 3^2 = 9. Cross out 9, 15.",
+            "Remaining: [2, 3, 5, 7, 11, 13, 17, 19]",
+            "p = 4. Already crossed out. Skip.",
+            "p = 5. Sqrt of 20 is ~4.4. We've exceeded the sqrt of N. We can stop scanning!",
+            "All remaining numbers are the primes up to 20."
+          ],
+          "takeaway": "Stopping the outer loop at sqrt(N) and starting the inner loop at p^2 makes the algorithm massively more efficient."
+        }
+      ],
+      "commonMistakes": [
+        "Creating a standard boolean array taking up megabytes of memory for N > 10^8. (Python lists are heavy, C++ vector<bool> or bitsets are better).",
+        "Starting the inner loop at `p * 2` instead of `p * p`.",
+        "Looping the outer loop all the way up to N when all that's needed to flag composites is `sqrt(N)`."
+      ],
+      "programmingNotes": [
+        "A fascinating variant called the 'Linear Sieve' calculates primes in true O(N) time and simultaneously computes the Smallest Prime Factor (SPF) for every number, allowing instantaneous O(log N) factorization of any number later."
+      ],
+      "summaryCheatSheet": {
+        "formulas": [
+          "Outer loop limit: `i * i <= N`",
+          "Inner loop start: `j = i * i`",
+          "Inner loop step: `j += i`"
+        ],
+        "rulesOfThumb": [
+          "Use the sieve when asked for multiple primes or factorization queries over a fixed range."
+        ]
+      }
+    },
+    "frequency": "very-common",
+    "prerequisites": [
+      "prime-factorization"
+    ],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "all primes up to N",
+          "prime check for range"
+        ],
+        "think": "Sieve of Eratosthenes",
+        "why": "O(n log log n) bulk prime generation"
+      },
+      {
+        "ifYouSee": [
+          "factor many numbers",
+          "smallest/largest prime factor"
+        ],
+        "think": "Linear sieve with SPF",
+        "why": "O(n) sieve gives O(log n) factorization"
+      }
+    ],
+    "pitfalls": [
+      "Starting inner loop from 2*p instead of p*p wastes time",
+      "Memory limit for n > 10^7 — use segmented sieve"
+    ],
+    "complexities": {
+      "time": "O(n log log n)",
+      "space": "O(n)"
+    },
+    "problems": [
+      {
+        "platform": "LeetCode",
+        "title": "Count Primes",
+        "url": "https://leetcode.com/problems/count-primes/",
+        "difficulty": "Medium",
+        "why": "Classic sieve problem"
+      },
+      {
+        "platform": "CSES",
+        "title": "Counting Divisors",
+        "url": "https://cses.fi/problemset/task/1713",
+        "why": "SPF sieve for fast factorization"
+      }
+    ],
+    "schemaVersion": 1
   },
   {
     "slug": "modular-inverse",
     "title": "Modular Multiplicative Inverse",
     "difficulty": "Medium",
     "summary": "Find x such that (a × x) mod m = 1. Essential for division in modular arithmetic.",
-    "tags": ["number-theory", "mod", "inverse"],
+    "tags": [
+      "number-theory",
+      "mod",
+      "inverse"
+    ],
     "content": [
       "The modular inverse of a modulo m is an integer x such that (a × x) ≡ 1 (mod m). Written as a⁻¹ mod m.",
       "Inverse exists if and only if GCD(a, m) = 1 (a and m are coprime).",
@@ -117,14 +700,115 @@
     "example": {
       "language": "python",
       "code": "MOD = 10**9 + 7\n\ndef mod_inverse_fermat(a, m=MOD):\n    \"\"\"Using Fermat's theorem (m must be prime)\"\"\"\n    return pow(a, m - 2, m)\n\ndef mod_inverse_extended_gcd(a, m):\n    \"\"\"Using Extended Euclidean Algorithm\"\"\"\n    def extended_gcd(a, b):\n        if b == 0:\n            return a, 1, 0\n        g, x1, y1 = extended_gcd(b, a % b)\n        return g, y1, x1 - (a // b) * y1\n    \n    g, x, _ = extended_gcd(a % m, m)\n    if g != 1:\n        return None  # Inverse doesn't exist\n    return (x % m + m) % m\n\ndef precompute_inverses(n, m=MOD):\n    \"\"\"Precompute inverses for 1 to n\"\"\"\n    inv = [0, 1] + [0] * (n - 1)\n    for i in range(2, n + 1):\n        inv[i] = (m - (m // i) * inv[m % i] % m) % m\n    return inv\n\n# Example: Division in modular arithmetic\na, b = 100, 7\nresult = (a * mod_inverse_fermat(b)) % MOD\nprint(f\"100 / 7 mod MOD = {result}\")"
-    }
+    },
+    "teaching": {
+      "tldr": "Modular inverse is 'division' in the land of modulo. It finds a number x to multiply by such that the result acts like division.",
+      "intuition": [
+        "In normal math, dividing by 2 is the exact same as multiplying by 1/2. We call 1/2 the 'multiplicative inverse' of 2 because 2 * (1/2) = 1.",
+        "In modular arithmetic, fractions aren't allowed. We only have whole numbers.",
+        "So, we must find a whole integer 'x' such that (a * x) mod m leaves a remainder of exactly 1. This 'x' acts as our fraction, letting us perform division safely."
+      ],
+      "definitions": [
+        "Modular Inverse of a (a⁻¹): An integer x such that (a * x) ≡ 1 (mod m).",
+        "Coprime: Numbers are coprime if their Greatest Common Divisor is 1."
+      ],
+      "keyIdeas": [
+        "The modular inverse of 'a' only exists if 'a' and 'm' share no common factors (they are coprime).",
+        "With a prime modulus like 10^9 + 7, every number smaller than it is automatically coprime, so the inverse always exists.",
+        "Fermat's Little Theorem states: If m is prime, a^(m-1) ≡ 1 (mod m).",
+        "By dividing both sides by 'a', we gracefully discover that a^(m-2) ≡ a⁻¹ (mod m)!"
+      ],
+      "proofSketch": [
+        "Assume modulus 'm' is prime.",
+        "Fermat's little theorem: a^(m-1) mod m = 1.",
+        "We want to find x such that a * x mod m = 1.",
+        "Rewrite Fermat's as: a * a^(m-2) mod m = 1.",
+        "Comparing the equations, it's clear: x = a^(m-2) mod m.",
+        "Since we can compute a^(m-2) quickly using fast exponentiation, finding the inverse takes only O(log m) time."
+      ],
+      "workedExamples": [
+        {
+          "title": "Finding Inverse modulo 7",
+          "steps": [
+            "Find the inverse of 2 modulo 7.",
+            "We want x such that (2 * x) mod 7 = 1.",
+            "Using Fermat's approach: We compute 2^(7-2) = 2^5.",
+            "2^5 = 32.",
+            "32 mod 7 = 4.",
+            "Verification check: Does 2 * 4 mod 7 = 1? Yes, 8 mod 7 = 1."
+          ],
+          "takeaway": "Using Fermat's theorem with fast exponentiation gracefully finds inverses in logarithmic time."
+        }
+      ],
+      "commonMistakes": [
+        "Trying to use Fermat's Little Theorem when the modulus is NOT a prime number. It will output garbage. Only use it for primes.",
+        "Using division before modulo. (a/b) mod m is incorrect. It MUST be (a * inverse(b)) mod m."
+      ],
+      "programmingNotes": [
+        "In Python, starting from 3.8, the standard `pow` function can compute inverses instantly: `pow(a, -1, m)`. Under the hood, this uses Extended Euclidean Algorithm, working even on non-primes!"
+      ],
+      "summaryCheatSheet": {
+        "formulas": [
+          "a⁻¹ = a^(m-2) % m  (ONLY when m is prime)",
+          "a / b % m = (a * b⁻¹) % m"
+        ],
+        "rulesOfThumb": [
+          "Fractions are banned.",
+          "Flip division to multiplication of inverses."
+        ]
+      }
+    },
+    "frequency": "very-common",
+    "prerequisites": [
+      "modular-arithmetic",
+      "fast-exponentiation",
+      "gcd-lcm"
+    ],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "division mod prime",
+          "nCr mod p"
+        ],
+        "think": "Fermat's little theorem: a^(p-2) mod p",
+        "why": "Gives modular inverse when p is prime"
+      },
+      {
+        "ifYouSee": [
+          "division mod non-prime"
+        ],
+        "think": "Extended GCD",
+        "why": "Works for any coprime modulus"
+      }
+    ],
+    "pitfalls": [
+      "Inverse exists only when gcd(a,m)=1",
+      "Using Fermat's theorem when m is not prime"
+    ],
+    "complexities": {
+      "time": "O(log m)",
+      "space": "O(1)"
+    },
+    "problems": [
+      {
+        "platform": "CSES",
+        "title": "Distributing Apples",
+        "url": "https://cses.fi/problemset/task/1716",
+        "why": "Requires nCr with mod inverse"
+      }
+    ],
+    "schemaVersion": 1
   },
   {
     "slug": "ncr-mod-prime",
     "title": "nCr Modulo Prime",
     "difficulty": "Medium",
     "summary": "Calculate binomial coefficients modulo a prime number efficiently.",
-    "tags": ["combinatorics", "mod", "binomial"],
+    "tags": [
+      "combinatorics",
+      "mod",
+      "binomial"
+    ],
     "content": [
       "nCr (n choose r) = n! / (r! × (n-r)!). Direct computation causes overflow for large n.",
       "For mod prime p: nCr mod p = (n! mod p) × (r!)⁻¹ mod p × ((n-r)!)⁻¹ mod p.",
@@ -137,14 +821,120 @@
     "example": {
       "language": "python",
       "code": "MOD = 10**9 + 7\nMAX_N = 200001\n\n# Precompute factorials and inverse factorials\nfact = [1] * MAX_N\nfor i in range(1, MAX_N):\n    fact[i] = fact[i-1] * i % MOD\n\ninv_fact = [1] * MAX_N\ninv_fact[MAX_N-1] = pow(fact[MAX_N-1], MOD-2, MOD)\nfor i in range(MAX_N-2, -1, -1):\n    inv_fact[i] = inv_fact[i+1] * (i+1) % MOD\n\ndef nCr(n, r):\n    if r < 0 or r > n:\n        return 0\n    return fact[n] * inv_fact[r] % MOD * inv_fact[n-r] % MOD\n\ndef lucas(n, r, p):\n    \"\"\"Lucas theorem for large n, small prime p\"\"\"\n    if r == 0:\n        return 1\n    return lucas(n // p, r // p, p) * nCr(n % p, r % p) % p\n\nprint(f\"10C3 = {nCr(10, 3)}\")  # 120\nprint(f\"100C50 mod MOD = {nCr(100, 50)}\")"
-    }
+    },
+    "teaching": {
+      "tldr": "Quickly calculates how many ways to choose 'r' items from 'n' possibilities, modulo a large prime, by combining factorials and modular inverses.",
+      "intuition": [
+        "Combinatorics is basically sophisticated counting. 'n choose r' (nCr) tells us how many unique teams of size 'r' we can form from a class of 'n' students.",
+        "The formula is n! / (r! * (n-r)!). Because factorials grow astronomically fast (100! is over 150 digits), we can never compute them normally.",
+        "By calculating the factorials gradually, and using the modular inverse to handle the division, we sidestep the huge numbers."
+      ],
+      "definitions": [
+        "nCr (Binomial Coefficient): Read as 'n choose r', representing ways to choose items ignoring sequence order.",
+        "Factorial (n!): The product of all positive integers less than or equal to n."
+      ],
+      "keyIdeas": [
+        "We precompute and store two arrays: the factorials `fact[i] = i! mod p`, and the inverse factorials `inv_fact[i] = (i!)⁻¹ mod p`.",
+        "The queries then become remarkably fast. An nCr request becomes: `(fact[n] * inv_fact[r] % p) * inv_fact[n-r] % p`.",
+        "The time essentially shifts entirely to the array setup. Setup is O(N), but every single nCr query drops to true O(1)."
+      ],
+      "proofSketch": [
+        "To find nCr mod p: n! / (r! * (n-r)!) mod p",
+        "Rewrite fractions as modular inverses:",
+        "= n! * (r!)⁻¹ * ((n-r)!)⁻¹ mod p",
+        "We can precalculate the factorials sequentially: fact[i] = fact[i-1] * i.",
+        "We can calculate the final inverse factorial `inv_fact[N]` using Fermat's Little Theorem.",
+        "Beautifully, we can calculate the rest in reverse! Since (x!) / x = (x-1)!, its inverse must be inv_fact[x] * x = inv_fact[x-1]. This avoids calling Fermat's theorem N times."
+      ],
+      "workedExamples": [
+        {
+          "title": "Choosing 2 from 5 mod 7",
+          "steps": [
+            "Precomputed factorials mod 7: fact[5]=120%7=1. fact[2]=2. fact[3]=6.",
+            "Precomputed inverses mod 7: (2!)⁻¹ = inverse(2) = 4. (3!)⁻¹ = inverse(6) = 6.",
+            "We want 5C2 = fact[5] * inv_fact[2] * inv_fact[3] mod 7.",
+            "5C2 = 1 * 4 * 6 = 24.",
+            "24 mod 7 = 3.",
+            "Verification: True 5C2 is 10. 10 mod 7 = 3. Match!"
+          ],
+          "takeaway": "Using precomputed arrays turns expensive combinatorial fractions into simple array multiplications."
+        }
+      ],
+      "commonMistakes": [
+        "Trying to call the modular inverse algorithm dynamically during thousands of queries. The O(log m) per query is sometimes too slow. The precomputation sweeps are necessary.",
+        "Failing to bounds-check queries. If a query asks for nCr where r > n, it should safely return 0."
+      ],
+      "programmingNotes": [
+        "Set your precomputation bounds slightly higher than the constraints (e.g., N=200005) so you don't trip an index-out-of-bounds error on the max case."
+      ],
+      "summaryCheatSheet": {
+        "formulas": [
+          "nCr = fact[n] * inv_fact[r] % p * inv_fact[n-r] % p",
+          "inv_fact[i] = inv_fact[i+1] * (i+1) % p"
+        ],
+        "rulesOfThumb": [
+          "Precompute factorials going up.",
+          "Precompute inverses going down via recursive multiplication."
+        ]
+      }
+    },
+    "frequency": "very-common",
+    "prerequisites": [
+      "modular-inverse",
+      "fast-exponentiation"
+    ],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "choose k from n",
+          "binomial coefficient"
+        ],
+        "think": "Precompute fact[] and inv_fact[]",
+        "why": "O(1) per query after O(n) precomputation"
+      },
+      {
+        "ifYouSee": [
+          "n up to 10^18, p small prime"
+        ],
+        "think": "Lucas' theorem",
+        "why": "Breaks into base-p digits"
+      }
+    ],
+    "pitfalls": [
+      "nCr where r > n should return 0, not crash",
+      "Precompute size must be >= max n+1"
+    ],
+    "complexities": {
+      "time": "O(n) precompute, O(1) per query",
+      "space": "O(n)"
+    },
+    "problems": [
+      {
+        "platform": "CSES",
+        "title": "Binomial Coefficients",
+        "url": "https://cses.fi/problemset/task/1079",
+        "why": "Direct nCr mod prime"
+      },
+      {
+        "platform": "LeetCode",
+        "title": "Unique Paths",
+        "url": "https://leetcode.com/problems/unique-paths/",
+        "difficulty": "Medium",
+        "why": "Grid paths = nCr"
+      }
+    ],
+    "schemaVersion": 1
   },
   {
     "slug": "pigeonhole-principle",
     "title": "Pigeonhole Principle",
     "difficulty": "Medium",
     "summary": "If n items are put into m containers with n > m, at least one container has more than one item.",
-    "tags": ["combinatorics", "proof-technique", "counting"],
+    "tags": [
+      "combinatorics",
+      "proof-technique",
+      "counting"
+    ],
     "content": [
       "Basic form: If n pigeons fly into m holes and n > m, at least one hole contains ≥2 pigeons.",
       "Generalized: If n objects are placed in m boxes, at least one box contains ≥⌈n/m⌉ objects.",
@@ -157,14 +947,118 @@
     "example": {
       "language": "python",
       "code": "def find_duplicate(nums):\n    \"\"\"\n    Array has n+1 integers in range [1,n].\n    By pigeonhole principle, at least one duplicate exists.\n    Floyd's cycle detection finds it in O(n) time, O(1) space.\n    \"\"\"\n    slow = fast = nums[0]\n    while True:\n        slow = nums[slow]\n        fast = nums[nums[fast]]\n        if slow == fast:\n            break\n    \n    slow = nums[0]\n    while slow != fast:\n        slow = nums[slow]\n        fast = nums[fast]\n    return slow\n\ndef has_subset_divisible_by_n(arr):\n    \"\"\"\n    Given n integers, prove there's a non-empty subset\n    with sum divisible by n (Pigeonhole on prefix sums mod n)\n    \"\"\"\n    n = len(arr)\n    prefix_mod = [0] * (n + 1)\n    for i in range(n):\n        prefix_mod[i+1] = (prefix_mod[i] + arr[i]) % n\n    \n    # n+1 prefix sums, n possible remainders -> two must be equal\n    seen = {}\n    for i, mod in enumerate(prefix_mod):\n        if mod in seen:\n            return (seen[mod], i)  # Subarray indices\n        seen[mod] = i\n    return None\n\nprint(find_duplicate([1, 3, 4, 2, 2]))  # 2"
-    }
+    },
+    "teaching": {
+      "tldr": "If you have more items than containers, at least one container must house more than one item. This is a powerful proof technique.",
+      "intuition": [
+        "Imagine you have 10 pigeons but only 9 pigeonholes. If you try to place every pigeon into a hole, you will eventually have to put two pigeons into the same hole. It's logically inescapable.",
+        "While it sounds so obvious that it borders on silly, mathematicians use it to prove that certain patterns or repetitions *must* exist, even if we don't know exactly where they are."
+      ],
+      "definitions": [
+        "Pigeons: The items you are distributing (often n+1 items).",
+        "Pigeonholes: The categories or states you are dropping items into (often n categories).",
+        "Collision: The mathematically guaranteed event where two items share the same category."
+      ],
+      "keyIdeas": [
+        "If you have `K` holes and `N` pigeons, at least one hole contains `ceil(N/K)` pigeons.",
+        "In algorithmic problems, 'pigeons' are often numbers or subset sums, while 'holes' are often remainders (modulo).",
+        "If you compute the remainder of N+1 different numbers when divided by N, they can only possibly have N different remainders (0 through N-1). Thus, two numbers MUST give the exact same remainder."
+      ],
+      "proofSketch": [
+        "Let's prove by contradiction.",
+        "Suppose we have N holes and N+1 pigeons.",
+        "Assume the Pigeonhole Principle is false. This would mean that NO hole has more than 1 pigeon.",
+        "If every hole has exactly 1 pigeon maximum, then the most pigeons we could have placed is 1 * N = N.",
+        "But we defined earlier that we have N+1 pigeons! The assumption must be false. Therefore, at least one hole must contain >1 pigeon."
+      ],
+      "workedExamples": [
+        {
+          "title": "Subarray Sum Divisible by N",
+          "steps": [
+            "Problem: Given an array of N integers, prove there is a contiguous subarray whose sum is cleanly divisible by N.",
+            "Take the array: [3, 1, 4, 2]. N = 4.",
+            "Compute prefix sums: [0, 3, 4, 8, 10]. Notice there are N+1 (so 5) prefix sums.",
+            "Take all prefix sums modulo N (mod 4): [0, 3, 0, 0, 2].",
+            "We have 5 numbers, but only 4 possible remainders (0, 1, 2, 3). By pigeonhole, a remainder MUST repeat.",
+            "Indices 0 and 2 both have remainder 0. The subarray between them is [3, 1], which sums to 4 (divisible by 4).",
+            "Conclusion: Whenever two prefixes share a remainder mod N, their difference is perfectly divisible by N!"
+          ],
+          "takeaway": "Using remainders as 'holes' and prefix sums as 'pigeons' guarantees a mathematical intersection."
+        },
+        {
+          "title": "The Birthday Paradox",
+          "steps": [
+            "How many people do you need in a room to GUARANTEE two share a birthday?",
+            "Pigeons = people. Holes = days in a year (366 max).",
+            "To guarantee a collision, you need Pigeons > Holes.",
+            "So, 367 people."
+          ],
+          "takeaway": "The pigeonhole principle yields absolute certainty, unlike probability which yields likelihood."
+        }
+      ],
+      "commonMistakes": [
+        "The principle proves *that* a collision exists. It does NOT automatically give you an algorithm to *find* the collision efficiently. You must usually combine it with other logic (like Hash Maps or Floyd's Cycle finding) to actually locate the duplicate."
+      ],
+      "programmingNotes": [
+        "When an interview question asks you to prove existence or find duplicates in limited ranges without extra memory, the Pigeonhole Principle is often the invisible key."
+      ],
+      "summaryCheatSheet": {
+        "formulas": [
+          "Min pigeons in max hole = Ceiling(N / K)"
+        ],
+        "rulesOfThumb": [
+          "Identify your pigeons (items).",
+          "Identify your holes (constraints)."
+        ]
+      }
+    },
+    "frequency": "common",
+    "prerequisites": [],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "n+1 items in n boxes",
+          "must repeat"
+        ],
+        "think": "Pigeonhole principle",
+        "why": "Guarantees at least one collision"
+      },
+      {
+        "ifYouSee": [
+          "prefix sums mod n"
+        ],
+        "think": "Two prefix sums share same remainder",
+        "why": "n+1 sums, n remainders — pigeonhole"
+      }
+    ],
+    "pitfalls": [
+      "Pigeonhole proves existence but doesn't construct the answer — combine with other techniques"
+    ],
+    "complexities": {
+      "time": "Depends on application",
+      "space": "Depends on application"
+    },
+    "problems": [
+      {
+        "platform": "LeetCode",
+        "title": "Find the Duplicate Number",
+        "url": "https://leetcode.com/problems/find-the-duplicate-number/",
+        "difficulty": "Medium",
+        "why": "Classic pigeonhole + cycle detection"
+      }
+    ],
+    "schemaVersion": 1
   },
   {
     "slug": "inclusion-exclusion",
     "title": "Inclusion-Exclusion Principle",
     "difficulty": "Hard",
     "summary": "Count elements in union of sets by alternating addition and subtraction of intersections.",
-    "tags": ["combinatorics", "counting", "sets"],
+    "tags": [
+      "combinatorics",
+      "counting",
+      "sets"
+    ],
     "content": [
       "|A ∪ B| = |A| + |B| - |A ∩ B|. Generalizes to any number of sets.",
       "General formula: |A₁ ∪ A₂ ∪ ... ∪ Aₙ| = Σ|Aᵢ| - Σ|Aᵢ ∩ Aⱼ| + Σ|Aᵢ ∩ Aⱼ ∩ Aₖ| - ... + (-1)ⁿ⁺¹|A₁ ∩ ... ∩ Aₙ|",
@@ -177,14 +1071,87 @@
     "example": {
       "language": "python",
       "code": "def count_coprime(n, primes):\n    \"\"\"Count integers in [1,n] coprime to all given primes\"\"\"\n    m = len(primes)\n    total = 0\n    \n    # Iterate all non-empty subsets using bitmask\n    for mask in range(1, 1 << m):\n        product = 1\n        bits = 0\n        for i in range(m):\n            if mask & (1 << i):\n                product *= primes[i]\n                bits += 1\n        # Add or subtract based on parity\n        if bits & 1:\n            total += n // product\n        else:\n            total -= n // product\n    \n    return n - total  # Numbers NOT divisible by any prime\n\ndef euler_totient(n):\n    \"\"\"Count integers in [1,n] coprime to n\"\"\"\n    result = n\n    p = 2\n    temp = n\n    while p * p <= temp:\n        if temp % p == 0:\n            while temp % p == 0:\n                temp //= p\n            result -= result // p\n        p += 1\n    if temp > 1:\n        result -= result // temp\n    return result\n\nprint(f\"Coprimes to [2,3,5] in [1,30]: {count_coprime(30, [2,3,5])}\")\nprint(f\"φ(12) = {euler_totient(12)}\")  # 4: {1,5,7,11}"
-    }
+    },
+    "frequency": "common",
+    "prerequisites": [
+      "prime-factorization"
+    ],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "count elements NOT in any set",
+          "union of sets"
+        ],
+        "think": "Inclusion-exclusion over subsets",
+        "why": "Alternating add/subtract avoids double counting"
+      },
+      {
+        "ifYouSee": [
+          "Euler totient",
+          "coprime count"
+        ],
+        "think": "IE with prime factors",
+        "why": "φ(n) uses inclusion-exclusion on prime divisors"
+      }
+    ],
+    "pitfalls": [
+      "Forgetting the sign alternation — odd subsets add, even subtract",
+      "2^n complexity — only feasible for small n (≤20)"
+    ],
+    "complexities": {
+      "time": "O(2^k) for k sets",
+      "space": "O(k)"
+    },
+    "problems": [
+      {
+        "platform": "CSES",
+        "title": "Counting Coprime Pairs",
+        "url": "https://cses.fi/problemset/task/2417",
+        "why": "IE with prime factors"
+      },
+      {
+        "platform": "LeetCode",
+        "title": "Ugly Number III",
+        "url": "https://leetcode.com/problems/ugly-number-iii/",
+        "difficulty": "Medium",
+        "why": "IE + binary search"
+      }
+    ],
+    "visualizers": [
+      {
+        "key": "inclusion-exclusion",
+        "enabled": true
+      }
+    ],
+    "microChecks": [
+      {
+        "question": "In the formula for |A ∪ B ∪ C|, what is the sign before the triple intersection |A ∩ B ∩ C| term?",
+        "answer": "+",
+        "hint": "Singles are +, pairs are -, triples are +"
+      },
+      {
+        "question": "If you are following the PIE sign pattern for 4 sets, what is the sign for the quad intersection |A ∩ B ∩ C ∩ D|?",
+        "answer": "-",
+        "hint": "It alternates: + (1), - (2), + (3), - (4)"
+      },
+      {
+        "question": "If |Universe|=30, |A|=10, |B|=10, and |A ∩ B|=3, what is |A ∪ B|?",
+        "answer": "17",
+        "hint": "|A| + |B| - |A ∩ B|"
+      }
+    ],
+    "schemaVersion": 1
   },
   {
     "slug": "chinese-remainder-theorem",
     "title": "Chinese Remainder Theorem",
     "difficulty": "Hard",
     "summary": "Solve systems of modular equations with pairwise coprime moduli.",
-    "tags": ["number-theory", "mod", "crt"],
+    "tags": [
+      "number-theory",
+      "mod",
+      "crt"
+    ],
     "content": [
       "CRT: Given pairwise coprime moduli m₁, m₂, ..., mₖ and remainders r₁, r₂, ..., rₖ, there exists a unique x mod (m₁×m₂×...×mₖ) satisfying all x ≡ rᵢ (mod mᵢ).",
       "Construction: x = Σ(rᵢ × Mᵢ × yᵢ) where M = Πmᵢ, Mᵢ = M/mᵢ, and yᵢ = Mᵢ⁻¹ mod mᵢ.",
@@ -192,19 +1159,144 @@
       "Time complexity: O(k × log(max(mᵢ))) for k equations.",
       "Application: Solve problems separately mod different primes, then combine using CRT.",
       "Handles large numbers by breaking into smaller moduli: e.g., mod 6 = CRT(mod 2, mod 3).",
-      "Extended CRT handles non-coprime moduli if solution exists (requires compatibility check)."
+      "Extended CRT handles non-coprime moduli if solution exists (requires compatibility check).",
+      "Worked Example: x ≡ 2 (mod 3), x ≡ 3 (mod 5). M = 15. Mi = [5, 3]. Solutions to Mi·yi ≡ 1 mod mi: y = [2, 2]. Result = (2·5·2 + 3·3·2) mod 15 = 38 mod 15 = 8."
     ],
     "example": {
       "language": "python",
-      "code": "def extended_gcd(a, b):\n    if b == 0:\n        return a, 1, 0\n    g, x, y = extended_gcd(b, a % b)\n    return g, y, x - (a // b) * y\n\ndef crt(remainders, moduli):\n    \"\"\"\n    Solve system: x ≡ r[i] (mod m[i]) for all i\n    Returns (solution, product_of_moduli)\n    \"\"\"\n    if len(remainders) != len(moduli):\n        return None\n    \n    M = 1\n    for m in moduli:\n        M *= m\n    \n    x = 0\n    for r, m in zip(remainders, moduli):\n        Mi = M // m\n        _, yi, _ = extended_gcd(Mi, m)\n        x += r * Mi * yi\n    \n    return x % M, M\n\n# Example: Find x such that:\n# x ≡ 2 (mod 3)\n# x ≡ 3 (mod 5)\n# x ≡ 2 (mod 7)\nsolution, mod = crt([2, 3, 2], [3, 5, 7])\nprint(f\"x = {solution} (mod {mod})\")  # x = 23 (mod 105)\n\n# Verify\nprint(f\"23 mod 3 = {23 % 3}\")  # 2\nprint(f\"23 mod 5 = {23 % 5}\")  # 3\nprint(f\"23 mod 7 = {23 % 7}\")  # 2"
-    }
+      "code": "def extended_gcd(a, b):\n    if b == 0:\n        return a, 1, 0\n    g, x, y = extended_gcd(b, a % b)\n    return g, y, x - (a // b) * y\n\ndef crt(remainders, moduli):\n    if len(remainders) != len(moduli):\n        return None\n    M = 1\n    for m in moduli:\n        M *= m\n    x = 0\n    for r, m in zip(remainders, moduli):\n        Mi = M // m\n        _, yi, _ = extended_gcd(Mi, m)\n        x += r * Mi * yi\n    return x % M, M\n\nsolution, mod = crt([2, 3, 2], [3, 5, 7])\nprint(f\"x = {solution} (mod {mod})\")  # x = 23 (mod 105)"
+    },
+    "frequency": "rare",
+    "prerequisites": [
+      "modular-inverse",
+      "gcd-lcm"
+    ],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "system of congruences",
+          "multiple mod equations"
+        ],
+        "think": "CRT",
+        "why": "Combines separate modular solutions"
+      },
+      {
+        "ifYouSee": [
+          "compute answer mod different primes then merge"
+        ],
+        "think": "CRT reconstruction",
+        "why": "Split large modulus into coprime factors"
+      },
+      {
+        "ifYouSee": [
+          "hash collision avoidance",
+          "multi-hash"
+        ],
+        "think": "CRT with multiple hash moduli",
+        "why": "Increase effective modulus via CRT"
+      }
+    ],
+    "pitfalls": [
+      "Moduli must be pairwise coprime for standard CRT — check gcd first",
+      "Overflow during M_i * y_i computation — use __int128 or Python",
+      "Non-coprime moduli require extended CRT (pair merge via egcd); standard formula silently gives wrong answers",
+      "Forgetting to normalize: solution should be in [0, lcm) not just mod m"
+    ],
+    "complexities": {
+      "time": "O(k log max(m_i))",
+      "space": "O(k)"
+    },
+    "bridges": [
+      {
+        "to": "gcd-lcm",
+        "example": "CRT merge step uses gcd to check compatibility and lcm for the combined modulus."
+      },
+      {
+        "to": "modular-inverse",
+        "example": "Each CRT term requires computing Mi⁻¹ mod mi."
+      }
+    ],
+    "problems": [
+      {
+        "platform": "CSES",
+        "title": "Chinese Remainder Theorem",
+        "url": "https://cses.fi/dt/task/2174",
+        "why": "Direct CRT implementation"
+      },
+      {
+        "platform": "LeetCode",
+        "title": "Strange Printer II",
+        "url": "https://leetcode.com/problems/strange-printer-ii/",
+        "difficulty": "Hard",
+        "why": "CRT-like constraint merging"
+      },
+      {
+        "platform": "Codeforces",
+        "title": "Remainders Game",
+        "url": "https://codeforces.com/problemset/problem/687/B",
+        "difficulty": "1800",
+        "why": "Determine when CRT uniqueness holds"
+      },
+      {
+        "platform": "Codeforces",
+        "title": "Dima and Salesman",
+        "url": "https://codeforces.com/problemset/problem/366/C",
+        "difficulty": "1700",
+        "why": "Modular system reconstruction"
+      },
+      {
+        "platform": "Project Euler",
+        "title": "Generalize CRT",
+        "url": "https://projecteuler.net/problem=271",
+        "why": "Solve x³ ≡ 1 mod n via CRT over prime factors"
+      },
+      {
+        "platform": "LightOJ",
+        "title": "False Coin",
+        "url": "https://lightoj.com/problem/false-coin",
+        "why": "Identify element via modular remainders"
+      }
+    ],
+    "visualizers": [
+      {
+        "key": "crt",
+        "enabled": true
+      }
+    ],
+    "microChecks": [
+      {
+        "question": "Given x≡2(mod 3) and x≡3(mod 5), what is x mod 15?",
+        "answer": "8",
+        "hint": "15=3×5 (coprime). Try substitution or the visualizer."
+      },
+      {
+        "question": "Is a solution guaranteed for x≡1(mod 4) and x≡3(mod 6)?",
+        "answer": "No",
+        "hint": "gcd(4,6)=2, and (3-1)=2 is divisible by 2, so actually yes. But x≡1(mod 4) and x≡0(mod 6)? (0-1)=-1 not div by 2 → no."
+      },
+      {
+        "question": "In CRT construction, what do we call the value M_i = M / m_i?",
+        "answer": "Complementary modulus",
+        "hint": "It's the product of all OTHER moduli."
+      },
+      {
+        "question": "What is the combined modulus when merging mod 4 and mod 6?",
+        "answer": "12",
+        "hint": "lcm(4,6)=12, not 4×6=24, because gcd=2."
+      }
+    ],
+    "schemaVersion": 1
   },
   {
     "slug": "matrix-exponentiation",
     "title": "Matrix Exponentiation",
     "difficulty": "Hard",
     "summary": "Compute matrix powers in O(k³ log n) for k×k matrices - used for linear recurrences.",
-    "tags": ["linear-algebra", "dp-optimization", "recurrence"],
+    "tags": [
+      "linear-algebra",
+      "dp-optimization",
+      "recurrence"
+    ],
     "content": [
       "Matrix exponentiation extends binary exponentiation to matrices: compute A^n in O(k³ log n) for k×k matrix.",
       "Key application: Convert linear recurrences to matrix form to compute n-th term in O(log n).",
@@ -217,14 +1309,62 @@
     "example": {
       "language": "python",
       "code": "MOD = 10**9 + 7\n\ndef mat_mult(A, B):\n    \"\"\"Multiply two square matrices mod MOD\"\"\"\n    n = len(A)\n    C = [[0]*n for _ in range(n)]\n    for i in range(n):\n        for j in range(n):\n            for k in range(n):\n                C[i][j] = (C[i][j] + A[i][k] * B[k][j]) % MOD\n    return C\n\ndef mat_pow(M, exp):\n    \"\"\"Compute M^exp mod MOD using binary exponentiation\"\"\"\n    n = len(M)\n    result = [[1 if i==j else 0 for j in range(n)] for i in range(n)]  # Identity\n    \n    while exp > 0:\n        if exp & 1:\n            result = mat_mult(result, M)\n        M = mat_mult(M, M)\n        exp >>= 1\n    return result\n\ndef fibonacci(n):\n    \"\"\"Compute n-th Fibonacci number in O(log n)\"\"\"\n    if n <= 1:\n        return n\n    M = [[1, 1], [1, 0]]\n    result = mat_pow(M, n - 1)\n    return result[0][0]\n\nprint(f\"F(10) = {fibonacci(10)}\")  # 55\nprint(f\"F(50) = {fibonacci(50)}\")\nprint(f\"F(10^9) mod MOD = {fibonacci(10**9)}\")"
-    }
+    },
+    "frequency": "common",
+    "prerequisites": [
+      "fast-exponentiation"
+    ],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "linear recurrence",
+          "find nth term in O(log n)"
+        ],
+        "think": "Matrix exponentiation",
+        "why": "Converts recurrence to matrix multiplication"
+      },
+      {
+        "ifYouSee": [
+          "count paths of length k in graph"
+        ],
+        "think": "Adjacency matrix ^ k",
+        "why": "(A^k)[i][j] = paths of length k from i to j"
+      }
+    ],
+    "pitfalls": [
+      "Matrix dimensions must match recurrence order",
+      "Don't forget modular arithmetic inside matrix multiply"
+    ],
+    "complexities": {
+      "time": "O(k³ log n) for k×k matrix",
+      "space": "O(k²)"
+    },
+    "problems": [
+      {
+        "platform": "CSES",
+        "title": "Fibonacci Numbers",
+        "url": "https://cses.fi/problemset/task/1722",
+        "why": "Classic matrix exp for Fibonacci"
+      },
+      {
+        "platform": "CSES",
+        "title": "Graph Paths I",
+        "url": "https://cses.fi/problemset/task/1202",
+        "why": "Count paths via matrix power"
+      }
+    ],
+    "schemaVersion": 1
   },
   {
     "slug": "probability-expected-value",
     "title": "Probability & Expected Value",
     "difficulty": "Hard",
     "summary": "Compute probabilities and expected values using linearity of expectation and recurrences.",
-    "tags": ["probability", "expected-value", "counting"],
+    "tags": [
+      "probability",
+      "expected-value",
+      "counting"
+    ],
     "content": [
       "Expected value E[X] = Σ(x × P(X=x)) = Σ P(X≥i) for non-negative integer X.",
       "Linearity of expectation: E[X + Y] = E[X] + E[Y], even if X and Y are dependent!",
@@ -237,6 +1377,1673 @@
     "example": {
       "language": "python",
       "code": "MOD = 10**9 + 7\n\ndef mod_inverse(a, m=MOD):\n    return pow(a, m - 2, m)\n\ndef expected_dice_sum(n):\n    \"\"\"Expected sum of n dice rolls (linearity of expectation)\"\"\"\n    # E[one die] = (1+2+3+4+5+6)/6 = 3.5\n    # E[n dice] = n × 3.5 = 7n/2\n    # Return as fraction mod MOD\n    numerator = 7 * n\n    denominator = 2\n    return numerator * mod_inverse(denominator) % MOD\n\ndef coupon_collector(n):\n    \"\"\"Expected trials to collect all n distinct items\"\"\"\n    # E = n × (1/n + 1/(n-1) + ... + 1/1) = n × H_n\n    # Where H_n is n-th harmonic number\n    result = 0\n    for i in range(1, n + 1):\n        # Add n/i = n × inverse(i)\n        result = (result + n * mod_inverse(i)) % MOD\n    return result\n\ndef expected_inversions_random_permutation(n):\n    \"\"\"Expected inversions in random permutation of n elements\"\"\"\n    # Each pair (i,j) has 1/2 probability of being inverted\n    # Total pairs = n(n-1)/2, expected inversions = n(n-1)/4\n    num = n * (n - 1)\n    return num * mod_inverse(4) % MOD\n\nprint(f\"E[sum of 3 dice] = {expected_dice_sum(3)}\")\nprint(f\"E[collect 10 items] ≈ {coupon_collector(10)}\")"
-    }
+    },
+    "frequency": "common",
+    "prerequisites": [
+      "modular-inverse"
+    ],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "expected number of steps/trials"
+        ],
+        "think": "Linearity of expectation",
+        "why": "E[X+Y] = E[X]+E[Y] even if dependent"
+      },
+      {
+        "ifYouSee": [
+          "geometric distribution",
+          "keep trying until success"
+        ],
+        "think": "E = 1/p",
+        "why": "Expected trials for probability p"
+      }
+    ],
+    "pitfalls": [
+      "Output probability as fraction mod prime: numerator * inverse(denominator)",
+      "Don't confuse P(A∪B) with P(A)+P(B) when not disjoint"
+    ],
+    "complexities": {
+      "time": "Depends on application",
+      "space": "Depends on application"
+    },
+    "problems": [
+      {
+        "platform": "Codeforces",
+        "title": "Vasya and Magic Matrix",
+        "url": "https://codeforces.com/problemset/problem/1042/E",
+        "difficulty": "1900",
+        "why": "Expected value with sorting"
+      }
+    ],
+    "schemaVersion": 1
+  },
+  {
+    "slug": "prefix-sum-1d",
+    "title": "Prefix Sum (1D)",
+    "difficulty": "Easy",
+    "summary": "Answer range sum queries in O(1) after O(n) preprocessing — the most fundamental technique in competitive programming.",
+    "tags": [
+      "arrays",
+      "prefix-sum",
+      "range-query"
+    ],
+    "content": [
+      "A prefix sum array stores cumulative sums: prefix[i] = arr[0] + arr[1] + ... + arr[i-1]. We set prefix[0] = 0.",
+      "Building the prefix array takes O(n): prefix[i] = prefix[i-1] + arr[i-1].",
+      "Range sum query arr[l..r] = prefix[r+1] - prefix[l]. This is O(1) per query after O(n) preprocessing.",
+      "Prefix sums convert range problems into point problems — a very powerful reduction.",
+      "The technique generalizes: prefix XOR for XOR queries, prefix product for product queries (with care for zeros).",
+      "2D extension: preprocess a matrix for O(1) sub-rectangle sum queries using inclusion-exclusion.",
+      "Difference array is the inverse: it converts range updates into point updates, then prefix sum recovers the array."
+    ],
+    "example": {
+      "language": "python",
+      "code": "def build_prefix(arr):\n    prefix = [0]\n    for x in arr:\n        prefix.append(prefix[-1] + x)\n    return prefix\n\ndef query(prefix, l, r):\n    \"\"\"Sum of arr[l..r] inclusive\"\"\"\n    return prefix[r + 1] - prefix[l]\n\narr = [3, 1, 4, 1, 5, 9, 2, 6]\nprefix = build_prefix(arr)\nprint(f\"Sum [2..5] = {query(prefix, 2, 5)}\")  # 4+1+5+9 = 19\nprint(f\"Sum [0..7] = {query(prefix, 0, 7)}\")  # 31"
+    },
+    "teaching": {
+      "tldr": "Prefix sum is a precomputation technique that lets you instantly query the sum of any continuous slice (subarray) of an array.",
+      "intuition": [
+        "Imagine tracking your accumulated savings over a year. At the end of March, your total is Jan + Feb + Mar.",
+        "If someone asks, 'How much did you save from February to April?', you don't need to add the individual months.",
+        "You easily take your total savings up to April, and subtract your total savings up to January. This leaves exactly February through April."
+      ],
+      "definitions": [
+        "Prefix Sum Array (P): An array where P[i] stores the sum of all elements from index 0 up to i-1.",
+        "Range Query [L, R]: Requesting the sum of all elements starting at index L and ending at index R."
+      ],
+      "keyIdeas": [
+        "We shift the prefix array by one index (padding with a 0 at the start). So P[0] = 0.",
+        "Building it: P[i+1] = P[i] + arr[i]. This takes O(N) time.",
+        "Range sum query [L, R] formula: Sum = P[R+1] - P[L]. This takes O(1) time.",
+        "It transforms slow loop-based summation into a simple subtraction."
+      ],
+      "proofSketch": [
+        "Let arr = [a0, a1, a2, a3, a4].",
+        "P[0] = 0",
+        "P[1] = a0",
+        "P[2] = a0 + a1",
+        "P[4] = a0 + a1 + a2 + a3",
+        "To find sum of [1, 3] which is (a1 + a2 + a3):",
+        "Notice that P[4] consists of (a0) + (a1 + a2 + a3).",
+        "If we subtract P[1] (which is a0) from P[4], the a0 terms cancel out perfectly.",
+        "Result: P[4] - P[1] = a1 + a2 + a3."
+      ],
+      "workedExamples": [
+        {
+          "title": "Basic Range Query",
+          "steps": [
+            "Array: [3, 1, 4, 1, 5, 9, 2, 6]",
+            "Prefix sum array: [0, 3, 4, 8, 9, 14, 23, 25, 31]",
+            "Query for sum from index 2 to 5. Expected: 4+1+5+9 = 19.",
+            "Using formula: P[5+1] - P[2] = P[6] - P[2] = 23 - 4 = 19."
+          ],
+          "takeaway": "A single subtraction yields the sum of any arbitrary length subarray."
+        }
+      ],
+      "commonMistakes": [
+        "Off-by-one errors. Not padding the prefix array with an initial 0 often leads to complicated checks when L=0.",
+        "Using the formula P[R] - P[L-1]. This fails when L is 0 because L-1 is -1 (out of bounds). Using the P[R+1] - P[L] 1-indexed padding eliminates this."
+      ],
+      "programmingNotes": [
+        "Always construct the prefix array with N+1 elements."
+      ],
+      "visualizerHints": [
+        "Watch how clicking on a range instantly highlights the subtraction boundaries in the prefix array."
+      ],
+      "summaryCheatSheet": {
+        "formulas": [
+          "P[i] = P[i-1] + arr[i-1]",
+          "Sum(L, R) = P[R+1] - P[L]"
+        ],
+        "rulesOfThumb": [
+          "Always start the prefix array with a 0.",
+          "Prefix sums only work on STATIC arrays (no updates)."
+        ]
+      }
+    },
+    "frequency": "very-common",
+    "prerequisites": [],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "range sum query",
+          "subarray sum"
+        ],
+        "think": "Prefix sum array",
+        "why": "O(1) per query after O(n) build"
+      },
+      {
+        "ifYouSee": [
+          "count subarrays with sum = k"
+        ],
+        "think": "Prefix sum + hashmap",
+        "why": "prefix[j] - prefix[i] = k means subarray [i..j-1] sums to k"
+      },
+      {
+        "ifYouSee": [
+          "equilibrium index",
+          "left sum = right sum"
+        ],
+        "think": "Prefix sum from both ends",
+        "why": "Compare prefix[i] with total - prefix[i+1]"
+      }
+    ],
+    "pitfalls": [
+      "Off-by-one: prefix has n+1 elements, query is prefix[r+1] - prefix[l], not prefix[r] - prefix[l-1]",
+      "Integer overflow for large arrays — use long long / BigInt",
+      "Prefix sum is static — if array changes, use BIT or segment tree"
+    ],
+    "complexities": {
+      "time": "O(n) build, O(1) query",
+      "space": "O(n)",
+      "note": "Cannot handle updates efficiently; use BIT/segment tree for dynamic"
+    },
+    "bridges": [
+      {
+        "to": "Arrays",
+        "example": "Subarray sum problems on LeetCode",
+        "link": "/tutorials/array-sliding-window"
+      },
+      {
+        "to": "DP",
+        "example": "Many DP optimizations use prefix sums",
+        "link": "/tutorials/dp-1d-sequence"
+      }
+    ],
+    "problems": [
+      {
+        "platform": "LeetCode",
+        "title": "Range Sum Query - Immutable",
+        "url": "https://leetcode.com/problems/range-sum-query-immutable/",
+        "difficulty": "Easy",
+        "why": "Direct prefix sum implementation"
+      },
+      {
+        "platform": "LeetCode",
+        "title": "Subarray Sum Equals K",
+        "url": "https://leetcode.com/problems/subarray-sum-equals-k/",
+        "difficulty": "Medium",
+        "why": "Prefix sum + hashmap pattern"
+      },
+      {
+        "platform": "LeetCode",
+        "title": "Product of Array Except Self",
+        "url": "https://leetcode.com/problems/product-of-array-except-self/",
+        "difficulty": "Medium",
+        "why": "Prefix and suffix products"
+      },
+      {
+        "platform": "CSES",
+        "title": "Static Range Sum Queries",
+        "url": "https://cses.fi/problemset/task/1646",
+        "why": "Classic prefix sum"
+      },
+      {
+        "platform": "Codeforces",
+        "title": "Greg and Array",
+        "url": "https://codeforces.com/problemset/problem/295/A",
+        "difficulty": "1400",
+        "why": "Prefix sum + difference array combo"
+      },
+      {
+        "platform": "LeetCode",
+        "title": "Continuous Subarray Sum",
+        "url": "https://leetcode.com/problems/continuous-subarray-sum/",
+        "difficulty": "Medium",
+        "why": "Prefix sum mod k + hashmap"
+      }
+    ],
+    "visualizers": [
+      {
+        "key": "prefix-1d",
+        "enabled": true
+      }
+    ],
+    "microChecks": [
+      {
+        "question": "Given arr = [2, 4, 6], what is prefix[3]?",
+        "answer": "12",
+        "hint": "prefix[3] = 2+4+6"
+      },
+      {
+        "question": "With prefix = [0, 2, 6, 12], what is sum(arr[1..2])?",
+        "answer": "10",
+        "hint": "prefix[3] - prefix[1] = 12 - 2"
+      },
+      {
+        "question": "What is the time complexity of a single range sum query using prefix sums?",
+        "answer": "O(1)",
+        "hint": "Just one subtraction"
+      }
+    ],
+    "schemaVersion": 1
+  },
+  {
+    "slug": "prefix-sum-2d",
+    "title": "Prefix Sum (2D)",
+    "difficulty": "Medium",
+    "summary": "Answer sub-rectangle sum queries in O(1) on a 2D matrix using inclusion-exclusion.",
+    "tags": [
+      "arrays",
+      "prefix-sum",
+      "2d",
+      "matrix"
+    ],
+    "content": [
+      "2D prefix sum extends the 1D idea to matrices: P[i][j] stores the sum of all elements in the sub-rectangle from (0,0) to (i-1,j-1).",
+      "Build formula: P[i][j] = M[i-1][j-1] + P[i-1][j] + P[i][j-1] - P[i-1][j-1]. The subtraction avoids double-counting.",
+      "Query formula (sum of rectangle (r1,c1) to (r2,c2)): P[r2+1][c2+1] - P[r1][c2+1] - P[r2+1][c1] + P[r1][c1].",
+      "This is the inclusion-exclusion principle applied to rectangles: add the whole, subtract two overlapping strips, add back the doubly-subtracted corner.",
+      "Build takes O(rows × cols). Each query is O(1). The prefix matrix has dimensions (rows+1) × (cols+1) with zero-padded borders.",
+      "Applications: image processing (integral images), 2D range queries in contest problems, maximum sum sub-rectangle."
+    ],
+    "example": {
+      "language": "python",
+      "code": "def build_2d_prefix(matrix):\n    rows, cols = len(matrix), len(matrix[0])\n    P = [[0]*(cols+1) for _ in range(rows+1)]\n    for i in range(1, rows+1):\n        for j in range(1, cols+1):\n            P[i][j] = matrix[i-1][j-1] + P[i-1][j] + P[i][j-1] - P[i-1][j-1]\n    return P\n\ndef query_2d(P, r1, c1, r2, c2):\n    return P[r2+1][c2+1] - P[r1][c2+1] - P[r2+1][c1] + P[r1][c1]\n\nmatrix = [[1,2,3],[4,5,6],[7,8,9]]\nP = build_2d_prefix(matrix)\nprint(f\"Sum (1,1)→(2,2) = {query_2d(P, 1, 1, 2, 2)}\")  # 5+6+8+9 = 28"
+    },
+    "teaching": {
+      "tldr": "2D Prefix sum expands the 1D concept to matrices, allowing you to instantly query the sum of any rectangular sub-grid.",
+      "intuition": [
+        "Imagine calculating the area of a square courtyard, but your only tool gives you the area from the top-left corner of the property to any arbitrary point.",
+        "Your courtyard isn't in the top-left corner. Instead, it's somewhere in the middle.",
+        "To find the courtyard's area, you take the large area encompassing it (all the way to the top-left), subtract the areas above it, subtract the areas to the left of it, and then add back the top-left intersection because you accidentally subtracted it twice."
+      ],
+      "definitions": [
+        "2D Prefix Array (P): A matrix where P[i][j] holds the sum of all cells in the rectangle bounded by the top-left corner (0,0) and bottom-right corner (i-1, j-1)."
+      ],
+      "keyIdeas": [
+        "We construct the matrix using Inclusion-Exclusion.",
+        "To build P[i][j], we add the original matrix cell, plus the sum from the block above P[i-1][j], plus the sum from the block left P[i][j-1]. Since their intersection was added twice, we subtract the diagonal block P[i-1][j-1].",
+        "Queries mirror this exact Inclusion-Exclusion geometry. Take the big rectangle extending to the bottom-right query point, subtract the two strips outside our bounds, and add back the corner piece you doubly subtracted."
+      ],
+      "proofSketch": [
+        "Let the sum of everything from (0,0) to (r2, c2) be BigRect.",
+        "We only want the sum starting at (r1, c1).",
+        "We must chop off the rectangle strictly above r1: this is P[r1][c2+1].",
+        "We must chop off the rectangle strictly left of c1: this is P[r2+1][c1].",
+        "But the region both strictly above and strictly left (the top-left corner) was chopped off by BOTH operations.",
+        "Therefore, we must compensate by adding back P[r1][c1].",
+        "Final formula: BigRect - TopRect - LeftRect + TopLeftCorner."
+      ],
+      "workedExamples": [
+        {
+          "title": "Querying a 3x3 Grid",
+          "steps": [
+            "Given Matrix: [[1, 2, 3], [4, 5, 6], [7, 8, 9]]. Pad prefix with a top/left row of zeros to make it 4x4.",
+            "Building P: P[1][1] = 1 + 0 + 0 - 0 = 1. P[1][2] = 2 + 1 + 0 - 0 = 3... P[2][3] = 6 + 15 + 6 - 3 = 24... full P builds normally.",
+            "Query rectangle from (1,1) to (2,2). These are the cells [5,6] and [8,9]. Real sum is 5+6+8+9 = 28.",
+            "Using formula: P[3][3] - P[1][3] - P[3][1] + P[1][1]",
+            "Values from P: 45 - 6 - 12 + 1 = 28.",
+            "Match!"
+          ],
+          "takeaway": "Four memory lookups can replace looping over millions of grid cells."
+        }
+      ],
+      "commonMistakes": [
+        "Off-by-one errors are notorious here. Using a 0-indexed prefix array requires dozens of messy `if i > 0` checks. ALWAYS pad the top and left of your prefix matrix with a row/col of 0s. Let the prefix matrix be size (Rows+1) x (Cols+1)."
+      ],
+      "programmingNotes": [
+        "In algorithmic competitions, any time you see a 2D matrix with static values and you need to repeatedly check rectangular properties (like 'count how many trees are planted in this sector'), 2D Prefix Sum is almost guaranteed to be the solution."
+      ],
+      "visualizerHints": [
+        "Play with the Interactive Grid. Notice how the visual highlights emphasize the overlapping sections of the subtraction."
+      ],
+      "summaryCheatSheet": {
+        "formulas": [
+          "Build: P[i][j] = M[i-1][j-1] + P[i-1][j] + P[i][j-1] - P[i-1][j-1]",
+          "Query: Sum(r1,c1,r2,c2) = P[r2+1][c2+1] - P[r1][c2+1] - P[r2+1][c1] + P[r1][c1]"
+        ],
+        "rulesOfThumb": [
+          "Inclusion-Exclusion is the heart of 2D prefix sums.",
+          "Padding is mandatory to keep your code clean."
+        ]
+      }
+    },
+    "frequency": "common",
+    "prerequisites": [
+      "prefix-sum-1d"
+    ],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "2D grid",
+          "rectangle sum query"
+        ],
+        "think": "2D prefix sum",
+        "why": "O(1) per query after O(n*m) build"
+      },
+      {
+        "ifYouSee": [
+          "maximum sum sub-rectangle"
+        ],
+        "think": "2D prefix sum + Kadane's variant",
+        "why": "Fix two rows, reduce to 1D max subarray"
+      }
+    ],
+    "pitfalls": [
+      "Inclusion-exclusion signs: it's +P -P -P +P, not all plus",
+      "Off-by-one with 1-indexed vs 0-indexed coordinates — be consistent",
+      "Memory: (n+1)*(m+1) matrix can be large for n,m ~ 10^4"
+    ],
+    "complexities": {
+      "time": "O(n*m) build, O(1) query",
+      "space": "O(n*m)"
+    },
+    "problems": [
+      {
+        "platform": "LeetCode",
+        "title": "Range Sum Query 2D - Immutable",
+        "url": "https://leetcode.com/problems/range-sum-query-2d-immutable/",
+        "difficulty": "Medium",
+        "why": "Direct 2D prefix sum"
+      },
+      {
+        "platform": "LeetCode",
+        "title": "Maximal Square",
+        "url": "https://leetcode.com/problems/maximal-square/",
+        "difficulty": "Medium",
+        "why": "2D prefix sum variant with DP"
+      },
+      {
+        "platform": "CSES",
+        "title": "Forest Queries",
+        "url": "https://cses.fi/problemset/task/1652",
+        "why": "Classic 2D prefix sum on grid"
+      }
+    ],
+    "visualizers": [
+      {
+        "key": "prefix-2d",
+        "enabled": true
+      }
+    ],
+    "microChecks": [
+      {
+        "question": "In the 2D prefix query formula, how many terms are there?",
+        "answer": "4",
+        "hint": "Inclusion-exclusion: +1 -1 -1 +1"
+      },
+      {
+        "question": "What is the size of the prefix matrix for a 3×4 input?",
+        "answer": "4x5",
+        "hint": "Add 1 to each dimension for zero padding"
+      }
+    ],
+    "schemaVersion": 1
+  },
+  {
+    "slug": "difference-array",
+    "title": "Difference Array / Imos Method",
+    "difficulty": "Easy",
+    "summary": "Apply multiple range updates in O(1) each, then build the final array in O(n) — the inverse of prefix sum.",
+    "tags": [
+      "arrays",
+      "difference-array",
+      "range-update",
+      "imos"
+    ],
+    "content": [
+      "A difference array is the inverse of prefix sum: it converts range updates into point updates.",
+      "To add val to all elements in range [l, r]: diff[l] += val and diff[r+1] -= val. Each update is O(1).",
+      "After all updates, compute the prefix sum of the difference array to get the final array. This takes O(n).",
+      "Total complexity: O(q) for q updates + O(n) to build = O(q + n), vs O(q × n) for naive range updates.",
+      "Also known as the 'Imos Method' in Japanese competitive programming — named after contest author imos.",
+      "Extends to 2D: for rectangle updates on a grid, use a 2D difference array with 4 point operations per update.",
+      "Key insight: prefix sum and difference array are inverse operations. Prefix sum of diff array = original. Diff of prefix = original."
+    ],
+    "example": {
+      "language": "python",
+      "code": "def range_update(n, updates):\n    \"\"\"Apply multiple [l, r, val] updates efficiently\"\"\"\n    diff = [0] * (n + 1)\n    for l, r, val in updates:\n        diff[l] += val\n        if r + 1 <= n:\n            diff[r + 1] -= val\n    \n    # Build final array via prefix sum\n    result = []\n    running = 0\n    for i in range(n):\n        running += diff[i]\n        result.append(running)\n    return result\n\n# Example: array of size 8, three range updates\nupdates = [(1, 4, 3), (2, 6, 2), (0, 3, 1)]\nresult = range_update(8, updates)\nprint(f\"Final array: {result}\")  # [1, 4, 6, 6, 5, 2, 2, 0]"
+    },
+    "teaching": {
+      "tldr": "Difference arrays allow you to apply flat additions to entire subarrays in O(1) time. It is exactly the inverse of a prefix sum.",
+      "intuition": [
+        "If a bus starts empty, and 5 people get on at stop A, and 5 people get off at stop C, we implicitly know exactly how many people were on the bus during the trip from A to B to C.",
+        "Instead of visiting every seat on the bus to add a passenger, we only record the 'changes' or 'differences' at the boundaries.",
+        "By keeping track of these boundary events (stepping up, stepping down), we can reconstruct the total values at any point by just taking a cumulative sum."
+      ],
+      "definitions": [
+        "Difference Array (D): Stores the step-changes between adjacent elements. D[i] = arr[i] - arr[i-1].",
+        "Range Update [L, R, V]: Add value V to all elements from index L to index R."
+      ],
+      "keyIdeas": [
+        "To add V to the range [L, R], we inject 'events' into the difference array.",
+        "D[L] += V means the values step up by V starting at L.",
+        "D[R+1] -= V means the values step back down by V immediately after R.",
+        "After executing many O(1) updates, we perform a single O(N) sweep (a prefix sum of D) to realize the final array."
+      ],
+      "proofSketch": [
+        "Let D be empty arrays of zeros.",
+        "Query: Add 10 to [1, 3]. Update: D[1] += 10, D[4] -= 10.",
+        "Now D = [0, 10, 0, 0, -10, 0]",
+        "Applying prefix sum sweeps left to right maintaining a running total:",
+        "index 0: total 0 -> final[0] = 0",
+        "index 1: total 10 -> final[1] = 10",
+        "index 2: total 10 (0 added) -> final[2] = 10",
+        "index 3: total 10 (0 added) -> final[3] = 10",
+        "index 4: total 0 (-10 added) -> final[4] = 0",
+        "This exactly modified indices 1, 2, and 3 by 10!"
+      ],
+      "workedExamples": [
+        {
+          "title": "Multiple Overlapping Updates",
+          "steps": [
+            "Start with zeros: length 5.",
+            "Add 3 to [0, 2]: D[0]+=3, D[3]-=3. D = [3, 0, 0, -3, 0]",
+            "Add 5 to [1, 4]: D[1]+=5, D[5]-=5. D = [3, 5, 0, -3, 0, -5]",
+            "Reconstruct via prefix sum:",
+            "i=0: 3",
+            "i=1: 3 + 5 = 8",
+            "i=2: 8 + 0 = 8",
+            "i=3: 8 - 3 = 5",
+            "i=4: 5 + 0 = 5",
+            "Result: [3, 8, 8, 5, 5]."
+          ],
+          "takeaway": "Updates don't interact or slow down; they just accumulate as boundary markers."
+        }
+      ],
+      "commonMistakes": [
+        "Forgetting to bounds-check when subtracting. If R is the last index in the array, R+1 is out of bounds. You either need the D array to be size N+1, or conditionally execute `if (R+1 < N) D[R+1] -= V;`"
+      ],
+      "programmingNotes": [
+        "Always initialize your difference array to sizing N+1 to cleanly catch the boundary drop-off."
+      ],
+      "visualizerHints": [
+        "Observe how a sweeping line constructs the final geometry from isolated dots."
+      ],
+      "summaryCheatSheet": {
+        "formulas": [
+          "D[L] += V",
+          "D[R+1] -= V"
+        ],
+        "rulesOfThumb": [
+          "Diff array turns range updates into point updates.",
+          "The inverse of a Diff Array is a Prefix Sum."
+        ]
+      }
+    },
+    "frequency": "very-common",
+    "prerequisites": [
+      "prefix-sum-1d"
+    ],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "multiple range add/increment updates"
+        ],
+        "think": "Difference array",
+        "why": "O(1) per update instead of O(n)"
+      },
+      {
+        "ifYouSee": [
+          "event scheduling",
+          "overlapping intervals count"
+        ],
+        "think": "Sweep line with difference array",
+        "why": "Mark start +1 end -1, prefix sum gives count at each point"
+      },
+      {
+        "ifYouSee": [
+          "2D range update on grid"
+        ],
+        "think": "2D difference array (4 operations per update)",
+        "why": "Extends 1D idea to rectangles"
+      }
+    ],
+    "pitfalls": [
+      "Off-by-one: diff[r+1] -= val, not diff[r] -= val",
+      "Array bounds: check r+1 < n before accessing diff[r+1]",
+      "Difference array is one-shot — after building, you need to re-initialize for new updates"
+    ],
+    "complexities": {
+      "time": "O(1) per update, O(n) build",
+      "space": "O(n)",
+      "note": "Cannot query before building; for online queries use BIT with range update"
+    },
+    "bridges": [
+      {
+        "to": "Arrays",
+        "example": "Sweep line problems",
+        "link": "/tutorials/array-two-pointer"
+      }
+    ],
+    "problems": [
+      {
+        "platform": "LeetCode",
+        "title": "Corporate Flight Bookings",
+        "url": "https://leetcode.com/problems/corporate-flight-bookings/",
+        "difficulty": "Medium",
+        "why": "Direct difference array application"
+      },
+      {
+        "platform": "LeetCode",
+        "title": "Car Pooling",
+        "url": "https://leetcode.com/problems/car-pooling/",
+        "difficulty": "Medium",
+        "why": "Sweep line with difference array"
+      },
+      {
+        "platform": "Codeforces",
+        "title": "Greg and Array",
+        "url": "https://codeforces.com/problemset/problem/295/A",
+        "difficulty": "1400",
+        "why": "Nested difference arrays"
+      },
+      {
+        "platform": "CSES",
+        "title": "Range Update Queries",
+        "url": "https://cses.fi/problemset/task/1651",
+        "why": "Range update + point query"
+      },
+      {
+        "platform": "LeetCode",
+        "title": "Range Addition",
+        "url": "https://leetcode.com/problems/range-addition/",
+        "difficulty": "Medium",
+        "why": "Textbook difference array"
+      }
+    ],
+    "visualizers": [
+      {
+        "key": "diff-array",
+        "enabled": true
+      }
+    ],
+    "microChecks": [
+      {
+        "question": "To add 5 to range [2,6], what operations do we perform on diff[]?",
+        "answer": "diff[2]+=5, diff[7]-=5",
+        "hint": "diff[l]+=val, diff[r+1]-=val"
+      },
+      {
+        "question": "What is the relationship between prefix sum and difference array?",
+        "answer": "inverse",
+        "hint": "They are inverse operations of each other"
+      }
+    ],
+    "schemaVersion": 1
+  },
+  {
+    "slug": "catalan-numbers",
+    "title": "Catalan Numbers",
+    "difficulty": "Medium",
+    "summary": "C(n) counts valid parenthesizations, BST shapes, non-crossing partitions, and many more combinatorial structures.",
+    "tags": [
+      "combinatorics",
+      "catalan",
+      "counting"
+    ],
+    "content": [
+      "The nth Catalan number C(n) = C(2n, n) / (n+1) = (2n)! / ((n+1)! × n!). First few values: 1, 1, 2, 5, 14, 42, 132.",
+      "Recurrence: C(n) = Σ C(i) × C(n-1-i) for i = 0 to n-1. This mirrors the structure of many divide-and-split problems.",
+      "C(n) counts: valid parenthesizations of n pairs, number of BSTs with n nodes, triangulations of (n+2)-gon, monotonic lattice paths that don't cross the diagonal.",
+      "The ballot problem: C(n) = C(2n, n) - C(2n, n+1). This is the reflection principle.",
+      "Generating function: C(x) = (1 - √(1-4x)) / (2x). Asymptotically C(n) ~ 4^n / (n^(3/2) × √π).",
+      "Computation: Use nCr(2n, n) * modular_inverse(n+1) for modular Catalan numbers."
+    ],
+    "example": {
+      "language": "python",
+      "code": "MOD = 10**9 + 7\n\ndef catalan(n):\n    \"\"\"Compute nth Catalan number mod MOD\"\"\"\n    if n <= 1:\n        return 1\n    # C(n) = C(2n, n) / (n+1)\n    num = 1\n    den = 1\n    for i in range(n):\n        num = num * (2*n - i) % MOD\n        den = den * (i + 1) % MOD\n    return num * pow(den, MOD - 2, MOD) % MOD * pow(n + 1, MOD - 2, MOD) % MOD\n\nfor i in range(10):\n    print(f\"C({i}) = {catalan(i)}\")\n# 1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862"
+    },
+    "teaching": {
+      "tldr": "Catalan numbers form a famous sequence that counts how many ways you can validly pair or split items (like balanced parentheses or dividing a polygon).",
+      "intuition": [
+        "Imagine writing algebraic expressions. How many ways can you arrange 3 pairs of parentheses so they are valid?",
+        "((())) is valid. ()(()) is valid. (())(  is invalid.",
+        "Any time a problem asks 'how many ways' and involves some restriction where 'state A can never exceed state B' (like closed brackets never exceeding open brackets reading left-to-right), Catalan numbers are likely the answer."
+      ],
+      "definitions": [
+        "Nth Catalan Number C(n): A sequence of positive integers counting certain combinatorial structures. Sequence begins: 1, 1, 2, 5, 14, 42, 132..."
+      ],
+      "keyIdeas": [
+        "The direct formula is: C(n) = nCr(2n, n) / (n+1).",
+        "It also has a recursive definition: C(n) = Sum of ( C(i) * C(n-1-i) ) for all i from 0 to n-1.",
+        "Applications: Valid parenthesis sequences, number of unique Binary Search Trees, Dyck paths (grid paths that stay below the diagonal), and polygon triangulations."
+      ],
+      "proofSketch": [
+        "Consider standard grid paths from (0,0) to (n,n) moving only Right or Up.",
+        "Total possible paths is nCr(2n, n).",
+        "We want paths that never cross above the diagonal y=x.",
+        "Using André's Reflection Principle, we can mathematically count the 'bad' paths that cross the diagonal. The number of bad paths is exactly nCr(2n, n+1).",
+        "Subtracting bad from total: nCr(2n, n) - nCr(2n, n+1).",
+        "Algebraically simplifying this yields nCr(2n, n) / (n+1)."
+      ],
+      "workedExamples": [
+        {
+          "title": "Number of Binary Search Trees",
+          "steps": [
+            "Problem: How many structurally unique BSTs can store 3 distinct keys?",
+            "Use the Catalan formula for n=3: C(3) = nCr(6, 3) / 4.",
+            "nCr(6, 3) = (6*5*4) / (3*2*1) = 20.",
+            "20 / 4 = 5.",
+            "Conclusion: There are exactly 5 unique BSTs."
+          ],
+          "takeaway": "The sheer versatility of Catalan numbers allows solving complex structural counts instantly."
+        }
+      ],
+      "commonMistakes": [
+        "Using the recursive formula C(n) = Σ C(i) * C(n-1-i) to compute values for large N. This takes O(N^2) time. The direct formula C(n) = nCr(2n, n)/(n+1) is vastly faster (O(N) or O(1) with precomputed factorials)."
+      ],
+      "programmingNotes": [
+        "Because of the division by (n+1), computing Catalan numbers modulo a prime heavily relies on the Modular Multiplicative Inverse."
+      ],
+      "summaryCheatSheet": {
+        "formulas": [
+          "C(n) = nCr(2n, n) / (n + 1)"
+        ],
+        "rulesOfThumb": [
+          "Count balanced brackets = Catalan.",
+          "Count trees = Catalan.",
+          "Count non-crossing paths = Catalan."
+        ]
+      }
+    },
+    "frequency": "common",
+    "prerequisites": [
+      "ncr-mod-prime",
+      "modular-inverse"
+    ],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "count valid parentheses sequences",
+          "Dyck paths"
+        ],
+        "think": "Catalan number",
+        "why": "C(n) counts n-pair valid parenthesizations"
+      },
+      {
+        "ifYouSee": [
+          "count BSTs with n keys",
+          "triangulations"
+        ],
+        "think": "Catalan number",
+        "why": "Both are counted by C(n)"
+      },
+      {
+        "ifYouSee": [
+          "non-crossing partitions",
+          "ballot sequences"
+        ],
+        "think": "Catalan / reflection principle",
+        "why": "Catalan appears in many non-crossing counting problems"
+      }
+    ],
+    "pitfalls": [
+      "Don't use the recurrence for large n — it's O(n²). Use the closed form with nCr.",
+      "Remember C(0) = 1, not 0"
+    ],
+    "complexities": {
+      "time": "O(n) with precomputed factorials",
+      "space": "O(n)"
+    },
+    "problems": [
+      {
+        "platform": "LeetCode",
+        "title": "Unique Binary Search Trees",
+        "url": "https://leetcode.com/problems/unique-binary-search-trees/",
+        "difficulty": "Medium",
+        "why": "Directly counts BSTs = Catalan"
+      },
+      {
+        "platform": "LeetCode",
+        "title": "Generate Parentheses",
+        "url": "https://leetcode.com/problems/generate-parentheses/",
+        "difficulty": "Medium",
+        "why": "Enumerate Catalan-counted sequences"
+      },
+      {
+        "platform": "CSES",
+        "title": "Bracket Sequences I",
+        "url": "https://cses.fi/problemset/task/2064",
+        "why": "Count valid bracket sequences"
+      }
+    ],
+    "schemaVersion": 1
+  },
+  {
+    "slug": "stars-and-bars",
+    "title": "Stars and Bars",
+    "difficulty": "Medium",
+    "summary": "Count ways to distribute n identical items into k distinct bins — fundamental combinatorics technique.",
+    "tags": [
+      "combinatorics",
+      "counting",
+      "distribution"
+    ],
+    "content": [
+      "Stars and Bars answers: how many ways to put n identical balls into k distinct boxes? Answer: C(n+k-1, k-1).",
+      "Visualization: n stars (items) and k-1 bars (dividers). Arrange them in a row. Stars between consecutive bars go to that box.",
+      "With minimum constraints (each box ≥ 1): C(n-1, k-1). First place 1 in each box, then distribute remaining n-k.",
+      "With upper bounds: use inclusion-exclusion. Subtract cases where any box exceeds its limit.",
+      "Equivalently counts: solutions to x₁ + x₂ + ... + xₖ = n where xᵢ ≥ 0.",
+      "This is one of the most frequently used formulas in competitive programming."
+    ],
+    "example": {
+      "language": "python",
+      "code": "MOD = 10**9 + 7\nMAX = 200001\nfact = [1] * MAX\nfor i in range(1, MAX): fact[i] = fact[i-1] * i % MOD\ninv_fact = [1] * MAX\ninv_fact[MAX-1] = pow(fact[MAX-1], MOD-2, MOD)\nfor i in range(MAX-2, -1, -1): inv_fact[i] = inv_fact[i+1] * (i+1) % MOD\n\ndef nCr(n, r):\n    if r < 0 or r > n: return 0\n    return fact[n] * inv_fact[r] % MOD * inv_fact[n-r] % MOD\n\ndef stars_and_bars(n, k):\n    \"\"\"Ways to put n identical items into k distinct bins\"\"\"\n    return nCr(n + k - 1, k - 1)\n\nprint(f\"5 balls into 3 boxes: {stars_and_bars(5, 3)}\")  # C(7,2) = 21"
+    },
+    "teaching": {
+      "tldr": "A combinatorial method to count how many ways you can put `N` identical items into `K` distinct bins.",
+      "intuition": [
+        "Imagine you have 5 identical blank coins, and you want to divide them among 3 different people (Alice, Bob, Charlie).",
+        "Lay the 5 coins out in a row: O O O O O.",
+        "To divide them into 3 groups, you just need to drop 2 'dividers' or 'bars' among the coins.",
+        "For example, O | O O | O O means Alice gets 1, Bob gets 2, Charlie gets 2.",
+        "Because the coins are identical, the only thing that matters is where the bars are placed. We've transformed a distribution problem into a simple geometry problem of arranging stars and bars!"
+      ],
+      "definitions": [
+        "Stars: Representation of the N identical indistinguishable items.",
+        "Bars: Representation of the K-1 dividers needed to create K distinct sections."
+      ],
+      "keyIdeas": [
+        "The total number of objects we are placing in our sequence is N (stars) + (K-1) (bars).",
+        "The number of ways to choose where the bars go is just choosing (K-1) spots out of the (N + K - 1) total spots.",
+        "The direct formula is nCr(N + K - 1, K - 1)."
+      ],
+      "proofSketch": [
+        "We want to find the number of non-negative integer solutions to x1 + x2 + ... + xK = N.",
+        "We lay out N ones (stars).",
+        "We need to partition these ones into K groups, which requires K-1 partitions (bars).",
+        "Total symbols to arrange in a line: N + K - 1.",
+        "Choose K-1 spaces for the bars. This uniquely defines a valid distribution.",
+        "Result: nCr(N + K - 1, K - 1)."
+      ],
+      "workedExamples": [
+        {
+          "title": "Distributing 5 Candies to 3 Kids",
+          "steps": [
+            "Candies are identical. N = 5.",
+            "Kids are distinct. K = 3.",
+            "We need K-1 = 2 bars.",
+            "Total spots: 5 + 2 = 7.",
+            "Formula: nCr(7, 2).",
+            "nCr(7, 2) = (7 * 6) / 2 = 21."
+          ],
+          "takeaway": "The sheer elegance of Stars and Bars instantly collapses complex identical-distribution math into a single nCr call."
+        },
+        {
+          "title": "Positive Constraint (At least 1 per bin)",
+          "steps": [
+            "Same problem, but every kid MUST get at least 1 candy.",
+            "Give 1 candy to each of the 3 kids immediately. That burns 3 candies.",
+            "Remaining candies N' = 5 - 3 = 2.",
+            "Now distribute the remaining N'=2 candies to the K=3 kids with NO restrictions.",
+            "Formula: nCr(N' + K - 1, K - 1) = nCr(2 + 3 - 1, 3 - 1) = nCr(4, 2).",
+            "Answer: 6."
+          ],
+          "takeaway": "If a bin has a minimum requirement, just pre-allocate that amount and solve for the remaining items!"
+        }
+      ],
+      "commonMistakes": [
+        "Trying to use this when the items are DISTINCT. Stars and Bars ONLY works for indistinguishable identical items. If you are distributing distinct items (like named books), it's a completely different combinatorics problem based on `K^N`."
+      ],
+      "programmingNotes": [
+        "Because this replies on `nCr` combinations, you almost always need precomputing factorials and modular inverse techniques ready."
+      ],
+      "summaryCheatSheet": {
+        "formulas": [
+          "Indistinguishable items, no bounds: nCr(N + K - 1, K - 1)",
+          "At least 1 item per bin: nCr(N - 1, K - 1)"
+        ],
+        "rulesOfThumb": [
+          "Pre-allocate minimums to reduce N.",
+          "Items MUST be identical."
+        ]
+      }
+    },
+    "frequency": "very-common",
+    "prerequisites": [
+      "ncr-mod-prime"
+    ],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "distribute identical items",
+          "x1+x2+...+xk = n"
+        ],
+        "think": "Stars and Bars: C(n+k-1, k-1)",
+        "why": "Counts non-negative integer solutions"
+      },
+      {
+        "ifYouSee": [
+          "at least 1 per bin"
+        ],
+        "think": "C(n-1, k-1)",
+        "why": "Place 1 in each first, distribute rest"
+      }
+    ],
+    "pitfalls": [
+      "Items must be identical — if distinct, use permutations instead",
+      "Upper bound constraints require inclusion-exclusion on top"
+    ],
+    "complexities": {
+      "time": "O(1) with precomputed factorials",
+      "space": "O(n)"
+    },
+    "problems": [
+      {
+        "platform": "CSES",
+        "title": "Distributing Apples",
+        "url": "https://cses.fi/problemset/task/1716",
+        "why": "Direct stars and bars"
+      },
+      {
+        "platform": "Codeforces",
+        "title": "Ball Painting",
+        "url": "https://codeforces.com/problemset/problem/1031/E",
+        "difficulty": "2100",
+        "why": "Stars and bars with constraints"
+      }
+    ],
+    "schemaVersion": 1
+  },
+  {
+    "slug": "derangements",
+    "title": "Derangements",
+    "difficulty": "Medium",
+    "summary": "Count permutations where no element is in its original position. D(n) = (n-1)(D(n-1) + D(n-2)).",
+    "tags": [
+      "combinatorics",
+      "permutations",
+      "derangement"
+    ],
+    "content": [
+      "A derangement is a permutation where no element appears in its original position. D(n) counts derangements of n elements.",
+      "Recurrence: D(n) = (n-1) × (D(n-1) + D(n-2)), with D(0) = 1, D(1) = 0.",
+      "Closed form: D(n) = n! × Σ(-1)^k / k! for k = 0 to n. This is inclusion-exclusion on fixed points.",
+      "Approximation: D(n) ≈ n!/e. The probability of a random permutation being a derangement approaches 1/e ≈ 0.3679.",
+      "Formula: D(n) = floor(n!/e + 0.5) for exact computation (using floating point).",
+      "Common in problems about gift exchanges, hat problems, and secret Santa scenarios."
+    ],
+    "example": {
+      "language": "python",
+      "code": "MOD = 10**9 + 7\n\ndef derangements(n):\n    \"\"\"Count derangements of n elements mod MOD\"\"\"\n    if n == 0: return 1\n    if n == 1: return 0\n    dp = [0] * (n + 1)\n    dp[0] = 1\n    dp[1] = 0\n    for i in range(2, n + 1):\n        dp[i] = (i - 1) * (dp[i-1] + dp[i-2]) % MOD\n    return dp[n]\n\nfor i in range(8):\n    print(f\"D({i}) = {derangements(i)}\")\n# 1, 0, 1, 2, 9, 44, 265, 1854"
+    },
+    "teaching": {
+      "tldr": "A derangement is a permutation where literally absolutely NO element remains in its original starting position. They are calculated using a simple DP recurrence.",
+      "intuition": [
+        "Imagine a Secret Santa gift exchange with N people. Everyone puts their name in a hat, and everyone draws a name.",
+        "A 'derangement' is a valid Secret Santa draw where NOBODY draws their own name.",
+        "How do we count these? If person A draws person B's name, there are two possibilities: either B draws A's name (they swap, leaving N-2 people to derange), or B draws someone else's name (which behaves exactly like deranging N-1 people).",
+        "Since person A could have drawn any of the (N-1) other people, we multiply the sum of those two possibilities by (N-1)!"
+      ],
+      "definitions": [
+        "Derangement D(n): A sequence of N items where the item originally at index i is no longer at index i for all 1 <= i <= N."
+      ],
+      "keyIdeas": [
+        "Base Cases: D(0) = 1 (A technicality: 0 elements have 1 way to be nowhere). D(1) = 0 (1 person must draw themselves).",
+        "Recurrence Relation: D(n) = (n-1) * (D(n-1) + D(n-2)).",
+        "This runs in simple O(N) time with basic dynamic programming."
+      ],
+      "proofSketch": [
+        "Suppose we have N elements. Element 1 must be placed in some index 'j' where j != 1.",
+        "There are (N-1) choices for 'j'. Assume we pick j.",
+        "Now, where does Element 'j' go?",
+        "Case 1: Element 'j' goes to index 1. Elements 1 and j have perfectly swapped. We are now left with (N-2) elements that must be completely deranged. That's D(N-2) ways.",
+        "Case 2: Element 'j' does NOT go to index 1. This means we have N-1 remaining elements, and element 'j' has exactly one restricted resting place (index 1). This is mathematically identical to deranging N-1 elements! That's D(N-1) ways.",
+        "Combining them gives the recurrence: (N-1) * (D(N-1) + D(N-2))."
+      ],
+      "workedExamples": [
+        {
+          "title": "Secret Santa for 4 people",
+          "steps": [
+            "D(0) = 1.",
+            "D(1) = 0.",
+            "D(2) = (2-1) * (D(1) + D(0)) = 1 * (0 + 1) = 1. (Makes sense, A and B must swap).",
+            "D(3) = (3-1) * (D(2) + D(1)) = 2 * (1 + 0) = 2.",
+            "D(4) = (4-1) * (D(3) + D(2)) = 3 * (2 + 1) = 3 * 3 = 9.",
+            "There are exactly 9 ways for 4 people to do a valid Secret Santa."
+          ],
+          "takeaway": "Using the dynamic programming recurrence is dramatically faster and simpler than using Inclusion-Exclusion."
+        }
+      ],
+      "commonMistakes": [
+        "Returning D(0) = 0. Often questions ask you to keep 'k' elements fixed and derange the other (n-k). If k=n, you are deranging 0 elements. The number of ways to do nothing is 1 way. D(0) must be 1.",
+        "Forgetting to multiply the sum by (N-1)."
+      ],
+      "programmingNotes": [
+        "If you need to calculate derangements for massive numbers without precomputing an array, there is a closed approximation formula: D(n) = floor(n! / e + 0.5)."
+      ],
+      "summaryCheatSheet": {
+        "formulas": [
+          "D(n) = (n-1) * (D(n-1) + D(n-2))"
+        ],
+        "rulesOfThumb": [
+          "Secret Santa = Derangement.",
+          "D(0)=1, D(1)=0, D(2)=1."
+        ]
+      }
+    },
+    "frequency": "common",
+    "prerequisites": [
+      "ncr-mod-prime",
+      "inclusion-exclusion"
+    ],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "no element in original position",
+          "complete rearrangement"
+        ],
+        "think": "Derangement count D(n)",
+        "why": "D(n) counts exactly these permutations"
+      },
+      {
+        "ifYouSee": [
+          "exactly k elements stay fixed"
+        ],
+        "think": "C(n,k) × D(n-k)",
+        "why": "Choose which k stay, derange the rest"
+      }
+    ],
+    "pitfalls": [
+      "D(0) = 1 (empty permutation is a derangement) — don't return 0",
+      "For 'exactly k fixed points' problems, multiply C(n,k) by D(n-k)"
+    ],
+    "complexities": {
+      "time": "O(n)",
+      "space": "O(n), or O(1) with rolling variables"
+    },
+    "problems": [
+      {
+        "platform": "LeetCode",
+        "title": "Find the Derangement of An Array",
+        "url": "https://leetcode.com/problems/find-the-derangement-of-an-array/",
+        "difficulty": "Medium",
+        "why": "Direct derangement computation"
+      },
+      {
+        "platform": "CSES",
+        "title": "Christmas Party",
+        "url": "https://cses.fi/problemset/task/1717",
+        "why": "Classic derangement problem"
+      }
+    ],
+    "schemaVersion": 1
+  },
+  {
+    "slug": "submask-iteration",
+    "title": "Submask Iteration",
+    "difficulty": "Medium",
+    "summary": "Efficiently iterate over all submasks of a given bitmask in O(3^n) total across all masks.",
+    "tags": [
+      "bitmask",
+      "enumeration",
+      "subset"
+    ],
+    "content": [
+      "Given a bitmask m, we can iterate all submasks s of m (s ⊆ m) using: for s = m; s > 0; s = (s-1) & m.",
+      "This generates all subsets of the set bits in m, in decreasing order. Don't forget to handle s = 0 separately.",
+      "Total iterations across all masks 0..2^n - 1 is 3^n (not 4^n), because each bit is in one of 3 states: not in m, in m but not in s, in m and in s.",
+      "This is the foundation of 'Sum over Subsets' (SOS) DP, a key technique for bitmask problems.",
+      "Common use: when you need dp[mask] that depends on dp[submask] for all submasks of mask.",
+      "The Zeta/Mobius transform over subsets is a related O(n × 2^n) technique for computing subset sums."
+    ],
+    "example": {
+      "language": "python",
+      "code": "def iterate_submasks(mask):\n    \"\"\"Yield all submasks of mask (including mask itself, excluding 0)\"\"\"\n    s = mask\n    while s > 0:\n        yield s\n        s = (s - 1) & mask\n\n# Example: submasks of 0b1101 (13)\nmask = 0b1101  # {0, 2, 3}\nprint(f\"Submasks of {bin(mask)}:\")\nfor s in iterate_submasks(mask):\n    print(f\"  {bin(s)} = {s}\")\n# 1101, 1100, 1001, 1000, 0101, 0100, 0001\n\n# Total submasks = 2^(popcount(mask)) = 2^3 = 8 (including 0)"
+    },
+    "teaching": {
+      "tldr": "An elegant bitwise trick that loops through every valid sub-combination of a bitmask without accidentally checking invalid combinations.",
+      "intuition": [
+        "Imagine you have a 'mask' representing pizza toppings available: `1011` (Cheese, No Pepperoni, Sausage, Mushroom).",
+        "You want to generate every possible pizza using ONLY the available toppings.",
+        "A naive way is to loop from 0 to 11 (`1011` in decimal), but that checks invalid pizzas like `0100` (Pepperoni) which you don't have!",
+        "The submask iteration trick essentially 'skips' the 0s in your main mask, acting like a custom binary counter that only counts down using the 1s you actually possess."
+      ],
+      "definitions": [
+        "Bitmask: An integer whose binary representation acts as a boolean array.",
+        "Submask: A mask `S` is a submask of `M` if every bit set to 1 in `S` is also set to 1 in `M`. Mathematically: `(S & M) == S`."
+      ],
+      "keyIdeas": [
+        "The magical loop: `for (int s = m; s > 0; s = (s - 1) & m)`.",
+        "Subtracting 1 from a binary number flips the lowest set bit to 0, and turns all the 0s below it to 1s.",
+        "By taking that result AND checking it against the original mask `m`, we immediately turn all those newly created 1s back to 0s IF they weren't in the original mask.",
+        "This perfectly calculates the 'next largest valid submask'."
+      ],
+      "proofSketch": [
+        "Let m = 1010 (binary).",
+        "s = 1010.",
+        "s - 1 = 1001.   (s-1) & m = 1001 & 1010 = 1000.",
+        "Next iteration: s = 1000.",
+        "s - 1 = 0111.   (s-1) & m = 0111 & 1010 = 0010.",
+        "Next iteration: s = 0010.",
+        "s - 1 = 0001.   (s-1) & m = 0001 & 1010 = 0000.",
+        "Loop ends. Handled: 1010, 1000, 0010. (And 0000 if we process outside the loop). All perfect submasks were hit!"
+      ],
+      "workedExamples": [
+        {
+          "title": "Time Complexity over All Masks",
+          "steps": [
+            "What if we run this loop for EVERY submask `S` of EVERY mask `M` from 0 to 2^N?",
+            "Naive expectation: N masks, so O(N * 2^N) or O(4^N).",
+            "Actual math: Each of the N bit positions can be in one of 3 distinct states across the two masks:",
+            "  1. Is 0 in M (and thus 0 in S)",
+            "  2. Is 1 in M, but 0 in S",
+            "  3. Is 1 in M, and 1 in S.",
+            "Since there are N bits and 3 valid states per bit, the total iterations exactly equals 3^N.",
+            "This makes it vastly more efficient than checking all 4^N pairs!"
+          ],
+          "takeaway": "Sum Over Subsets (SOS) using this loop runs in O(3^N), making N=15 highly feasible."
+        }
+      ],
+      "commonMistakes": [
+        "The standard loop `while (s > 0)` skips the empty mask (0). In many DP problems, the empty subset is a base case or valid transition, so you must specifically calculate `dp[...][0]` outside or restructure the loop to include 0."
+      ],
+      "programmingNotes": [
+        "While this algorithm is O(3^N), a wildly different technique called 'Fast Zeta Transform' (or SOS DP) accomplishes the exact same aggregate summations in O(N * 2^N), which gets important when N approaches 22."
+      ],
+      "summaryCheatSheet": {
+        "formulas": [
+          "Loop: `for (int s=m; s; s=(s-1)&m)`",
+          "Includes zero: `for (int s=m; ; s=(s-1)&m) { ...; if(!s) break; }`"
+        ],
+        "rulesOfThumb": [
+          "Use for finding best complementary pairs.",
+          "Use for dividing sets into subsets."
+        ]
+      }
+    },
+    "frequency": "common",
+    "prerequisites": [],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "DP over subsets where dp[mask] uses dp[submask]"
+        ],
+        "think": "Submask iteration",
+        "why": "Enumerate all submasks of each mask"
+      },
+      {
+        "ifYouSee": [
+          "partition mask into two complementary submasks"
+        ],
+        "think": "Iterate submasks, complement is mask ^ submask",
+        "why": "Covers all ways to split a set into two parts"
+      }
+    ],
+    "pitfalls": [
+      "Must handle submask = 0 separately — the loop for(s=m; s>0; s=(s-1)&m) skips 0",
+      "Complexity is O(3^n) total, NOT O(4^n) — this matters for feasibility analysis"
+    ],
+    "complexities": {
+      "time": "O(3^n) total across all masks",
+      "space": "O(2^n) for DP table"
+    },
+    "bridges": [
+      {
+        "to": "DP",
+        "example": "Bitmask DP with subset dependencies",
+        "link": "/tutorials/bitmask-dp"
+      }
+    ],
+    "problems": [
+      {
+        "platform": "Codeforces",
+        "title": "Compatible Numbers",
+        "url": "https://codeforces.com/problemset/problem/165/E",
+        "difficulty": "2200",
+        "why": "SOS DP using submask ideas"
+      },
+      {
+        "platform": "CSES",
+        "title": "Hamiltonian Flights",
+        "url": "https://cses.fi/problemset/task/1690",
+        "why": "Bitmask DP using submask iteration"
+      }
+    ],
+    "schemaVersion": 1
+  },
+  {
+    "slug": "subset-dp-identities",
+    "title": "Subset DP Identities",
+    "difficulty": "Hard",
+    "summary": "Key identities for Sum over Subsets (SOS) DP, Zeta/Möbius transforms on bitmasks.",
+    "tags": [
+      "bitmask",
+      "dp",
+      "sos",
+      "zeta-transform"
+    ],
+    "content": [
+      "SOS DP computes for each mask: f[mask] = Σ a[sub] for all sub ⊆ mask. Naive is O(3^n), SOS DP does it in O(n × 2^n).",
+      "SOS DP iterates over each bit position: for i in range(n): for mask in range(2^n): if mask has bit i: f[mask] += f[mask ^ (1<<i)].",
+      "This is the Zeta transform (superset sum). The Möbius transform (inverse) uses subtraction instead of addition.",
+      "Application: given a[mask], compute 'how many masks x are submasks of mask with a[x] > 0' for all masks simultaneously.",
+      "Subset convolution: combine two functions over subsets respecting cardinality. Requires ranked Zeta transforms.",
+      "These transforms are the bitmask analogue of prefix sums — just in higher dimensions."
+    ],
+    "example": {
+      "language": "python",
+      "code": "def sos_dp(a, n):\n    \"\"\"Sum over subsets: f[mask] = sum of a[sub] for all sub ⊆ mask\"\"\"\n    f = a[:]\n    for i in range(n):\n        for mask in range(1 << n):\n            if mask & (1 << i):\n                f[mask] += f[mask ^ (1 << i)]\n    return f\n\n# Example: n=3, a[mask] = popcount(mask)\nn = 3\na = [bin(m).count('1') for m in range(1 << n)]\nf = sos_dp(a, n)\nprint(f\"a = {a}\")\nprint(f\"SOS = {f}\")\n# a    = [0, 1, 1, 2, 1, 2, 2, 3]\n# SOS  = [0, 1, 1, 4, 1, 4, 4, 12]"
+    },
+    "frequency": "rare",
+    "prerequisites": [
+      "submask-iteration"
+    ],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "sum/count over all submasks for every mask"
+        ],
+        "think": "SOS DP / Zeta transform",
+        "why": "O(n × 2^n) instead of O(3^n)"
+      },
+      {
+        "ifYouSee": [
+          "AND convolution",
+          "number of pairs with x AND y = 0"
+        ],
+        "think": "SOS DP on complement",
+        "why": "Count submasks of complement"
+      }
+    ],
+    "pitfalls": [
+      "Direction matters: superset sum vs subset sum require different loop orders",
+      "Möbius inversion subtracts — don't add"
+    ],
+    "complexities": {
+      "time": "O(n × 2^n)",
+      "space": "O(2^n)"
+    },
+    "problems": [
+      {
+        "platform": "Codeforces",
+        "title": "Compatible Numbers",
+        "url": "https://codeforces.com/problemset/problem/165/E",
+        "difficulty": "2200",
+        "why": "Classic SOS DP"
+      },
+      {
+        "platform": "Codeforces",
+        "title": "Vowels",
+        "url": "https://codeforces.com/problemset/problem/383/E",
+        "difficulty": "2600",
+        "why": "SOS DP application"
+      }
+    ],
+    "schemaVersion": 1
+  },
+  {
+    "slug": "linearity-of-expectation",
+    "title": "Linearity of Expectation",
+    "difficulty": "Medium",
+    "summary": "E[X+Y] = E[X] + E[Y] — even when X and Y are dependent. The most powerful tool in probabilistic analysis.",
+    "tags": [
+      "probability",
+      "expected-value",
+      "linearity"
+    ],
+    "content": [
+      "Linearity of Expectation: E[X₁ + X₂ + ... + Xₙ] = E[X₁] + E[X₂] + ... + E[Xₙ]. Works ALWAYS, even for dependent variables.",
+      "Strategy: decompose a complex random variable into simple indicator variables, compute each E[Xᵢ] independently, then sum.",
+      "Indicator variable Xᵢ ∈ {0, 1}: E[Xᵢ] = P(Xᵢ = 1). This simplifies calculation enormously.",
+      "Example: expected inversions in random permutation = Σ P(a[i] > a[j]) for all i < j. Each pair contributes 1/2. Total = n(n-1)/4.",
+      "Coupon collector: expected time to collect all n types = n × H_n = n × (1 + 1/2 + ... + 1/n) ≈ n ln n.",
+      "This technique lets you avoid computing full probability distributions — just sum individual expectations."
+    ],
+    "example": {
+      "language": "python",
+      "code": "MOD = 10**9 + 7\n\ndef mod_inv(a, m=MOD):\n    return pow(a, m - 2, m)\n\ndef expected_inversions(n):\n    \"\"\"Expected inversions in random permutation of n\"\"\"\n    # Each pair (i,j) has prob 1/2 of being inverted\n    # Total pairs = n*(n-1)/2, expected = n*(n-1)/4\n    return n * (n - 1) % MOD * mod_inv(4) % MOD\n\ndef coupon_collector(n):\n    \"\"\"Expected trials to collect all n types\"\"\"\n    # E = n * (1/1 + 1/2 + ... + 1/n)\n    result = 0\n    for i in range(1, n + 1):\n        result = (result + n * mod_inv(i)) % MOD\n    return result\n\nprint(f\"Expected inversions (n=10): {expected_inversions(10)}\")\nprint(f\"Coupon collector (n=5): {coupon_collector(5)}\")"
+    },
+    "frequency": "common",
+    "prerequisites": [
+      "probability-expected-value",
+      "modular-inverse"
+    ],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "compute expected value of sum/count"
+        ],
+        "think": "Linearity of expectation",
+        "why": "Break into indicator variables, sum E[each]"
+      },
+      {
+        "ifYouSee": [
+          "expected inversions",
+          "expected distance"
+        ],
+        "think": "Pair contribution technique",
+        "why": "Each pair contributes independently to expectation"
+      }
+    ],
+    "pitfalls": [
+      "LOE does NOT work for E[X × Y] — that requires independence",
+      "Don't forget to output as fraction mod prime: numerator × denominator⁻¹"
+    ],
+    "complexities": {
+      "time": "Depends on decomposition",
+      "space": "Depends on application"
+    },
+    "problems": [
+      {
+        "platform": "Codeforces",
+        "title": "Vasya and Magic Matrix",
+        "url": "https://codeforces.com/problemset/problem/1042/E",
+        "difficulty": "1900",
+        "why": "LOE with sorting"
+      },
+      {
+        "platform": "AtCoder",
+        "title": "Dice Product",
+        "url": "https://atcoder.jp/contests/abc266/tasks/abc266_e",
+        "difficulty": "Medium",
+        "why": "Expected value with independence"
+      }
+    ],
+    "visualizers": [
+      {
+        "key": "expected-value-sim",
+        "enabled": true
+      }
+    ],
+    "microChecks": [
+      {
+        "question": "Does Linearity of Expectation E[X+Y] = E[X] + E[Y] require X and Y to be independent?",
+        "answer": "No",
+        "hint": "LOE works for any variables, unlike E[XY]"
+      },
+      {
+        "question": "In the Expected Value simulator for multiple dice, what does the empirical mean converge to as trials increase?",
+        "answer": "Theoretical mean",
+        "hint": "Law of Large Numbers"
+      }
+    ],
+    "schemaVersion": 1
+  },
+  {
+    "slug": "indicator-variables",
+    "title": "Indicator Variables",
+    "difficulty": "Medium",
+    "summary": "Model events as 0/1 variables where E[X] = P(X=1) — the building block for linearity of expectation.",
+    "tags": [
+      "probability",
+      "expected-value",
+      "indicator"
+    ],
+    "content": [
+      "An indicator variable I_A for event A: I_A = 1 if A occurs, 0 otherwise. Then E[I_A] = P(A).",
+      "Power: decompose count of events as X = Σ I_Aᵢ. Then E[X] = Σ P(Aᵢ) by linearity.",
+      "Example: expected heads in n fair coin flips = Σ P(flip i is heads) = n × 0.5.",
+      "Example: expected number of fixed points in random permutation = Σ P(σ(i)=i) = n × 1/n = 1.",
+      "For variance: Var(X) = E[X²] - E[X]². For indicators: E[Xᵢ²] = E[Xᵢ] = P(Aᵢ) since 0² = 0, 1² = 1.",
+      "Covariance of indicators: Cov(I_A, I_B) = P(A∩B) - P(A)P(B). Needed for variance calculations."
+    ],
+    "example": {
+      "language": "python",
+      "code": "def expected_fixed_points(n):\n    \"\"\"Expected fixed points in random permutation of [1..n]\"\"\"\n    # Each element has 1/n chance of being fixed\n    # By LOE: E = n * (1/n) = 1\n    return 1  # Always 1, regardless of n!\n\ndef expected_records(n):\n    \"\"\"Expected number of left-to-right maxima in random permutation\"\"\"\n    # Element i is a record iff it's max of first i elements: prob = 1/i\n    # E = 1/1 + 1/2 + ... + 1/n = H_n\n    return sum(1/i for i in range(1, n+1))\n\nfor n in [5, 10, 100]:\n    print(f\"n={n}: fixed_pts=1, records≈{expected_records(n):.2f}\")\n# n=5: fixed_pts=1, records≈2.28\n# n=10: fixed_pts=1, records≈2.93\n# n=100: fixed_pts=1, records≈5.19"
+    },
+    "frequency": "common",
+    "prerequisites": [
+      "linearity-of-expectation"
+    ],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "count of events happening",
+          "how many satisfy condition"
+        ],
+        "think": "Indicator variables + LOE",
+        "why": "E[count] = sum of probabilities of each event"
+      },
+      {
+        "ifYouSee": [
+          "expected number of elements with property"
+        ],
+        "think": "Sum P(element i has property)",
+        "why": "Each element is an independent indicator"
+      }
+    ],
+    "pitfalls": [
+      "Indicators simplify E[X] but not P(X = k) — for distributions you need more work",
+      "Independence is NOT required for LOE, but IS required for Var(X) = Σ Var(Xᵢ)"
+    ],
+    "complexities": {
+      "time": "O(n) for n indicators",
+      "space": "O(1)"
+    },
+    "problems": [
+      {
+        "platform": "Codeforces",
+        "title": "Random Events",
+        "url": "https://codeforces.com/problemset/problem/1461/D",
+        "difficulty": "1500",
+        "why": "Probability analysis with indicators"
+      },
+      {
+        "platform": "AtCoder",
+        "title": "Sum of f(A)",
+        "url": "https://atcoder.jp/contests/abc162/tasks/abc162_e",
+        "difficulty": "Medium",
+        "why": "Indicator variable decomposition"
+      }
+    ],
+    "visualizers": [
+      {
+        "key": "expected-value-sim",
+        "enabled": true
+      }
+    ],
+    "microChecks": [
+      {
+        "question": "If I is an indicator for event A, what is E[I] equal to?",
+        "answer": "P(A)",
+        "hint": "Expectation of indicator is the probability of the event"
+      },
+      {
+        "question": "If we define I_i as 1 if the i-th coin flip is heads, what is the expected sum of n flips?",
+        "answer": "0.5n",
+        "hint": "Sum of E[I_i] for i=1..n"
+      }
+    ],
+    "schemaVersion": 1
+  },
+  {
+    "slug": "mobius-function-inversion",
+    "title": "Möbius Function & Inversion",
+    "difficulty": "Hard",
+    "summary": "μ(n) encodes prime-factor parity. Möbius inversion converts between divisor-sum functions — the number-theory analogue of inclusion-exclusion.",
+    "tags": [
+      "number-theory",
+      "combinatorics",
+      "mobius",
+      "multiplicative"
+    ],
+    "content": [
+      "The Möbius function: μ(1)=1. μ(n)=0 if n has a squared prime factor. μ(n)=(−1)^k if n is a product of k distinct primes.",
+      "Key identity: Σ_{d|n} μ(d) = [n=1]. This is the 'sifting' property and is equivalent to inclusion-exclusion.",
+      "Divisor sum (Dirichlet convolution): if g(n)=Σ_{d|n} f(d), then f(n)=Σ_{d|n} μ(d)·g(n/d). This is Möbius inversion.",
+      "Applications: Euler's totient φ(n)=Σ_{d|n} μ(d)·(n/d). Count of squarefree numbers ≤ N. GCD-counting problems.",
+      "Sieve for μ: linear sieve in O(n) — track smallest prime factor and count distinct prime factors.",
+      "Dirichlet convolution is associative and has identity ε(n)=[n=1]. μ is the Dirichlet inverse of the constant function 1.",
+      "In CP, Möbius inversion often transforms 'count pairs with gcd=d' into 'count pairs with d|gcd', which is easier to compute.",
+      "Worked Example (n=6): μ(1)=1, μ(2)=-1, μ(3)=-1, μ(6)=μ(2×3)=1. Identity: μ(1)+μ(2)+μ(3)+μ(6) = 1 + (-1) + (-1) + 1 = 0. Matches [6=1]."
+    ],
+    "example": {
+      "language": "python",
+      "code": "def mobius_sieve(n):\n    mu = [0]*(n+1)\n    mu[1] = 1\n    primes = []\n    spf = [0]*(n+1)\n    for i in range(2, n+1):\n        if spf[i] == 0:\n            spf[i] = i\n            primes.append(i)\n            mu[i] = -1\n        for p in primes:\n            if p > spf[i] or i*p > n: break\n            spf[i*p] = p\n            mu[i*p] = 0 if i%p==0 else -mu[i]\n    return mu\n\nmu = mobius_sieve(20)\nprint(mu[1:21])  # [1,-1,-1,0,-1,1,-1,0,0,1,-1,0,-1,1,1,0,-1,0,-1,0]"
+    },
+    "frequency": "rare",
+    "prerequisites": [
+      "prime-factorization",
+      "sieve-of-eratosthenes",
+      "inclusion-exclusion"
+    ],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "count pairs with gcd=1",
+          "coprime pairs"
+        ],
+        "think": "Möbius inversion on gcd",
+        "why": "Transform gcd=d into d|gcd, which is Σ over multiples"
+      },
+      {
+        "ifYouSee": [
+          "Euler totient sum",
+          "φ(n) in formula"
+        ],
+        "think": "Möbius inversion: φ = μ * id",
+        "why": "Dirichlet convolution identity"
+      },
+      {
+        "ifYouSee": [
+          "squarefree numbers",
+          "distinct prime factors only"
+        ],
+        "think": "μ(n) ≠ 0 iff squarefree",
+        "why": "μ encodes squarefreeness"
+      }
+    ],
+    "pitfalls": [
+      "μ(0) is undefined — always start sieve from 1",
+      "Confusing Möbius inversion direction: g=Σf over divisors vs f=Σμ·g",
+      "Forgetting μ(n)=0 terms — they don't contribute but skipping requires the check",
+      "Dirichlet convolution is NOT ordinary convolution — indices multiply, not add"
+    ],
+    "complexities": {
+      "time": "O(n) sieve, O(n log n) transform",
+      "space": "O(n)"
+    },
+    "bridges": [
+      {
+        "to": "inclusion-exclusion",
+        "example": "Möbius inversion is the multiplicative analogue of PIE — both use alternating signs."
+      },
+      {
+        "to": "sieve-of-eratosthenes",
+        "example": "μ is computed via linear sieve as a byproduct of prime enumeration."
+      }
+    ],
+    "problems": [
+      {
+        "platform": "CSES",
+        "title": "Counting Coprime Pairs",
+        "url": "https://cses.fi/problemset/task/2417",
+        "why": "Classic Möbius counting of coprime pairs"
+      },
+      {
+        "platform": "Codeforces",
+        "title": "Coprime Triples",
+        "url": "https://codeforces.com/problemset/problem/1264/D",
+        "difficulty": "2100",
+        "why": "Extend coprime counting to triples via inclusion-exclusion + Möbius"
+      },
+      {
+        "platform": "SPOJ",
+        "title": "LCMSUM",
+        "url": "https://www.spoj.com/problems/LCMSUM/",
+        "why": "Requires divisor-sum manipulation with Möbius"
+      },
+      {
+        "platform": "Codeforces",
+        "title": "Intergalaxy Trips",
+        "url": "https://codeforces.com/problemset/problem/1045/G",
+        "difficulty": "2400",
+        "why": "Advanced multiplicative function problem requiring Möbius"
+      },
+      {
+        "platform": "LeetCode",
+        "title": "Count Square-Free Integers",
+        "url": "https://leetcode.com/problems/count-the-number-of-square-free-subsets/",
+        "difficulty": "Medium",
+        "why": "μ(n)≠0 characterizes squarefree"
+      },
+      {
+        "platform": "Codeforces",
+        "title": "GCD of Subsets",
+        "url": "https://codeforces.com/problemset/problem/803/F",
+        "difficulty": "1800",
+        "why": "Count subsequences with gcd=1 via Mobius"
+      }
+    ],
+    "visualizers": [
+      {
+        "key": "mobius",
+        "enabled": true
+      }
+    ],
+    "microChecks": [
+      {
+        "question": "What is μ(12)?",
+        "answer": "0",
+        "hint": "12=2²×3, has squared factor"
+      },
+      {
+        "question": "What is μ(30)?",
+        "answer": "-1",
+        "hint": "30=2×3×5, three distinct primes → (−1)³=−1"
+      },
+      {
+        "question": "If g(n)=Σf(d) for d|n, how do you recover f(n)?",
+        "answer": "f(n)=Σ μ(d)·g(n/d) for d|n",
+        "hint": "Möbius inversion formula"
+      },
+      {
+        "question": "What is Σ_{d|n} μ(d) when n>1?",
+        "answer": "0",
+        "hint": "Sifting property: equals [n=1]"
+      }
+    ],
+    "schemaVersion": 1
+  },
+  {
+    "slug": "polynomial-convolution-ntt",
+    "title": "Polynomial Convolution (FFT/NTT)",
+    "difficulty": "Hard",
+    "summary": "Multiply polynomials in O(n log n) using the Number Theoretic Transform — the modular-arithmetic version of FFT.",
+    "tags": [
+      "number-theory",
+      "polynomials",
+      "fft",
+      "ntt",
+      "convolution"
+    ],
+    "content": [
+      "Polynomial convolution: given A(x) of degree n and B(x) of degree m, compute C(x)=A(x)·B(x) of degree n+m. Naive: O(n·m).",
+      "FFT idea: evaluate both polynomials at n+m+1 special points (roots of unity), multiply point-wise in O(n), then interpolate back.",
+      "NTT replaces complex roots with primitive roots modulo a prime. Standard CP setup: MOD=998244353, primitive root g=3.",
+      "Why 998244353? It's prime and 998244353−1 = 2²³ × 7 × 17, so it supports NTT of length up to 2²³ = 8M.",
+      "NTT stages: 1) Bit-reverse permutation. 2) log₂(n) butterfly stages, each combining pairs with twiddle factors. 3) Optional inverse.",
+      "Inverse NTT: same algorithm but with inverse root and multiply result by n⁻¹ mod p.",
+      "Key operations: modular exponentiation for roots, bit-reversal permutation, and in-place butterfly updates.",
+      "Worked Example: Multiply A=[1,2] (1+2x) and B=[3,4] (3+4x). Result C = [1×3, 1×4+2×3, 2×4] = [3, 10, 8] (3+10x+8x²)."
+    ],
+    "example": {
+      "language": "python",
+      "code": "MOD = 998244353\ng = 3\n\ndef ntt(a, invert):\n    n = len(a)\n    j = 0\n    for i in range(1, n):\n        bit = n >> 1\n        while j & bit:\n            j ^= bit; bit >>= 1\n        j ^= bit\n        if i < j: a[i], a[j] = a[j], a[i]\n    length = 2\n    while length <= n:\n        w = pow(g, (MOD-1)//length, MOD)\n        if invert: w = pow(w, MOD-2, MOD)\n        for i in range(0, n, length):\n            wn = 1\n            for k in range(length//2):\n                u, v = a[i+k], a[i+k+length//2]*wn%MOD\n                a[i+k] = (u+v)%MOD\n                a[i+k+length//2] = (u-v)%MOD\n                wn = wn*w%MOD\n        length <<= 1\n    if invert:\n        inv_n = pow(n, MOD-2, MOD)\n        for i in range(n): a[i] = a[i]*inv_n%MOD\n\n# Multiply [1,2,3] * [4,5] = [4,13,22,15]\na = [1,2,3,0]; b = [4,5,0,0]\nntt(a, False); ntt(b, False)\nc = [x*y%MOD for x,y in zip(a,b)]\nntt(c, True)\nprint(c[:4])  # [4, 13, 22, 15]"
+    },
+    "frequency": "rare",
+    "prerequisites": [
+      "fast-exponentiation",
+      "modular-inverse"
+    ],
+    "patterns": [
+      {
+        "ifYouSee": [
+          "multiply polynomials",
+          "generating function product"
+        ],
+        "think": "NTT convolution",
+        "why": "O(n log n) vs O(n²)"
+      },
+      {
+        "ifYouSee": [
+          "count subsets with sum=k",
+          "knapsack DP optimization"
+        ],
+        "think": "Generating function + NTT",
+        "why": "DP convolution via polynomials"
+      },
+      {
+        "ifYouSee": [
+          "large number multiplication",
+          "big integer multiply"
+        ],
+        "think": "FFT/NTT on digit arrays",
+        "why": "Digits are polynomial coefficients"
+      }
+    ],
+    "pitfalls": [
+      "Array length must be a power of 2 — pad with zeros",
+      "Using wrong primitive root for the modulus (g=3 only works for 998244353)",
+      "Forgetting to multiply by n⁻¹ in inverse NTT gives values scaled by n",
+      "Overflow in intermediate products — ensure values stay < MOD before each multiply"
+    ],
+    "complexities": {
+      "time": "O(n log n)",
+      "space": "O(n)"
+    },
+    "bridges": [
+      {
+        "to": "fast-exponentiation",
+        "example": "Computing primitive roots and their powers uses modular exponentiation."
+      },
+      {
+        "to": "modular-inverse",
+        "example": "Inverse NTT needs inv(n) mod p and inverse twiddle factors."
+      }
+    ],
+    "problems": [
+      {
+        "platform": "CSES",
+        "title": "Polynomial Multiplication",
+        "url": "https://cses.fi/problemset/task/2111",
+        "why": "Direct NTT application"
+      },
+      {
+        "platform": "Codeforces",
+        "title": "Multiply",
+        "url": "https://codeforces.com/problemset/problem/2019/E",
+        "difficulty": "2200",
+        "why": "NTT-based polynomial product"
+      },
+      {
+        "platform": "AtCoder",
+        "title": "Convolution",
+        "url": "https://atcoder.jp/contests/practice2/tasks/practice2_f",
+        "difficulty": "Hard",
+        "why": "Reference NTT problem from ACL practice contest"
+      },
+      {
+        "platform": "LeetCode",
+        "title": "Multiply Strings",
+        "url": "https://leetcode.com/problems/multiply-strings/",
+        "difficulty": "Medium",
+        "why": "Digit-level convolution (can be solved via FFT for large inputs)"
+      },
+      {
+        "platform": "Codeforces",
+        "title": "Inverse of Remainder Sum",
+        "url": "https://codeforces.com/problemset/problem/553/E",
+        "difficulty": "2600",
+        "why": "Advanced generating function + NTT"
+      },
+      {
+        "platform": "SPOJ",
+        "title": "POLYMUL",
+        "url": "https://www.spoj.com/problems/POLYMUL/",
+        "why": "Direct polynomial multiplication test"
+      },
+      {
+        "platform": "Codeforces",
+        "title": "Prefix Sum Queries",
+        "url": "https://codeforces.com/problemset/problem/1096/G",
+        "difficulty": "1900",
+        "why": "NTT on frequency arrays"
+      }
+    ],
+    "visualizers": [
+      {
+        "key": "convolution-ntt",
+        "enabled": true
+      }
+    ],
+    "microChecks": [
+      {
+        "question": "What modulus and primitive root are standard for NTT in competitive programming?",
+        "answer": "998244353 and 3",
+        "hint": "998244353 = 119 × 2²³ + 1"
+      },
+      {
+        "question": "What is the result of convolving [1,2] with [3,4]?",
+        "answer": "[3,10,8]",
+        "hint": "c[0]=1×3, c[1]=1×4+2×3, c[2]=2×4"
+      },
+      {
+        "question": "Why must the NTT array length be a power of 2?",
+        "answer": "Butterfly decomposition requires dividing by 2 at each stage",
+        "hint": "Cooley-Tukey algorithm splits even/odd indices recursively"
+      },
+      {
+        "question": "What is the time complexity of NTT-based polynomial multiplication?",
+        "answer": "O(n log n)",
+        "hint": "3 NTTs (forward A, forward B, inverse C) each O(n log n) + O(n) point-wise multiply"
+      }
+    ],
+    "schemaVersion": 1
   }
 ]

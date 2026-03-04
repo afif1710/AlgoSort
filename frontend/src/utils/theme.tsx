@@ -1,3 +1,5 @@
+// Copyright (c) 2026 AlgoSort. All Rights Reserved.
+// Unauthorized copying, redistribution, or modification prohibited.
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 type Theme =
