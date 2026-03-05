@@ -34,12 +34,18 @@ async function generateSitemap() {
 
         const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${allRoutes.map(route => `  <url>
-    <loc>${BASE_URL}${route}</loc>
+${allRoutes.map(route => {
+            // Ensure home route is exactly the BASE_URL with a trailing slash
+            const fullUrl = route === '' ? `${BASE_URL}/` : `${BASE_URL}${route}`;
+            const priority = route === '' ? '1.0' : route.split('/').length > 2 ? '0.6' : '0.8';
+
+            return `  <url>
+    <loc>${fullUrl}</loc>
     <lastmod>${lastMod}</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>${route === '' ? '1.0' : route.split('/').length > 2 ? '0.6' : '0.8'}</priority>
-  </url>`).join('\n')}
+    <priority>${priority}</priority>
+  </url>`;
+        }).join('\n')}
 </urlset>`;
 
         // Ensure dist exists
