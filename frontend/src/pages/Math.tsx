@@ -2,6 +2,7 @@
 // Unauthorized copying, redistribution, or modification prohibited.
 import { Link } from "react-router-dom";
 import mathTopics from "../data/mathTopics.json";
+import Seo from "../components/seo/Seo";
 
 interface MathTopic {
   slug: string;
@@ -94,6 +95,11 @@ export default function Math() {
 
   return (
     <div className="py-6 space-y-10">
+      <Seo 
+        title="Math for CP & DSA | AlgoSort"
+        description="Master essential mathematical concepts for competitive programming and technical interviews."
+        canonical="https://algo-sort-cyan.vercel.app/math"
+      />
       <header className="text-center space-y-2">
         <h1 className="text-3xl font-bold" style={{ color: "var(--fg)" }}>
           Math for CP/DSA

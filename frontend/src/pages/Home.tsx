@@ -2,6 +2,7 @@
 // Unauthorized copying, redistribution, or modification prohibited.
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Seo from "../components/seo/Seo";
 
 export default function Home() {
   const [currentViz, setCurrentViz] = useState(0);
@@ -16,6 +17,11 @@ export default function Home() {
 
   return (
     <div className="min-h-[calc(100vh-64px)] flex flex-col items-center justify-center px-4 py-12">
+      <Seo 
+        title="AlgoSort | Master Data Structures & Algorithms"
+        description="Learn DSA & Competitive Programming with interactive tutorials, visualizations, and a built-in code sandbox."
+        canonical="https://algo-sort-cyan.vercel.app/"
+      />
       {/* Hero Section */}
       <div className="text-center space-y-6 mb-16 max-w-4xl animate-fade-in">
         {/* Main Title with Gradient */}

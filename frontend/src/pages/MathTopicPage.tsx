@@ -8,6 +8,7 @@ import PracticeList from "../components/math/PracticeList";
 import MathNotesTab from "../components/math/MathNotesTab";
 import MicroCheck from "../components/math/MicroCheck";
 import TeachingBlock, { TeachingData } from "../components/math/TeachingBlock";
+import Seo from "../components/seo/Seo";
 
 // Lazy-loaded visualizers
 const PrefixSum1DVisualizer = lazy(
@@ -129,6 +130,11 @@ export default function MathTopicPage() {
 
   return (
     <div className="py-6 space-y-6">
+      <Seo 
+        title={`${topic.title} | Math for CP`}
+        description={topic.summary || `Learn ${topic.title} math concepts on AlgoSort.`}
+        canonical={`https://algo-sort-cyan.vercel.app/math/${topic.slug}`}
+      />
       {/* Back button */}
       <div className="flex items-center">
         <button

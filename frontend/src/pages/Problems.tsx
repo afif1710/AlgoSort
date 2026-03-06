@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import data from "../data/leetcodeProblems.json";
+import Seo from "../components/seo/Seo";
 
 export default function Problems() {
   const [searchParams] = useSearchParams();
@@ -28,6 +29,11 @@ export default function Problems() {
 
   return (
     <div className="py-6 space-y-6">
+      <Seo 
+        title="Practice Problems | AlgoSort"
+        description="Curated LeetCode problems organized by concept to help you practice and test your Data Structures & Algorithms knowledge."
+        canonical="https://algo-sort-cyan.vercel.app/problems"
+      />
       <h2 className="text-2xl font-bold">Problems (LeetCode)</h2>
 
       {Object.entries(data).map(([topic, list]) => (

@@ -66,6 +66,7 @@ import TwoSATVisualizer from "../components/TwoSATVisualizer";
 import HLDVisualizer from "../components/HLDVisualizer";
 import SuffixArrayVisualizer from "../components/SuffixArrayVisualizer";
 import CentroidDecompositionVisualizer from "../components/CentroidDecompositionVisualizer";
+import Seo from "../components/seo/Seo";
 
 type LeetProblem = { title: string; url: string; difficulty: string };
 type TabType = "learn" | "training" | "code" | "practice" | "notes";
@@ -142,6 +143,11 @@ export default function TopicPage() {
 
   return (
     <div className="py-6">
+      <Seo 
+        title={`${topic.title} | AlgoSort`}
+        description={topic.summary || `Learn ${topic.title} with interactive visualizations on AlgoSort.`}
+        canonical={`https://algo-sort-cyan.vercel.app/tutorials/${topic.slug}`}
+      />
       <div className="space-y-6">
         <div className="flex items-center">
           <button

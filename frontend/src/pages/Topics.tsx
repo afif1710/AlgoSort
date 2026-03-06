@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import topics from "../data/topics.json";
+import Seo from "../components/seo/Seo";
 
 export default function Topics() {
   const levels = ["Beginner", "Intermediate", "Advanced"];
@@ -40,6 +41,11 @@ export default function Topics() {
   return (
     // ✅ ADDED: py-6 wrapper for padding
     <div className="py-6 min-h-screen">
+      <Seo 
+        title="DSA Tutorials | AlgoSort"
+        description="Master Data Structures & Algorithms with interactive visualizations and detailed learning paths."
+        canonical="https://algo-sort-cyan.vercel.app/tutorials"
+      />
       {/* Level Navigation - Dynamic Position */}
       <div
         className={`level-nav-container ${isScrolled ? "scrolled" : ""}`}
