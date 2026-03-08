@@ -18,8 +18,6 @@ export default function ThemeToggle() {
         <option value="dark">🌙 Navy</option>
         <option value="midnight">🌃 Midnight</option>
         <option value="sunset">🌅 Sunset</option>
-        <option value="dracula">🧛 Dracula</option>
-        <option value="nord">❄️ Nord</option>
       </select>
     </div>
   );

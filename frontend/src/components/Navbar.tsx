@@ -67,13 +67,12 @@ export default function Navbar() {
       <header className="border-b border-slate-200/50 sticky top-0 bg-[var(--bg)]/80 backdrop-blur-md z-[110] transition-all">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
           {/* Logo Area */}
-          <Link to="/" className="flex items-center gap-2 flex-shrink-0 z-[120]">
-            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-brand to-brand-dark grid place-items-center text-white font-bold text-lg shadow-lg shadow-brand/20">
-              A
-            </div>
-            <span className="font-bold text-xl tracking-tight hidden sm:block">
-              AlgoSort
-            </span>
+          <Link to="/" className="flex items-center flex-shrink-0 z-[120]">
+            <img 
+              src="/logo.png" 
+              alt="AlgoSort Logo" 
+              className="h-14 w-auto object-contain sm:h-16"
+            />
           </Link>
 
           {/* Desktop Search - Hidden on mobile, visible on md+ */}
@@ -134,6 +133,10 @@ export default function Navbar() {
         }}
       >
         <div className="space-y-6 flex-1 overflow-y-auto w-full">
+          {/* Logo in drawer */}
+          <div className="flex justify-center mb-4">
+             <img src="/logo.png" alt="Logo" className="h-16 w-auto" />
+          </div>
           {/* Mobile Search */}
           <div className="mb-6 w-full block">
              <GlobalSearch />

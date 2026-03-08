@@ -286,10 +286,12 @@ export default function Home() {
         </div>
       </div>
 
-      <footer className="w-full text-center py-8 mt-auto border-t border-[var(--panel)]">
-        <p className="text-sm font-medium" style={{ color: "var(--muted)" }}>
-          AlgoSort
-        </p>
+      <footer className="w-full text-center py-8 mt-auto border-t border-[var(--panel)] flex flex-col items-center">
+        <img 
+          src="/logo.png" 
+          alt="AlgoSort Logo" 
+          className="h-16 w-auto mb-4 opacity-80"
+        />
         <p className="text-xs mt-1" style={{ color: "var(--muted)" }}>
           Copyright &copy; 2026 AlgoSort. All Rights Reserved.
         </p>

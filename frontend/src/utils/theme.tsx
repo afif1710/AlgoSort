@@ -7,9 +7,7 @@ type Theme =
   | "gray"
   | "dark"
   | "midnight"
-  | "sunset"
-  | "dracula"
-  | "nord";
+  | "sunset";
 
 const ThemeCtx = createContext<{ theme: Theme; setTheme: (t: Theme) => void }>({
   theme: "midnight",
