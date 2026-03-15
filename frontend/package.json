@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "generate-pwa-icons": "node scripts/generate-pwa-icons.js",
+    "build": "npm run generate-pwa-icons && vite build",
     "preview": "vite preview",
     "postbuild": "node scripts/generate-sitemap.js"
   },
@@ -27,8 +28,10 @@
     "@vitejs/plugin-react": "^5.1.2",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
+    "sharp": "^0.34.5",
     "tailwindcss": "^3.4.9",
     "typescript": "^5.4.5",
-    "vite": "^5.2.10"
+    "vite": "^5.2.10",
+    "vite-plugin-pwa": "^1.2.0"
   }
 }
